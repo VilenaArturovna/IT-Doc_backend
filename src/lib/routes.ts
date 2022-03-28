@@ -1,7 +1,8 @@
-const userRoot = 'user'
+const userRoot = 'user';
 
 export const routes = {
   user: {
-    root: userRoot
-  }
-}
+    root: userRoot,
+    byId: `${userRoot}/:id`,
+  },
+};

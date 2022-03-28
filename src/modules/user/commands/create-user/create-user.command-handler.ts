@@ -1,7 +1,7 @@
-import {CommandHandler} from "@nestjs/cqrs";
-import {CreateUserCommand} from "@modules/user/commands/create-user/create-user.command";
-import {UserRepository} from "@modules/user/repositories/user.repository";
-import {UserEntity} from "@modules/user/user.entity";
+import { CommandHandler } from '@nestjs/cqrs';
+import { CreateUserCommand } from '@modules/user/commands/create-user/create-user.command';
+import { UserRepository } from '@modules/user/repositories/user.repository';
+import { UserEntity } from '@modules/user/user.entity';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserCommandHandler {

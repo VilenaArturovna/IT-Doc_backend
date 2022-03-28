@@ -1,5 +1,5 @@
 ---
-to: src/modules/<%= module %>/queries/<%= name %>/<%= name %>.command.ts
+to: src/modules/<%= module %>/queries/<%= name %>/<%= name %>.query.ts
 ---
 <%QueryName = h.changeCase.pascal(name) + 'Query'
   RequestDtoName = h.changeCase.pascal(name) + 'RequestDto' %>
