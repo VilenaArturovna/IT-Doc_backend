@@ -1,5 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsDateString, IsEmail, IsEnum, IsMobilePhone, IsOptional, IsString, IsUrl } from 'class-validator';
+import {
+  IsDateString,
+  IsEmail,
+  IsEnum,
+  IsMobilePhone,
+  IsOptional,
+  IsString,
+  IsUrl,
+} from 'class-validator';
 import { RoleType } from '@modules/user/types/role.type';
 
 export class CreateUserRequestDto {
@@ -15,9 +23,6 @@ export class CreateUserRequestDto {
   @ApiProperty()
   @IsEmail()
   email: string;
-  @ApiProperty()
-  @IsString()
-  password: string;
   @ApiProperty()
   @IsEnum(RoleType)
   role: RoleType;

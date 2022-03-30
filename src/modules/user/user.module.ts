@@ -13,6 +13,10 @@ import { GetOneUserController } from '@modules/user/queries/get-one-user/get-one
 import { GetOneUserQueryHandler } from '@modules/user/queries/get-one-user/get-one-user.query-handler';
 import { UpdateUserCommandHandler } from '@modules/user/commands/update-user/update-user.command-handler';
 import { UpdateUserController } from '@modules/user/commands/update-user/update-user.controller';
+import { SignInController } from '@modules/user/commands/sign-in/sign-in.controller';
+import { SignInCommandHandler } from '@modules/user/commands/sign-in/sign-in.command-handler';
+import { JwtServiceAdapter } from '@lib/services/jwt-service/jwt.service';
+import { JwtModule } from '@nestjs/jwt';
 
 const httpControllers = [
   CreateUserController,
@@ -20,18 +24,29 @@ const httpControllers = [
   GetManyUsersController,
   GetOneUserController,
   UpdateUserController,
+  SignInController,
 ];
 const commandHandlers = [
   CreateUserCommandHandler,
   DeleteUserCommandHandler,
   UpdateUserCommandHandler,
+  SignInCommandHandler,
 ];
 const queryHandlers = [GetManyUsersQueryHandler, GetOneUserQueryHandler];
 const repositories = [UserRepository];
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity]), CqrsModule],
+  imports: [
+    TypeOrmModule.forFeature([UserEntity]),
+    CqrsModule,
+    JwtModule.register({ secret: 'jwt-secret-word' }),
+  ],
   controllers: [...httpControllers],
-  providers: [...commandHandlers, ...queryHandlers, ...repositories],
+  providers: [
+    ...commandHandlers,
+    ...queryHandlers,
+    ...repositories,
+    JwtServiceAdapter,
+  ],
 })
 export class UserModule {}

@@ -17,8 +17,8 @@ export class UserEntity extends OrmEntityBase {
   @Column()
   email: string;
 
-  @Column()
-  password: string;
+  @Column({ nullable: true })
+  password: string | null;
 
   @Column()
   phone: string;
