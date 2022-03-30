@@ -19,12 +19,16 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "schema:sync": "npm run build && typeorm schema:sync --config ormconfig.json"
+    "schema:sync": "npm run build && typeorm schema:sync --config ormconfig.json",
+    "command": "hygen CQRS/command new",
+    "query": "hygen CQRS/query new"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^2.0.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/cqrs": "^8.0.3",
+    "@nestjs/jwt": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.2.0",
     "@nestjs/typeorm": "^8.0.3",
@@ -32,6 +36,7 @@
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "dotenv": "^16.0.0",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
