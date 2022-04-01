@@ -4,14 +4,14 @@ import { RoleType } from './types/role.type';
 
 @Entity('user')
 export class UserEntity extends OrmEntityBase {
-  @Column()
-  firstname: string;
+  @Column({ nullable: true })
+  firstname: string | null;
 
-  @Column()
-  lastname: string;
+  @Column({ nullable: true })
+  lastname: string | null;
 
-  @Column()
-  middleName: string;
+  @Column({ nullable: true })
+  middleName: string | null;
 
   @Index({ unique: true })
   @Column()
@@ -20,11 +20,11 @@ export class UserEntity extends OrmEntityBase {
   @Column({ nullable: true })
   password: string | null;
 
-  @Column()
-  phone: string;
+  @Column({ nullable: true })
+  phone: string | null;
 
-  @Column()
-  birthdate: Date;
+  @Column({ nullable: true })
+  birthdate: Date | null;
 
   @Column({ nullable: true })
   photo: string | null;
@@ -36,5 +36,5 @@ export class UserEntity extends OrmEntityBase {
   resetPasswordHash?: string | null;
 
   @Column({ nullable: true })
-  inviteHash?: string | null;
+  inviteHash?: string;
 }

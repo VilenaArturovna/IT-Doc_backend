@@ -5,5 +5,6 @@ export const routes = {
     root: userRoot,
     byId: `${userRoot}/:id`,
     signIn: 'sign-in',
+    acceptInvite: 'accept-invite:hash',
   },
 };

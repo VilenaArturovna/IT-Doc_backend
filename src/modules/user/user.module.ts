@@ -17,6 +17,10 @@ import { SignInController } from '@modules/user/commands/sign-in/sign-in.control
 import { SignInCommandHandler } from '@modules/user/commands/sign-in/sign-in.command-handler';
 import { JwtServiceAdapter } from '@lib/services/jwt-service/jwt.service';
 import { JwtModule } from '@nestjs/jwt';
+import { AcceptInviteCommandHandler } from '@modules/user/commands/accept-invite/accept-invite.command-handler';
+import { AcceptInviteController } from '@modules/user/commands/accept-invite/accept-invite.controller';
+import { BcryptService } from '@lib/services/hash-password-service/bcrypt.service';
+import { CryptoService } from '@lib/services/random-hash-service/crypto.service';
 
 const httpControllers = [
   CreateUserController,
@@ -25,12 +29,14 @@ const httpControllers = [
   GetOneUserController,
   UpdateUserController,
   SignInController,
+  AcceptInviteController,
 ];
 const commandHandlers = [
   CreateUserCommandHandler,
   DeleteUserCommandHandler,
   UpdateUserCommandHandler,
   SignInCommandHandler,
+  AcceptInviteCommandHandler,
 ];
 const queryHandlers = [GetManyUsersQueryHandler, GetOneUserQueryHandler];
 const repositories = [UserRepository];
@@ -47,6 +53,8 @@ const repositories = [UserRepository];
     ...queryHandlers,
     ...repositories,
     JwtServiceAdapter,
+    BcryptService,
+    CryptoService,
   ],
 })
 export class UserModule {}

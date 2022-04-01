@@ -3,5 +3,5 @@ export enum RoleType {
   ENGINEER = 'engineer',
   MANAGER = 'manager',
   DISPATCHER = 'dispatcher',
-  CLIENT = 'client'
+  CLIENT = 'client',
 }

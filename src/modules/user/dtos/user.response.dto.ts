@@ -25,6 +25,8 @@ export class UserResponseDto implements IReadResponse {
   birthdate: Date;
   @ApiPropertyOptional()
   photo?: string;
+  @ApiProperty()
+  inviteHash?: string;
 
   constructor(entity: UserEntity) {
     this.id = entity.id;
@@ -38,5 +40,6 @@ export class UserResponseDto implements IReadResponse {
     this.photo = entity?.photo;
     this.phone = entity.phone;
     this.role = entity.role;
+    this.inviteHash = entity.inviteHash; //TODO: remove
   }
 }
