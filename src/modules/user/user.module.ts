@@ -21,6 +21,14 @@ import { AcceptInviteCommandHandler } from '@modules/user/commands/accept-invite
 import { AcceptInviteController } from '@modules/user/commands/accept-invite/accept-invite.controller';
 import { BcryptService } from '@lib/services/hash-password-service/bcrypt.service';
 import { CryptoService } from '@lib/services/random-hash-service/crypto.service';
+import { ForgotPasswordController } from '@modules/user/commands/forgot-password/forgot-password.controller';
+import { ForgotPasswordCommandHandler } from '@modules/user/commands/forgot-password/forgot-password.command-handler';
+import { ResetPasswordController } from '@modules/user/commands/reset-password/reset-password.controller';
+import { ResetPasswordCommandHandler } from '@modules/user/commands/reset-password/reset-password.command-handler';
+import { ChangePasswordCommandHandler } from '@modules/user/commands/change-password/change-password.command-handler';
+import { ChangePasswordController } from '@modules/user/commands/change-password/change-password.controller';
+import { LocalStrategy } from '@lib/guards/auth/strategies/local.strategy';
+import { JwtStrategy } from '@lib/guards/auth/strategies/jwt.strategy';
 
 const httpControllers = [
   CreateUserController,
@@ -30,6 +38,9 @@ const httpControllers = [
   UpdateUserController,
   SignInController,
   AcceptInviteController,
+  ForgotPasswordController,
+  ResetPasswordController,
+  ChangePasswordController,
 ];
 const commandHandlers = [
   CreateUserCommandHandler,
@@ -37,6 +48,9 @@ const commandHandlers = [
   UpdateUserCommandHandler,
   SignInCommandHandler,
   AcceptInviteCommandHandler,
+  ForgotPasswordCommandHandler,
+  ResetPasswordCommandHandler,
+  ChangePasswordCommandHandler,
 ];
 const queryHandlers = [GetManyUsersQueryHandler, GetOneUserQueryHandler];
 const repositories = [UserRepository];
@@ -55,6 +69,8 @@ const repositories = [UserRepository];
     JwtServiceAdapter,
     BcryptService,
     CryptoService,
+    LocalStrategy,
+    JwtStrategy,
   ],
 })
 export class UserModule {}
