@@ -2,6 +2,7 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { routes } from '@lib/routes';
 import {
+  ApiBearerAuth,
   ApiExtraModels,
   ApiOkResponse,
   ApiOperation,
@@ -17,6 +18,7 @@ import { GetManyUsersRequestDto } from '@modules/user/queries/get-many-users/get
 export class GetManyUsersController {
   constructor(private readonly queryBus: QueryBus) {}
 
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get many users' })
   @ApiOkResponse({ type: UserResponseDto, isArray: true })
   @ApiExtraModels(GetManyUsersRequestDto)

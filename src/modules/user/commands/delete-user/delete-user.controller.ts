@@ -1,7 +1,12 @@
 import { Controller, Delete, Param, ParseUUIDPipe } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { routes } from '@lib/routes';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { DeleteUserCommand } from '@modules/user/commands/delete-user/delete-user.command';
 import { UserResponseDto } from '@modules/user/dtos/user.response.dto';
 
@@ -10,6 +15,7 @@ import { UserResponseDto } from '@modules/user/dtos/user.response.dto';
 export class DeleteUserController {
   constructor(private readonly commandBus: CommandBus) {}
 
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete one user' })
   @ApiOkResponse({ type: UserResponseDto })
   @Delete(routes.user.byId)

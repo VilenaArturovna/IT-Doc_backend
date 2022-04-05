@@ -3,7 +3,12 @@ import { CommandBus } from '@nestjs/cqrs';
 import { routes } from '@lib/routes';
 import { CreateUserRequestDto } from '@modules/user/commands/create-user/create-user.request.dto';
 import { UserResponseDto } from '@modules/user/dtos/user.response.dto';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CreateUserCommand } from '@modules/user/commands/create-user/create-user.command';
 
 @ApiTags('user')
@@ -11,6 +16,7 @@ import { CreateUserCommand } from '@modules/user/commands/create-user/create-use
 export class CreateUserController {
   constructor(private readonly commandBus: CommandBus) {}
 
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create user' })
   @ApiOkResponse({ type: UserResponseDto })
   @Post(routes.user.root)

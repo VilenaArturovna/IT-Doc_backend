@@ -1,7 +1,12 @@
 import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { routes } from '@lib/routes';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { GetOneUserQuery } from '@modules/user/queries/get-one-user/get-one-user.query';
 import { UserResponseDto } from '@modules/user/dtos/user.response.dto';
 
@@ -10,6 +15,7 @@ import { UserResponseDto } from '@modules/user/dtos/user.response.dto';
 export class GetOneUserController {
   constructor(private readonly queryBus: QueryBus) {}
 
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get one user' })
   @ApiOkResponse({ type: UserResponseDto })
   @Get(routes.user.byId)
