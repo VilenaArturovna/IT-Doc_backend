@@ -29,6 +29,8 @@ import { ChangePasswordCommandHandler } from '@modules/user/commands/change-pass
 import { ChangePasswordController } from '@modules/user/commands/change-password/change-password.controller';
 import { LocalStrategy } from '@lib/guards/auth/strategies/local.strategy';
 import { JwtStrategy } from '@lib/guards/auth/strategies/jwt.strategy';
+import { GetMeController } from '@modules/user/queries/get-me/get-me.controller';
+import { GetMeQueryHandler } from '@modules/user/queries/get-me/get-me.query-handler';
 
 const httpControllers = [
   CreateUserController,
@@ -41,6 +43,7 @@ const httpControllers = [
   ForgotPasswordController,
   ResetPasswordController,
   ChangePasswordController,
+  GetMeController,
 ];
 const commandHandlers = [
   CreateUserCommandHandler,
@@ -52,7 +55,11 @@ const commandHandlers = [
   ResetPasswordCommandHandler,
   ChangePasswordCommandHandler,
 ];
-const queryHandlers = [GetManyUsersQueryHandler, GetOneUserQueryHandler];
+const queryHandlers = [
+  GetManyUsersQueryHandler,
+  GetOneUserQueryHandler,
+  GetMeQueryHandler,
+];
 const repositories = [UserRepository];
 
 @Module({

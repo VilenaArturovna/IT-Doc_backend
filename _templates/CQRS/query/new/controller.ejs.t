@@ -7,7 +7,7 @@ to: src/modules/<%= module %>/queries/<%= name %>/<%= name %>.controller.ts
 import { Controller, Get } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { routes } from '@lib/routes';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { <%= QueryName %> } from '@modules/<%= module %>/queries/<%= name %>/<%= name %>.query';
 
 @ApiTags('<%= module %>')
@@ -15,6 +15,7 @@ import { <%= QueryName %> } from '@modules/<%= module %>/queries/<%= name %>/<%=
 export class <%= ControllerName %> {
   constructor(private readonly queryBus: QueryBus) {}
 
+  @ApiBearerAuth()
   @ApiOperation({ summary:  })
   @ApiOkResponse({ type:  })
   @Get(routes.)
