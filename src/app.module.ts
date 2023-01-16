@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import ormconfig from '../ormconfig';
-import { UserModule } from '@modules/user/user.module';
+import { StaffModule } from '@modules/staff/staff.module';
 import { ConfigModule } from '@nestjs/config';
-import { JwtAuthGuard } from '@lib/guards/auth/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from '@src/common/guards/auth/jwt-auth.guard';
+import { WarehouseModule } from '@modules/warehouse/warehouse.module';
+import { ObjectionConfigService } from '@src/common';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(ormconfig),
     ConfigModule.forRoot({ isGlobal: true }),
-    UserModule,
+    StaffModule,
+    WarehouseModule,
   ],
   controllers: [],
   providers: [
@@ -18,6 +18,7 @@ import { APP_GUARD } from '@nestjs/core';
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
+    ObjectionConfigService,
   ],
 })
 export class AppModule {}

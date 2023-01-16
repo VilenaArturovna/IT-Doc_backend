@@ -16,10 +16,11 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@lib/*": ["lib/*"],
-      "@modules/*": ["modules/*"]
+      "@src/*": ["src/*"],
+      "@modules/*": ["src/modules/*"],
+      "@libs/*": ["src/libs/*"]
     }
   }
 }
