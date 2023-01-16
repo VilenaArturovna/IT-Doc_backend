@@ -1,11 +1,11 @@
 export enum Section {
-  MATERIAL = 'material',
-  SERVICE = 'service',
-  PRODUCT = 'product',
+  MATERIAL = 'MATERIAL',
+  SERVICE = 'SERVICE',
+  PRODUCT = 'PRODUCT',
 }
 
 export enum Unit {
-  KG = 'kg',
-  PIECE = 'piece',
-  SET = 'set',
+  KG = 'KG',
+  PIECE = 'PIECE',
+  SET = 'SET',
 }
