@@ -28,8 +28,8 @@ export const paginate = async <T>(options: {
 
   return Result.ok({
     data,
-    page,
-    limit,
+    page: Number(page),
+    limit: Number(limit),
     total,
   });
 };
