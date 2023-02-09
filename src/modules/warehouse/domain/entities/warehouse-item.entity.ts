@@ -3,11 +3,9 @@ import { DateVO, IdVO, MoneyVO } from '@libs/value-objects';
 import { Section, Unit } from '@modules/warehouse/types';
 import {
   ProviderEntity,
-  ServiceEntity,
   VendorEntity,
   WarehouseItemHasEmptyFieldsError,
 } from '@modules/warehouse/domain';
-import { ConflictException } from '@libs/exceptions';
 
 export interface WarehouseItemEntityProps {
   section: Section;
@@ -30,7 +28,6 @@ export interface WarehouseItemEntityProps {
   nextDeliveryDate?: DateVO;
   vendor: VendorEntity;
   provider: ProviderEntity;
-  service?: ServiceEntity;
   isArchived: boolean;
 }
 
@@ -59,7 +56,6 @@ export class WarehouseItemEntity extends EntityBase<WarehouseItemEntityProps> {
     this.props.criticalMargin = props.criticalMargin;
     this.props.balance = props.balance;
     this.props.title = props.title;
-    this.props.service = props.service;
     this.validate();
     this.updatedAtNow();
   }
@@ -79,7 +75,6 @@ export class WarehouseItemEntity extends EntityBase<WarehouseItemEntityProps> {
       criticalMargin,
       vendor,
       provider,
-      service,
     } = this.props;
 
     const requiredFields = [
@@ -94,12 +89,6 @@ export class WarehouseItemEntity extends EntityBase<WarehouseItemEntityProps> {
     ];
     if (requiredFields.some((f) => f === null || f === undefined)) {
       throw new WarehouseItemHasEmptyFieldsError();
-    }
-
-    if (section === Section.SERVICE && !service) {
-      throw new ConflictException(
-        'При создании услуги необходимо добавить тип услуги',
-      );
     }
   }
 }

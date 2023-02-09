@@ -5,12 +5,6 @@ import {
   GetOneProviderQueryHandler,
 } from '@modules/warehouse/queries/provider';
 import {
-  GetManyServicesController,
-  GetManyServicesQueryHandler,
-  GetOneServiceController,
-  GetOneServiceQueryHandler,
-} from '@modules/warehouse/queries/service';
-import {
   GetManyVendorsController,
   GetManyVendorsQueryHandler,
   GetOneVendorController,
@@ -24,15 +18,12 @@ import {
 } from '@modules/warehouse/queries/warehouse-item';
 
 export * from './provider';
-export * from './service';
 export * from './vendor';
 export * from './warehouse-item';
 
 export const queryControllers = [
   GetManyProvidersController,
   GetOneProviderController,
-  GetManyServicesController,
-  GetOneServiceController,
   GetManyVendorsController,
   GetOneVendorController,
   GetManyWarehouseItemsController,
@@ -41,8 +32,6 @@ export const queryControllers = [
 export const queryHandlers = [
   GetManyProvidersQueryHandler,
   GetOneProviderQueryHandler,
-  GetManyServicesQueryHandler,
-  GetOneServiceQueryHandler,
   GetManyVendorsQueryHandler,
   GetOneVendorQueryHandler,
   GetManyWarehouseItemsQueryHandler,

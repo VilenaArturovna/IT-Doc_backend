@@ -14,7 +14,6 @@ import {
 import { Currency, DateVO, MoneyVO } from '@libs/value-objects';
 import { VendorOrmMapper } from '@modules/warehouse/database/mappers/vendor.orm-mapper';
 import { ProviderOrmMapper } from '@modules/warehouse/database/mappers/provider.orm-mapper';
-import { ServiceOrmMapper } from '@modules/warehouse/database/mappers/service.orm-mapper';
 
 export class WarehouseItemOrmMapper extends OrmMapper<
   WarehouseItemEntity,
@@ -56,9 +55,6 @@ export class WarehouseItemOrmMapper extends OrmMapper<
         : undefined,
       vendor: new VendorOrmMapper().toDomainEntity(ormEntity.vendor),
       provider: new ProviderOrmMapper().toDomainEntity(ormEntity.provider),
-      service: ormEntity.service
-        ? new ServiceOrmMapper().toDomainEntity(ormEntity.service)
-        : undefined,
     };
   }
 
@@ -84,7 +80,6 @@ export class WarehouseItemOrmMapper extends OrmMapper<
       isArchived: props.isArchived,
       vendorId: props.vendor.id.value,
       providerId: props.provider.id.value,
-      serviceId: props.service?.id.value,
     };
   }
 }

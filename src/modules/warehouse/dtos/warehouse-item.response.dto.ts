@@ -2,13 +2,11 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Section, Unit } from '@modules/warehouse/types';
 import {
   ProviderOrmEntity,
-  ServiceOrmEntity,
   VendorOrmEntity,
 } from '@modules/warehouse/database/entities';
 import { WarehouseItemEntity } from '@modules/warehouse/domain';
 import { ProviderResponseDto } from '@modules/warehouse/dtos/provider.response.dto';
 import { VendorResponseDto } from '@modules/warehouse/dtos/vendor.response.dto';
-import { ServiceResponseDto } from '@modules/warehouse/dtos/service.response.dto';
 
 export class WarehouseItemResponseDto {
   @ApiProperty()
@@ -56,9 +54,6 @@ export class WarehouseItemResponseDto {
   @ApiProperty({ type: () => ProviderOrmEntity })
   provider: ProviderOrmEntity;
 
-  @ApiPropertyOptional({ type: () => ServiceOrmEntity, nullable: true })
-  service?: ServiceOrmEntity;
-
   @ApiProperty()
   isArchived: boolean;
 
@@ -81,9 +76,6 @@ export class WarehouseItemResponseDto {
     this.packing = props.packing;
     this.provider = new ProviderResponseDto(props.provider);
     this.vendor = new VendorResponseDto(props.vendor);
-    this.service = props.service
-      ? new ServiceResponseDto(props.service)
-      : undefined;
     this.isArchived = props.isArchived;
   }
 }

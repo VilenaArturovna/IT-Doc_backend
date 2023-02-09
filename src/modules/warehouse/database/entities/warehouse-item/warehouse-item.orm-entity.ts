@@ -3,8 +3,6 @@ import { Section, Unit } from '@modules/warehouse/types';
 import {
   ProviderModel,
   ProviderOrmEntity,
-  ServiceModel,
-  ServiceOrmEntity,
   VendorModel,
   VendorOrmEntity,
 } from '@modules/warehouse/database/entities';
@@ -26,8 +24,6 @@ export interface WarehouseItemOrmEntityProps {
   vendor?: VendorOrmEntity;
   providerId: string;
   provider?: ProviderOrmEntity;
-  serviceId?: string;
-  service?: ServiceOrmEntity;
   isArchived: boolean;
 }
 
@@ -51,8 +47,6 @@ export class WarehouseItemOrmEntity
   vendor?: VendorOrmEntity;
   providerId: string;
   provider?: ProviderOrmEntity;
-  serviceId?: string;
-  service?: ServiceOrmEntity;
   isArchived: boolean;
 }
 
@@ -74,9 +68,7 @@ export class WarehouseItemModel
   nextDeliveryDate?: string;
   vendor?: VendorModel;
   provider?: ProviderModel;
-  service?: ServiceModel;
   isArchived: boolean;
   providerId: string;
-  serviceId: string;
   vendorId: string;
 }

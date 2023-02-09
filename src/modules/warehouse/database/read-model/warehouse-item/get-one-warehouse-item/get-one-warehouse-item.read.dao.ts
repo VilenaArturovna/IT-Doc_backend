@@ -10,7 +10,7 @@ export class GetOneWarehouseItemVendor {
   id: string;
 
   @ApiProperty()
-  name: string;
+  title: string;
 }
 
 export class GetOneWarehouseItemDaoModel {
@@ -58,12 +58,6 @@ export class GetOneWarehouseItemDaoModel {
 
   @ApiProperty({ type: () => GetOneWarehouseItemVendor })
   provider: GetOneWarehouseItemVendor;
-
-  @ApiPropertyOptional({
-    type: () => GetOneWarehouseItemVendor,
-    nullable: true,
-  })
-  service?: GetOneWarehouseItemVendor;
 
   @ApiProperty()
   isArchived: boolean;

@@ -30,7 +30,7 @@ export class WarehouseItemObjectionRepository extends ObjectionRepositoryBase<
       const ormEntity = await this.repository
         .query()
         .findById(id.value)
-        .withGraphFetched(['service', 'vendor', 'provider']);
+        .withGraphFetched('[vendor, provider]');
 
       if (!ormEntity) {
         return Result.fail(new NotFoundException('Entity not found'));

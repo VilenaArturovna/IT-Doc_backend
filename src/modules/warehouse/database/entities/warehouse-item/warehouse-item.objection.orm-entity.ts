@@ -2,11 +2,8 @@ import {
   WarehouseItemModel,
   WarehouseItemOrmEntityProps,
 } from './warehouse-item.orm-entity';
-import {
-  ProviderObjectionOrmEntity,
-  ServiceObjectionOrmEntity,
-  VendorObjectionOrmEntity,
-} from '@modules/warehouse/database/entities';
+import { ProviderObjectionOrmEntity } from '../provider/provider.objection.orm-entity';
+import { VendorObjectionOrmEntity } from '../vendor/vendor.objection.orm-entity';
 import { Model } from 'objection';
 
 export class WarehouseItemObjectionOrmEntity extends WarehouseItemModel {
@@ -50,7 +47,6 @@ export class WarehouseItemObjectionOrmEntity extends WarehouseItemModel {
         expense: { type: ['number', 'null'] },
         expenseReserve: { type: ['number', 'null'] },
         nextDeliveryDate: { type: ['string', 'null'] },
-        serviceId: { type: ['string', 'null'] },
         vendorId: { type: 'string' },
         providerId: { type: 'string' },
       },
@@ -72,14 +68,6 @@ export class WarehouseItemObjectionOrmEntity extends WarehouseItemModel {
       join: {
         from: `${this.tableName}.providerId`,
         to: `${ProviderObjectionOrmEntity.tableName}.id`,
-      },
-    },
-    service: {
-      relation: Model.BelongsToOneRelation,
-      modelClass: ServiceObjectionOrmEntity,
-      join: {
-        from: `${this.tableName}.serviceId`,
-        to: `${ServiceObjectionOrmEntity.tableName}.id`,
       },
     },
   };

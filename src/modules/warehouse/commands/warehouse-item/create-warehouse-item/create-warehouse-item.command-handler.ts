@@ -2,7 +2,6 @@ import { CommandHandler } from '@nestjs/cqrs';
 import { CreateWarehouseItemCommand } from './create-warehouse-item.command';
 import {
   ProviderObjectionRepository,
-  ServiceObjectionRepository,
   VendorObjectionRepository,
   WarehouseItemObjectionRepository,
 } from '@modules/warehouse/database/repositories';
@@ -17,26 +16,20 @@ export class CreateWarehouseItemCommandHandler {
     private readonly warehouseItemObjectionRepository: WarehouseItemObjectionRepository,
     private readonly providerObjectionRepository: ProviderObjectionRepository,
     private readonly vendorObjectionRepository: VendorObjectionRepository,
-    private readonly serviceObjectionRepository: ServiceObjectionRepository,
   ) {}
 
   async execute(
     command: CreateWarehouseItemCommand,
   ): Promise<Result<WarehouseItemEntity, ExceptionBase>> {
-    const { vendorId, providerId, serviceId, ...payload } = command.payload;
+    const { vendorId, providerId, ...payload } = command.payload;
 
-    const [vendorResult, providerResult, serviceResult] = await Promise.all([
+    const [vendorResult, providerResult] = await Promise.all([
       this.vendorObjectionRepository.getOneById(new UuidVO(vendorId)),
       this.providerObjectionRepository.getOneById(new UuidVO(providerId)),
-      serviceId &&
-        this.serviceObjectionRepository.getOneById(new UuidVO(serviceId)),
     ]);
 
     const vendor = vendorResult.unwrap();
     const provider = providerResult.unwrap();
-    let service;
-
-    serviceResult && (service = serviceResult.unwrap());
 
     const warehouseItemEntity = WarehouseItemEntity.create({
       title: payload.title,
@@ -56,7 +49,6 @@ export class CreateWarehouseItemCommandHandler {
       isArchived: false,
       vendor,
       provider,
-      service,
     });
 
     return this.warehouseItemObjectionRepository.create(warehouseItemEntity);

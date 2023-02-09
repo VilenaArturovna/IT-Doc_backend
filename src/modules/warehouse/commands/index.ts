@@ -15,14 +15,6 @@ import {
   UpdateVendorController,
 } from '@modules/warehouse/commands/vendor';
 import {
-  CreateServiceCommandHandler,
-  CreateServiceController,
-  RemoveServiceCommandHandler,
-  RemoveServiceController,
-  UpdateServiceCommandHandler,
-  UpdateServiceController,
-} from '@modules/warehouse/commands/service';
-import {
   ArchiveWarehouseItemCommandHandler,
   ArchiveWarehouseItemController,
   CreateWarehouseItemCommandHandler,
@@ -38,9 +30,6 @@ export const commandControllers = [
   CreateVendorController,
   UpdateVendorController,
   RemoveVendorController,
-  CreateServiceController,
-  UpdateServiceController,
-  RemoveServiceController,
   CreateWarehouseItemController,
   UpdateWarehouseItemController,
   ArchiveWarehouseItemController,
@@ -52,9 +41,6 @@ export const commandHandlers = [
   CreateVendorCommandHandler,
   UpdateVendorCommandHandler,
   RemoveVendorCommandHandler,
-  CreateServiceCommandHandler,
-  UpdateServiceCommandHandler,
-  RemoveServiceCommandHandler,
   CreateWarehouseItemCommandHandler,
   UpdateWarehouseItemCommandHandler,
   ArchiveWarehouseItemCommandHandler,

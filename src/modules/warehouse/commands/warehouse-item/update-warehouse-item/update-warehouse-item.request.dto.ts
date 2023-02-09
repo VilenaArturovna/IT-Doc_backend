@@ -72,9 +72,4 @@ export class UpdateWarehouseItemRequestDto {
   @ApiProperty()
   @IsUUID()
   providerId: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsUUID()
-  serviceId?: string;
 }

@@ -18,14 +18,12 @@ export class GetOneWarehouseItemObjectionReadDao extends GetOneWarehouseItemRead
       .select(
         'wi.*',
         knex.raw(`
-        jsonb_build_object('id', v.id, 'name', v.name) as vendor,
-        jsonb_build_object('id', p.id, 'name', p.name) as provider,
-        jsonb_build_object('id', s.id, 'name', s.name) as service,
+        jsonb_build_object('id', v.id, 'title', v.title) as vendor,
+        jsonb_build_object('id', p.id, 'title', p.title) as provider    
       `),
       )
       .innerJoin('vendors as v', 'v.id', 'wi.vendorId')
       .innerJoin('providers as p', 'p.id', 'wi.providerId')
-      .innerJoin('services as s', 's.id', 'wi.serviceId')
       .where('wi.id', query.params.id)
       .first();
 

@@ -1,6 +1,5 @@
 export enum Section {
   MATERIAL = 'MATERIAL',
-  SERVICE = 'SERVICE',
   PRODUCT = 'PRODUCT',
 }
 
