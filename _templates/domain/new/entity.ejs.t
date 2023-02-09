@@ -15,7 +15,7 @@ export interface <%= EntityProps %> {
 export class <%= DomainEntity%> extends EntityBase<<%= EntityProps %>> {
   protected readonly _id: IdVO;
 
-  protected static create(props: <%= EntityProps %>): <%= DomainEntity%> {
+  public static create(props: <%= EntityProps %>): <%= DomainEntity%> {
     return new <%= DomainEntity%>({ props });
   }
 
