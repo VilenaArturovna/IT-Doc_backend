@@ -14,7 +14,7 @@ import {
 export * from './auth';
 export * from './staff';
 
-export const queriesControllers = [
+export const queryControllers = [
   GetManyStaffController,
   GetStaffController,
   StaffGetMeController,

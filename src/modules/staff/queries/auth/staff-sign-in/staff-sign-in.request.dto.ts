@@ -3,11 +3,11 @@ import { IsEmail, IsString, Matches } from 'class-validator';
 import { passwordRegexp } from '@libs/utils';
 
 export class StaffSignInRequestDto {
-  @ApiProperty()
+  @ApiProperty({ example: 'admin@itdoc.ru' })
   @IsEmail()
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'qweQWE123$' })
   @IsString()
   @Matches(passwordRegexp, {
     message:
