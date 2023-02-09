@@ -10,7 +10,6 @@ export async function up(knex: Knex) {
     t.text('name').notNullable();
     t.integer('time').notNullable();
     t.float('price').notNullable();
-    t.enum('priority', ['LOW', 'MEDIUM', 'HIGH', 'VIP']).notNullable();
   });
 }
 

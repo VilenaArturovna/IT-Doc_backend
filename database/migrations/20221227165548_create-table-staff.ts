@@ -3,6 +3,8 @@ import { Knex } from 'knex';
 const tableName = 'staff';
 
 export async function up(knex: Knex) {
+  await knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
+
   return knex.schema.createTable(tableName, (t) => {
     t.uuid('id').defaultTo(knex.raw('uuid_generate_v4()')).primary();
     t.timestamp('createdAt').defaultTo(knex.fn.now());
