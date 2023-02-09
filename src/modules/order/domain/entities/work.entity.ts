@@ -1,13 +1,11 @@
 import { EntityBase } from '@libs/base-classes';
 import { IdVO, MoneyVO } from '@libs/value-objects';
-import { WorkPriority } from '@modules/order/types';
+import { WorkHasEmptyFieldsError } from '@modules/order/domain/errors';
 
 export interface WorkEntityProps {
   name: string;
   price: MoneyVO;
-  //in minutes
-  time: number;
-  priority: WorkPriority;
+  time: number; //in minutes
 }
 
 export class WorkEntity extends EntityBase<WorkEntityProps> {
@@ -17,5 +15,21 @@ export class WorkEntity extends EntityBase<WorkEntityProps> {
     return new WorkEntity({ props });
   }
 
-  protected validate() {}
+  public update(props: WorkEntityProps) {
+    this.props.name = props.name;
+    this.props.price = props.price;
+    this.props.time = props.time;
+    this.updatedAtNow();
+    this.validate();
+  }
+
+  protected validate() {
+    const { price, time, name } = this.props;
+
+    const requiredFields = [price, name, time];
+
+    if (requiredFields.some((f) => f === null || f === undefined)) {
+      throw new WorkHasEmptyFieldsError();
+    }
+  }
 }

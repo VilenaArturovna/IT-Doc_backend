@@ -10,15 +10,7 @@ export class WorkObjectionOrmEntity extends WorkModel {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: [
-        'id',
-        'createdAt',
-        'updatedAt',
-        'name',
-        'price',
-        'time',
-        'priority',
-      ],
+      required: ['id', 'createdAt', 'updatedAt', 'name', 'price', 'time'],
       properties: {
         id: { type: 'string' },
         createdAt: { type: 'string' },
@@ -26,7 +18,6 @@ export class WorkObjectionOrmEntity extends WorkModel {
         name: { type: 'string' },
         price: { type: 'number' },
         time: { type: 'number' },
-        priority: { type: 'string' },
       },
     };
   }

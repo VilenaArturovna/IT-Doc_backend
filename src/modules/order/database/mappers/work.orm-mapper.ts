@@ -29,7 +29,6 @@ export class WorkOrmMapper extends OrmMapper<
       name: ormEntity.name,
       time: ormEntity.time,
       price: MoneyVO.toVO({ amount: ormEntity.price, currency: Currency.RUR }),
-      priority: ormEntity.priority,
     };
   }
 
@@ -39,7 +38,6 @@ export class WorkOrmMapper extends OrmMapper<
       name: props.name,
       time: props.time,
       price: props.price.amount,
-      priority: props.priority,
     };
   }
 }

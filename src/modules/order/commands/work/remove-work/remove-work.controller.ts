@@ -10,19 +10,19 @@ import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { RemoveServiceCommand } from './remove-service.command';
+import { RemoveWorkCommand } from './remove-work.command';
 
-@ApiTags('warehouse/service')
+@ApiTags('order/work')
 @Controller()
-export class RemoveServiceController {
+export class RemoveWorkController {
   constructor(private readonly commandBus: CommandBus) {}
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Remove service' })
+  @ApiOperation({ summary: 'Remove work' })
   @HttpCode(204)
-  @Delete(routes.service.byId)
-  async removeService(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
-    const command = new RemoveServiceCommand({ payload: { id } });
+  @Delete(routes.work.byId)
+  async removeWork(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
+    const command = new RemoveWorkCommand({ payload: { id } });
 
     const result: Result<void, ExceptionBase> = await this.commandBus.execute(
       command,

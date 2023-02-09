@@ -1,7 +1,9 @@
-import { ObjectionRepositoryBase } from '@libs/base-classes';
+import { ExceptionBase, ObjectionRepositoryBase } from '@libs/base-classes';
 import { WorkEntity, WorkEntityProps } from '@modules/order/domain';
 import { WorkObjectionOrmEntity, WorkOrmEntity } from '../entities';
 import { WorkOrmMapper } from '../mappers';
+import { Result } from '@libs/utils';
+import { NotFoundException } from '@libs/exceptions';
 
 export class WorkObjectionRepository extends ObjectionRepositoryBase<
   WorkEntity,
@@ -12,5 +14,23 @@ export class WorkObjectionRepository extends ObjectionRepositoryBase<
 > {
   constructor() {
     super(WorkObjectionOrmEntity, new WorkOrmMapper());
+  }
+
+  async getWorkByName(
+    name: string,
+  ): Promise<Result<WorkEntity, ExceptionBase>> {
+    try {
+      const ormEntity = await this.repository.query().findOne({ name });
+
+      if (!ormEntity) {
+        return Result.fail(new NotFoundException('Entity not found'));
+      }
+
+      const domainEntity = await this.mapper.toDomainEntity(ormEntity);
+
+      return Result.ok(domainEntity);
+    } catch (e) {
+      return Result.fail(e);
+    }
   }
 }

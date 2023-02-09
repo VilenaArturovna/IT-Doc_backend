@@ -9,24 +9,24 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { GetOneServiceQuery } from '@modules/warehouse/queries';
-import { GetOneServiceDaoModel } from '@modules/warehouse/database/read-model';
+import { GetOneWorkQuery } from '@modules/order/queries';
+import { GetOneWorkDaoModel } from '@modules/order/database/read-model';
 
-@ApiTags('warehouse/service')
+@ApiTags('order/work')
 @Controller()
-export class GetOneServiceController {
+export class GetOneWorkController {
   constructor(private readonly queryBus: QueryBus) {}
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get one service' })
-  @ApiOkResponse({ type: () => GetOneServiceDaoModel })
-  @Get(routes.service.byId)
-  async getOneService(
+  @ApiOperation({ summary: 'Get one work' })
+  @ApiOkResponse({ type: () => GetOneWorkDaoModel })
+  @Get(routes.work.byId)
+  async getOneWork(
     @Param('id', ParseUUIDPipe) id: string,
-  ): Promise<GetOneServiceDaoModel> {
-    const query = new GetOneServiceQuery({ params: { id } });
+  ): Promise<GetOneWorkDaoModel> {
+    const query = new GetOneWorkQuery({ params: { id } });
 
-    const result: Result<GetOneServiceDaoModel, ExceptionBase> =
+    const result: Result<GetOneWorkDaoModel, ExceptionBase> =
       await this.queryBus.execute(query);
 
     return result.unwrap();
