@@ -28,7 +28,7 @@ export class WorkOrmMapper extends OrmMapper<
     return {
       name: ormEntity.name,
       time: ormEntity.time,
-      price: MoneyVO.toVO({ amount: ormEntity.price, currency: Currency.RUR }),
+      price: MoneyVO.toVO({ amount: ormEntity.price, currency: Currency.RUB }),
     };
   }
 

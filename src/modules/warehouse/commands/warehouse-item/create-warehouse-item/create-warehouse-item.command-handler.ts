@@ -34,7 +34,7 @@ export class CreateWarehouseItemCommandHandler {
     const warehouseItemEntity = WarehouseItemEntity.create({
       title: payload.title,
       unit: payload.unit,
-      price: MoneyVO.toVO({ amount: payload.price, currency: Currency.RUR }),
+      price: MoneyVO.toVO({ amount: payload.price, currency: Currency.RUB }),
       balance: payload.balance,
       criticalMargin: payload.criticalMargin,
       section: payload.section,

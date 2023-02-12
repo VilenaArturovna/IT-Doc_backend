@@ -34,7 +34,7 @@ export class UpdateWorkCommandHandler {
     work.update({
       name,
       time,
-      price: MoneyVO.toVO({ amount: price, currency: Currency.RUR }),
+      price: MoneyVO.toVO({ amount: price, currency: Currency.RUB }),
     });
 
     return this.repository.update(work);

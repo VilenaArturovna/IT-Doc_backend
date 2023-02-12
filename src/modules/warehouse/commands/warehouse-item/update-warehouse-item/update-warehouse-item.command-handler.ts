@@ -37,7 +37,7 @@ export class UpdateWarehouseItemCommandHandler {
 
     warehouseItem.update({
       title: payload.title,
-      price: MoneyVO.toVO({ amount: payload.price, currency: Currency.RUR }),
+      price: MoneyVO.toVO({ amount: payload.price, currency: Currency.RUB }),
       balance: payload.balance,
       criticalMargin: payload.criticalMargin,
       nextDeliveryDate: payload.nextDeliveryDate

@@ -43,7 +43,7 @@ export class WarehouseItemOrmMapper extends OrmMapper<
       unit: ormEntity.unit,
       balance: ormEntity.balance,
       criticalMargin: ormEntity.criticalMargin,
-      price: MoneyVO.toVO({ amount: ormEntity.price, currency: Currency.RUR }),
+      price: MoneyVO.toVO({ amount: ormEntity.price, currency: Currency.RUB }),
       expense: ormEntity.expense,
       expenseReserve: ormEntity.expenseReserve,
       packing: ormEntity.packing,

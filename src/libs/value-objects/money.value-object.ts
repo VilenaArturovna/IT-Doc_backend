@@ -2,7 +2,7 @@ import { isEnum } from 'class-validator';
 import { ValueObject } from '../base-classes/value-object.base';
 
 export enum Currency {
-  RUR = 'RUR',
+  RUB = 'RUB',
 }
 
 interface MoneyVOProps {
