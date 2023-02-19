@@ -23,6 +23,8 @@ export interface ClientEntityProps {
   contactPersonPhone?: PhoneVO;
 }
 
+type UpdateClientEntityProps = Omit<ClientEntityProps, 'type'>;
+
 export class ClientEntity extends EntityBase<ClientEntityProps> {
   protected readonly _id: IdVO;
 
@@ -82,5 +84,30 @@ export class ClientEntity extends EntityBase<ClientEntityProps> {
     ) {
       throw new ClientHasEmptyFieldsError();
     }
+  }
+
+  public get beneficiary() {
+    return this.props.beneficiary;
+  }
+
+  public update(props: UpdateClientEntityProps) {
+    this.props.name = props.name;
+    this.props.phone = props.phone;
+    this.props.beneficiary = props.beneficiary;
+    this.props.fullName = props.fullName;
+    this.props.legalAddress = props.legalAddress;
+    this.props.actualAddress = props.actualAddress;
+    this.props.INN = props.INN;
+    this.props.KPP = props.KPP;
+    this.props.OGRN = props.OGRN;
+    this.props.BIK = props.BIK;
+    this.props.paymentAccount = props.paymentAccount;
+    this.props.correspondentAccount = props.correspondentAccount;
+    this.props.directorName = props.directorName;
+    this.props.email = props.email;
+    this.props.contactPerson = props.contactPerson;
+    this.props.contactPersonPhone = props.contactPersonPhone;
+    this.updatedAtNow();
+    this.validate();
   }
 }

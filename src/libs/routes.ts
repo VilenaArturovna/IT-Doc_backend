@@ -3,6 +3,7 @@ const warehouseItemRoot = 'warehouse';
 const providerRoot = 'provider';
 const vendorRoot = 'vendor';
 const workRoot = 'work';
+const clientRoot = 'client';
 
 export const routes = {
   staff: {
@@ -32,5 +33,9 @@ export const routes = {
   work: {
     root: workRoot,
     byId: `${workRoot}/:id`,
+  },
+  client: {
+    root: clientRoot,
+    byId: `${clientRoot}/:id`,
   },
 };

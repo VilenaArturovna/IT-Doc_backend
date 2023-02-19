@@ -1,11 +1,21 @@
-import { WorkObjectionRepository } from '@modules/order/database/repositories';
 import {
+  ClientObjectionRepository,
+  WorkObjectionRepository,
+} from '@modules/order/database/repositories';
+import {
+  GetManyClientsReadDaoProvider,
   GetManyWorksReadDaoProvider,
+  GetOneClientReadDaoProvider,
   GetOneWorkReadDaoProvider,
 } from '@modules/order/database/read-model';
 
-export const repositories = [WorkObjectionRepository];
+export const repositories = [
+  WorkObjectionRepository,
+  ClientObjectionRepository,
+];
 export const readDaoProviders = [
   GetManyWorksReadDaoProvider,
   GetOneWorkReadDaoProvider,
+  GetManyClientsReadDaoProvider,
+  GetOneClientReadDaoProvider,
 ];
