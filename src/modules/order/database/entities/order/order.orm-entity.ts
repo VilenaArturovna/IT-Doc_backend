@@ -1,5 +1,5 @@
 import { ModelBase, OrmEntityBase } from '@libs/base-classes';
-import { Beneficiary, OrderStatus } from '@modules/order/types';
+import { Beneficiary, OrderStatus, Priority } from '@modules/order/types';
 import { StaffOrmEntity } from '@modules/staff/database/entities';
 import {
   ClientOrmEntity,
@@ -8,6 +8,7 @@ import {
 import { WarehouseItemOrmEntity } from '@modules/warehouse/database/entities';
 
 export interface OrderOrmEntityProps {
+  priority: Priority;
   status: OrderStatus;
   deadline: string;
   number?: string;
@@ -30,6 +31,7 @@ export class OrderOrmEntity
   extends OrmEntityBase<OrderOrmEntityProps>
   implements OrderOrmEntityProps
 {
+  priority: Priority;
   status: OrderStatus;
   deadline: string;
   number?: string;
@@ -49,6 +51,7 @@ export class OrderOrmEntity
 }
 
 export class OrderModel extends ModelBase implements OrderOrmEntity {
+  priority: Priority;
   status: OrderStatus;
   deadline: string;
   number?: string;

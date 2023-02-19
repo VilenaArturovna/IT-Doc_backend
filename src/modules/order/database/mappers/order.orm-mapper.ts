@@ -30,6 +30,7 @@ export class OrderOrmMapper extends OrmMapper<
 
   protected toDomainProps(ormEntity: OrderOrmEntity): OrderEntityProps {
     return {
+      priority: ormEntity.priority,
       beneficiary: ormEntity.beneficiary,
       equipment: ormEntity.equipment,
       equipmentCondition: ormEntity.equipmentCondition,
@@ -60,6 +61,7 @@ export class OrderOrmMapper extends OrmMapper<
   protected toOrmProps(entity: OrderEntity): OrmEntityProps<OrderOrmEntity> {
     const props = entity.getCopiedProps();
     return {
+      priority: props.priority,
       beneficiary: props.beneficiary,
       equipment: props.equipment,
       equipmentCondition: props.equipmentCondition,

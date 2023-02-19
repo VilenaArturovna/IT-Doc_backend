@@ -4,6 +4,8 @@ const providerRoot = 'provider';
 const vendorRoot = 'vendor';
 const workRoot = 'work';
 const clientRoot = 'client';
+const orderRoot = 'order';
+const orderById = `${orderRoot}/:id`;
 
 export const routes = {
   staff: {
@@ -37,5 +39,8 @@ export const routes = {
   client: {
     root: clientRoot,
     byId: `${clientRoot}/:id`,
+  },
+  order: {
+    root: orderRoot,
   },
 };

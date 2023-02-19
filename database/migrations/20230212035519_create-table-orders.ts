@@ -14,6 +14,7 @@ export async function up(knex: Knex) {
       t.string('equipment').notNullable();
       t.string('equipmentCondition').notNullable();
       t.string('malfunction').notNullable();
+      t.string('priority').notNullable();
       t.enum('beneficiary', ['OOO', 'IP']).notNullable();
       t.uuid('clientId')
         .references('id')

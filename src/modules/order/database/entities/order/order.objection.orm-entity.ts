@@ -24,6 +24,7 @@ export class OrderObjectionOrmEntity extends OrderModel {
         'malfunction',
         'beneficiary',
         'price',
+        'priority',
       ],
       properties: {
         id: { type: 'string' },
@@ -31,6 +32,7 @@ export class OrderObjectionOrmEntity extends OrderModel {
         updatedAt: { type: 'string' },
         number: { type: 'string' },
         status: { type: 'string' },
+        priority: { type: 'string' },
         deadline: { type: 'string' },
         equipment: { type: 'string' },
         equipmentCondition: { type: 'string' },

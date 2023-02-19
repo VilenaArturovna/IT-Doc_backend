@@ -21,3 +21,8 @@ export enum ClientType {
   PHYSICAL_PERSON = 'PHYSICAL_PERSON',
   LEGAL_PERSON = 'LEGAL_PERSON',
 }
+
+export enum Priority {
+  NORMAL = 'NORMAL',
+  URGENT = 'URGENT',
+}

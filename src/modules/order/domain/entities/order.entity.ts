@@ -1,11 +1,12 @@
 import { EntityBase } from '@libs/base-classes';
 import { DateVO, IdVO, MoneyVO } from '@libs/value-objects';
-import { Beneficiary, OrderStatus } from '@modules/order/types';
+import { Beneficiary, OrderStatus, Priority } from '@modules/order/types';
 import { StaffEntity } from '@modules/staff/domain';
 import { ClientEntity, WorkEntity } from '@modules/order/domain';
 import { WarehouseItemEntity } from '@modules/warehouse/domain';
 
 export interface OrderEntityProps {
+  priority: Priority;
   status: OrderStatus;
   deadline: DateVO;
   number?: string;

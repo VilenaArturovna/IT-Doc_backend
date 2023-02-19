@@ -1,5 +1,6 @@
 import {
   ClientObjectionRepository,
+  OrderObjectionRepository,
   WorkObjectionRepository,
 } from '@modules/order/database/repositories';
 import {
@@ -12,6 +13,7 @@ import {
 export const repositories = [
   WorkObjectionRepository,
   ClientObjectionRepository,
+  OrderObjectionRepository,
 ];
 export const readDaoProviders = [
   GetManyWorksReadDaoProvider,

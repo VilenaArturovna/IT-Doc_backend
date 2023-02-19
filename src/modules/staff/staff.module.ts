@@ -7,6 +7,7 @@ import { readDaoProviders, repositories } from '@modules/staff/database';
 import { queryControllers, queryHandlers } from '@modules/staff/queries';
 import { commandControllers, commandHandlers } from '@modules/staff/commands';
 import { JwtStrategy } from '@src/common/guards/auth/strategies/jwt.strategy';
+import { StaffObjectionRepository } from '@modules/staff/database/repositories';
 
 @Module({
   imports: [
@@ -22,6 +23,6 @@ import { JwtStrategy } from '@src/common/guards/auth/strategies/jwt.strategy';
     ...repositories,
     ...commandHandlers,
   ],
-  exports: [GetStaffReadDao],
+  exports: [GetStaffReadDao, StaffObjectionRepository],
 })
 export class StaffModule {}
