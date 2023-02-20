@@ -18,6 +18,10 @@ import {
   CreateOrderCommandHandler,
   CreateOrderController,
 } from '@modules/order/commands/order';
+import {
+  UpdateDeadlineCommandHandler,
+  UpdateDeadlineController,
+} from '@modules/order/commands/deadline';
 
 export const commandControllers = [
   CreateWorkController,
@@ -27,6 +31,7 @@ export const commandControllers = [
   UpdateClientController,
   RemoveClientController,
   CreateOrderController,
+  UpdateDeadlineController,
 ];
 export const commandHandlers = [
   CreateWorkCommandHandler,
@@ -36,4 +41,5 @@ export const commandHandlers = [
   UpdateClientCommandHandler,
   RemoveClientCommandHandler,
   CreateOrderCommandHandler,
+  UpdateDeadlineCommandHandler,
 ];

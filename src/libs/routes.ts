@@ -6,6 +6,7 @@ const workRoot = 'work';
 const clientRoot = 'client';
 const orderRoot = 'order';
 const orderById = `${orderRoot}/:id`;
+const deadlineRoot = 'deadline';
 
 export const routes = {
   staff: {
@@ -42,5 +43,9 @@ export const routes = {
   },
   order: {
     root: orderRoot,
+  },
+  deadline: {
+    root: deadlineRoot,
+    byId: `${deadlineRoot}/:id`,
   },
 };
