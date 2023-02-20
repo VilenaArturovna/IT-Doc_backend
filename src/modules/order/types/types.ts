@@ -9,7 +9,6 @@ export enum OrderStatus {
   READY = 'READY',
   READY_AND_NOT_PAID = 'READY_AND_NOT_PAID',
   COMPLETED = 'COMPLETED',
-  CANCELED = 'CANCELED',
 }
 
 export enum Beneficiary {
