@@ -17,6 +17,8 @@ import {
 import {
   CreateOrderCommandHandler,
   CreateOrderController,
+  PutInQueueForDiagnosticsCommandHandler,
+  PutInQueueForDiagnosticsController,
 } from '@modules/order/commands/order';
 import {
   UpdateDeadlineCommandHandler,
@@ -32,6 +34,7 @@ export const commandControllers = [
   RemoveClientController,
   CreateOrderController,
   UpdateDeadlineController,
+  PutInQueueForDiagnosticsController,
 ];
 export const commandHandlers = [
   CreateWorkCommandHandler,
@@ -42,4 +45,5 @@ export const commandHandlers = [
   RemoveClientCommandHandler,
   CreateOrderCommandHandler,
   UpdateDeadlineCommandHandler,
+  PutInQueueForDiagnosticsCommandHandler,
 ];

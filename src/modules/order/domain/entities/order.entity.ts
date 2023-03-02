@@ -30,4 +30,16 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
   }
 
   protected validate() {}
+
+  public get priority() {
+    return this.props.priority;
+  }
+
+  public putInQueueForDiagnostics(deadline: DateVO) {
+    this.props.status = OrderStatus.IN_DIAGNOSTICS_QUEUE;
+    this.props.deadline = deadline;
+
+    this.updatedAtNow();
+    this.validate();
+  }
 }

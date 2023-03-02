@@ -43,6 +43,8 @@ export const routes = {
   },
   order: {
     root: orderRoot,
+    byId: orderById,
+    putInQueueForDiagnostics: `${orderById}/in-queue-for-diagnostics`,
   },
   deadline: {
     root: deadlineRoot,
