@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Priority } from '@modules/order/types';
 import {
+  IsBoolean,
   IsEnum,
   IsNotEmpty,
   IsOptional,
@@ -47,4 +48,8 @@ export class CreateOrderRequestDto {
   @IsOptional()
   @IsUUID()
   responsibleStaffId?: string;
+
+  @ApiProperty()
+  @IsBoolean()
+  isRemoteOrder: boolean; //удаленный заказ
 }

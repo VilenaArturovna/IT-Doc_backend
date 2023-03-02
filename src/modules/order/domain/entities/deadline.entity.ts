@@ -1,11 +1,11 @@
 import { EntityBase } from '@libs/base-classes';
 import { IdVO } from '@libs/value-objects';
-import { OrderStatus } from '@modules/order/types';
+import { OrderStatus, Priority } from '@modules/order/types';
 
 export interface DeadlineEntityProps {
   name: OrderStatus;
-  normal: number;
-  urgent: number;
+  normal: number; //in minutes
+  urgent: number; //in minutes
 }
 
 export type UpdateDeadlineEntityProps = Omit<DeadlineEntityProps, 'name'>;
@@ -24,5 +24,14 @@ export class DeadlineEntity extends EntityBase<DeadlineEntityProps> {
     this.props.urgent = props.urgent;
     this.updatedAtNow();
     this.validate();
+  }
+
+  public getPriorityDeadline(priority: Priority): number {
+    if (priority === Priority.URGENT) {
+      return this.props.urgent;
+    }
+    if (priority === Priority.NORMAL) {
+      return this.props.normal;
+    }
   }
 }

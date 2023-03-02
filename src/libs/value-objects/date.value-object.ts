@@ -1,5 +1,6 @@
 import { isDateString } from 'class-validator';
 import { ValueObject } from '../base-classes/value-object.base';
+import * as dayjs from 'dayjs';
 
 export class DateVO extends ValueObject<Date> {
   constructor(value: Date | string | number) {
@@ -33,5 +34,10 @@ export class DateVO extends ValueObject<Date> {
 
   public isAfter(date: DateVO): boolean {
     return this.value.getTime() > date.value.getTime();
+  }
+
+  public addMinutes(minutes: number): DateVO {
+    const d = dayjs(this.props.value).add(minutes, 'minutes');
+    return new DateVO(d.toISOString());
   }
 }

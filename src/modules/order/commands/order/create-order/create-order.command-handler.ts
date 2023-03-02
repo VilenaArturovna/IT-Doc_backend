@@ -2,6 +2,7 @@ import { CommandHandler } from '@nestjs/cqrs';
 import { CreateOrderCommand } from './create-order.command';
 import {
   ClientObjectionRepository,
+  DeadlineObjectionRepository,
   OrderObjectionRepository,
 } from '@modules/order/database/repositories';
 import { Result } from '@libs/utils';
@@ -17,6 +18,7 @@ export class CreateOrderCommandHandler {
     private readonly orderRepository: OrderObjectionRepository,
     private readonly clientRepository: ClientObjectionRepository,
     private readonly staffRepository: StaffObjectionRepository,
+    private readonly deadlineRepository: DeadlineObjectionRepository,
   ) {}
 
   async execute(
@@ -38,9 +40,22 @@ export class CreateOrderCommandHandler {
       staff = staffResult.unwrap();
     }
 
+    const status = payload.isRemoteOrder
+      ? OrderStatus.REGISTERED
+      : OrderStatus.IN_DIAGNOSTICS_QUEUE;
+
+    const deadlineEntityResult = await this.deadlineRepository.getOneByName(
+      status,
+    );
+    const deadlineEntity = deadlineEntityResult.unwrap();
+
+    const deadline = DateVO.now().addMinutes(
+      deadlineEntity.getPriorityDeadline(payload.priority),
+    );
+
     const order = OrderEntity.create({
       priority: payload.priority,
-      status: OrderStatus.REGISTERED,
+      status,
       client,
       responsibleStaff: staff,
       equipment: payload.equipment,
@@ -48,8 +63,7 @@ export class CreateOrderCommandHandler {
       serialNumberEquipment: payload.serialNumberEquipment,
       malfunction: payload.malfunction,
       beneficiary: client.beneficiary,
-      //todo added date from priority deadlines
-      deadline: DateVO.now(),
+      deadline,
       price: MoneyVO.toVO({ amount: 0, currency: Currency.RUB }),
     });
 
