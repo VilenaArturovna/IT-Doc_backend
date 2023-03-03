@@ -45,6 +45,7 @@ export const routes = {
     root: orderRoot,
     byId: orderById,
     putInQueueForDiagnostics: `${orderById}/in-queue-for-diagnostics`,
+    startDiagnostic: `${orderById}/start-diagnostic`,
   },
   deadline: {
     root: deadlineRoot,

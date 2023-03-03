@@ -9,23 +9,23 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { PutInQueueForDiagnosticsCommand } from './put-in-queue-for-diagnostics.command';
+import { StartDiagnosticCommand } from './start-diagnostic.command';
 import { OrderResponseDto } from '@modules/order/dtos';
 import { OrderEntity } from '@modules/order/domain';
 
 @ApiTags('order/order')
 @Controller()
-export class PutInQueueForDiagnosticsController {
+export class StartDiagnosticController {
   constructor(private readonly commandBus: CommandBus) {}
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Put in queue for diagnostics' })
+  @ApiOperation({ summary: 'Start diagnostic' })
   @ApiOkResponse({ type: () => OrderResponseDto })
-  @Patch(routes.order.putInQueueForDiagnostics)
-  async putInQueueForDiagnostics(
+  @Patch(routes.order.startDiagnostic)
+  async startDiagnostic(
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<OrderResponseDto> {
-    const command = new PutInQueueForDiagnosticsCommand({ payload: { id } });
+    const command = new StartDiagnosticCommand({ payload: { id } });
 
     const result: Result<OrderEntity, ExceptionBase> =
       await this.commandBus.execute(command);

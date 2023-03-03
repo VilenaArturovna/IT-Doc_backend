@@ -42,4 +42,12 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
     this.updatedAtNow();
     this.validate();
   }
+
+  public startDiagnostic(deadline: DateVO) {
+    this.props.status = OrderStatus.DIAGNOSTIC;
+    this.props.deadline = deadline;
+
+    this.updatedAtNow();
+    this.validate();
+  }
 }
