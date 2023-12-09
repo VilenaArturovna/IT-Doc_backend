@@ -1,13 +1,14 @@
+import { ExceptionBase } from '@libs/base-classes';
+import { routes } from '@libs/routes';
+import { Result } from '@libs/utils';
+import { StaffSignInQuery } from '@modules/staff/queries';
 import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { Result } from '@libs/utils';
-import { routes } from '@libs/routes';
-import { ExceptionBase } from '@libs/base-classes';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { StaffSignInQuery } from '@modules/staff/queries';
+import { Public } from '@src/common';
+
 import { StaffSignInRequestDto } from './staff-sign-in.request.dto';
 import { StaffSignInResponseDto } from './staff-sign-in.response.dto';
-import { Public } from '@src/common';
 
 @ApiTags('staff/auth')
 @Controller()

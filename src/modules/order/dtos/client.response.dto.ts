@@ -1,7 +1,7 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Beneficiary, ClientType } from '@modules/order/types';
-import { IsEnum } from 'class-validator';
 import { ClientEntity } from '@modules/order/domain';
+import { Beneficiary, ClientType } from '@modules/order/types';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEnum } from 'class-validator';
 
 export class ClientResponseDto {
   @ApiProperty()

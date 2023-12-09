@@ -1,16 +1,16 @@
+import { ExceptionBase } from '@libs/base-classes';
+import { routes } from '@libs/routes';
+import { Result } from '@libs/utils';
+import { StaffGetMeDaoModel } from '@modules/staff/database/read-model';
+import { StaffGetMeQuery } from '@modules/staff/queries';
 import { Controller, Get } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { Result } from '@libs/utils';
-import { routes } from '@libs/routes';
-import { ExceptionBase } from '@libs/base-classes';
 import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { StaffGetMeQuery } from '@modules/staff/queries';
-import { StaffGetMeDaoModel } from '@modules/staff/database/read-model';
 import { MyId } from '@src/common';
 
 @ApiTags('staff')

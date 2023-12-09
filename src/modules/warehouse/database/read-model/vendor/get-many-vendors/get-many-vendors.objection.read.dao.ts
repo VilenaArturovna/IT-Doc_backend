@@ -1,14 +1,14 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { paginate } from '@libs/pagination';
+import { Tables } from '@libs/tables';
 import { Result } from '@libs/utils';
+import { GetManyVendorsQuery } from '@modules/warehouse/queries';
 import { Model } from 'objection';
 
 import {
   GetManyVendorsDaoModel,
   GetManyVendorsReadDao,
 } from './get-many-vendors.read.dao';
-import { GetManyVendorsQuery } from '@modules/warehouse/queries';
-import { paginate } from '@libs/pagination';
-import { Tables } from '@libs/tables';
 
 export class GetManyVendorsObjectionReadDao extends GetManyVendorsReadDao {
   async query(

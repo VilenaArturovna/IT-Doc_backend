@@ -1,18 +1,19 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { ExceptionBase } from '@libs/base-classes';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
-import { ExceptionBase } from '@libs/base-classes';
+import { ClientEntity } from '@modules/order/domain';
+import { ClientResponseDto } from '@modules/order/dtos';
+import { Body, Controller, Post } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+
 import { CreateClientCommand } from './create-client.command';
 import { CreateClientRequestDto } from './create-client.request.dto';
-import { ClientResponseDto } from '@modules/order/dtos';
-import { ClientEntity } from '@modules/order/domain';
 
 @ApiTags('order/client')
 @Controller()

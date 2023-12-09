@@ -1,12 +1,13 @@
-import { CommandHandler } from '@nestjs/cqrs';
-import { CreateStaffCommand } from './create-staff.command';
-import { generatePassword, Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
-import { StaffEntity } from '@modules/staff/domain';
-import { DateVO, EmailVO, HashPasswordVO, PhoneVO } from '@libs/value-objects';
-import { ConflictException } from '@libs/exceptions';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { ConflictException } from '@libs/exceptions';
+import { generatePassword, Result } from '@libs/utils';
+import { DateVO, EmailVO, HashPasswordVO, PhoneVO } from '@libs/value-objects';
 import { StaffUnitOfWork } from '@modules/staff/database/unit-of-work';
+import { StaffEntity } from '@modules/staff/domain';
+import { CommandHandler } from '@nestjs/cqrs';
+
+import { CreateStaffCommand } from './create-staff.command';
 
 @CommandHandler(CreateStaffCommand)
 export class CreateStaffCommandHandler extends CommandHandlerBase<

@@ -1,10 +1,11 @@
-import { QueryHandler } from '@nestjs/cqrs';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
+import { Result } from '@libs/utils';
 import {
   GetManyStaffDaoModel,
   GetManyStaffReadDao,
 } from '@modules/staff/database/read-model';
+import { QueryHandler } from '@nestjs/cqrs';
+
 import { GetManyStaffQuery } from './get-many-staff.query';
 
 @QueryHandler(GetManyStaffQuery)

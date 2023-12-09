@@ -1,6 +1,6 @@
+import { passwordRegexp } from '@libs/utils';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, Matches } from 'class-validator';
-import { passwordRegexp } from '@libs/utils';
 
 export class StaffSignInRequestDto {
   @ApiProperty({ example: 'admin@itdoc.ru' })

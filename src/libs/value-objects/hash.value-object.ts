@@ -1,5 +1,6 @@
-import { ValueObject } from '../base-classes/value-object.base';
 import * as bcrypt from 'bcrypt';
+
+import { ValueObject } from '../base-classes/value-object.base';
 
 export class HashVO extends ValueObject<string> {
   constructor(value: string) {

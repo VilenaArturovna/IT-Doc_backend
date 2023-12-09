@@ -1,6 +1,7 @@
-import { IdVO } from './id.value-object';
-import { v4 as uuid } from 'uuid';
 import { isUUID } from 'class-validator';
+import { v4 as uuid } from 'uuid';
+
+import { IdVO } from './id.value-object';
 
 export class UuidVO extends IdVO {
   constructor(value: string) {

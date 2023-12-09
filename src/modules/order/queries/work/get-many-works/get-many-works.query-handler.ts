@@ -1,10 +1,11 @@
-import { QueryHandler } from '@nestjs/cqrs';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
+import { Result } from '@libs/utils';
 import {
   GetManyWorksDaoModel,
   GetManyWorksReadDao,
 } from '@modules/order/database/read-model';
+import { QueryHandler } from '@nestjs/cqrs';
+
 import { GetManyWorksQuery } from './get-many-works.query';
 
 @QueryHandler(GetManyWorksQuery)

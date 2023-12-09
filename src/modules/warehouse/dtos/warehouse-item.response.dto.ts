@@ -1,5 +1,3 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Section, Unit } from '@modules/warehouse/types';
 import {
   ProviderOrmEntity,
   VendorOrmEntity,
@@ -7,6 +5,8 @@ import {
 import { WarehouseItemEntity } from '@modules/warehouse/domain';
 import { ProviderResponseDto } from '@modules/warehouse/dtos/provider.response.dto';
 import { VendorResponseDto } from '@modules/warehouse/dtos/vendor.response.dto';
+import { Section, Unit } from '@modules/warehouse/types';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class WarehouseItemResponseDto {
   @ApiProperty()

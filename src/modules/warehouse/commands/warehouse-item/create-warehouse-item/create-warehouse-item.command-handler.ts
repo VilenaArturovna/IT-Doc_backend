@@ -1,11 +1,12 @@
-import { CommandHandler } from '@nestjs/cqrs';
-import { CreateWarehouseItemCommand } from './create-warehouse-item.command';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
-import { WarehouseItemEntity } from '@modules/warehouse/domain';
-import { Currency, DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { Result } from '@libs/utils';
+import { Currency, DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
 import { WarehouseUnitOfWork } from '@modules/warehouse/database/unit-of-work';
+import { WarehouseItemEntity } from '@modules/warehouse/domain';
+import { CommandHandler } from '@nestjs/cqrs';
+
+import { CreateWarehouseItemCommand } from './create-warehouse-item.command';
 
 @CommandHandler(CreateWarehouseItemCommand)
 export class CreateWarehouseItemCommandHandler extends CommandHandlerBase<

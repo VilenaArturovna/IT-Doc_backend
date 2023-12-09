@@ -1,16 +1,17 @@
+import { ExceptionBase } from '@libs/base-classes';
+import { routes } from '@libs/routes';
+import { Result } from '@libs/utils';
+import { GetManyStaffDaoModel } from '@modules/staff/database/read-model';
+import { GetManyStaffQuery } from '@modules/staff/queries';
 import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { Result } from '@libs/utils';
-import { routes } from '@libs/routes';
-import { ExceptionBase } from '@libs/base-classes';
 import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { GetManyStaffQuery } from '@modules/staff/queries';
-import { GetManyStaffDaoModel } from '@modules/staff/database/read-model';
+
 import { GetManyStaffRequestDto } from './get-many-staff.request.dto';
 
 @ApiTags('staff')

@@ -1,5 +1,6 @@
-import { ValueObject } from '../base-classes/value-object.base';
 import { isEmail } from 'class-validator';
+
+import { ValueObject } from '../base-classes/value-object.base';
 
 export class EmailVO extends ValueObject<string> {
   constructor(value: string) {

@@ -1,7 +1,7 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
 import { PaginationRequestDto } from '@libs/pagination';
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import { TransformToBooleanDecorator } from '@src/common';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class GetManyWarehouseItemsRequestDto extends PaginationRequestDto {
   @ApiPropertyOptional()

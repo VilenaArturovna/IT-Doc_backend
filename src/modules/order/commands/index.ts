@@ -1,12 +1,4 @@
 import {
-  CreateWorkCommandHandler,
-  CreateWorkController,
-  RemoveWorkCommandHandler,
-  RemoveWorkController,
-  UpdateWorkCommandHandler,
-  UpdateWorkController,
-} from '@modules/order/commands/work';
-import {
   CreateClientCommandHandler,
   CreateClientController,
   RemoveClientCommandHandler,
@@ -14,6 +6,10 @@ import {
   UpdateClientCommandHandler,
   UpdateClientController,
 } from '@modules/order/commands/client';
+import {
+  UpdateDeadlineCommandHandler,
+  UpdateDeadlineController,
+} from '@modules/order/commands/deadline';
 import {
   CreateOrderCommandHandler,
   CreateOrderController,
@@ -25,9 +21,13 @@ import {
   StartDiagnosticController,
 } from '@modules/order/commands/order';
 import {
-  UpdateDeadlineCommandHandler,
-  UpdateDeadlineController,
-} from '@modules/order/commands/deadline';
+  CreateWorkCommandHandler,
+  CreateWorkController,
+  RemoveWorkCommandHandler,
+  RemoveWorkController,
+  UpdateWorkCommandHandler,
+  UpdateWorkController,
+} from '@modules/order/commands/work';
 
 export const commandControllers = [
   CreateWorkController,

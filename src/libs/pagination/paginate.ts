@@ -1,4 +1,5 @@
 import { Knex } from 'knex';
+
 import { ExceptionBase } from '../base-classes';
 import { ConflictException } from '../exceptions';
 import { Result } from '../utils';

@@ -3,9 +3,10 @@ import {
   OrmEntityProps,
   OrmMapper,
 } from '@libs/base-classes';
-import { ClientEntity, ClientEntityProps } from '@modules/order/domain';
-import { ClientOrmEntity, ClientOrmEntityProps } from '../entities';
 import { EmailVO, PhoneVO } from '@libs/value-objects';
+import { ClientEntity, ClientEntityProps } from '@modules/order/domain';
+
+import { ClientOrmEntity, ClientOrmEntityProps } from '../entities';
 
 export class ClientOrmMapper extends OrmMapper<
   ClientEntity,

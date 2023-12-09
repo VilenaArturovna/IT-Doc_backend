@@ -1,9 +1,8 @@
-import { ReadDaoBase, ExceptionBase } from '@libs/base-classes';
+import { ExceptionBase, ReadDaoBase } from '@libs/base-classes';
 import { Result } from '@libs/utils';
-import { ApiProperty } from '@nestjs/swagger';
-
 import { StaffSignInQuery } from '@modules/staff/queries';
 import { Role } from '@modules/staff/types';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class StaffSignInDaoModel {
   @ApiProperty()

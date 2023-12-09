@@ -1,8 +1,7 @@
-import { ReadDaoBase, ExceptionBase } from '@libs/base-classes';
+import { ExceptionBase, ReadDaoBase } from '@libs/base-classes';
 import { Result } from '@libs/utils';
-import { ApiProperty } from '@nestjs/swagger';
-
 import { GetOneWorkQuery } from '@modules/order/queries';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class GetOneWorkDaoModel {
   @ApiProperty()

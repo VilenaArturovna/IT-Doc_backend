@@ -1,12 +1,13 @@
-import { Body, Controller, HttpCode, Patch } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { ExceptionBase } from '@libs/base-classes';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
-import { ExceptionBase } from '@libs/base-classes';
+import { Body, Controller, HttpCode, Patch } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { MyId } from '@src/common';
+
 import { ChangePasswordCommand } from './change-password.command';
 import { ChangePasswordRequestDto } from './change-password.request.dto';
-import { MyId } from '@src/common';
 
 @ApiTags('staff')
 @Controller()

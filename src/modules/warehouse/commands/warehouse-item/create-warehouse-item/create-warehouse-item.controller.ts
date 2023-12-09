@@ -1,18 +1,19 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { ExceptionBase } from '@libs/base-classes';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
-import { ExceptionBase } from '@libs/base-classes';
+import { WarehouseItemEntity } from '@modules/warehouse/domain';
+import { WarehouseItemResponseDto } from '@modules/warehouse/dtos';
+import { Body, Controller, Post } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+
 import { CreateWarehouseItemCommand } from './create-warehouse-item.command';
 import { CreateWarehouseItemRequestDto } from './create-warehouse-item.request.dto';
-import { WarehouseItemResponseDto } from '@modules/warehouse/dtos';
-import { WarehouseItemEntity } from '@modules/warehouse/domain';
 
 @ApiTags('warehouse/warehouse-item')
 @Controller()

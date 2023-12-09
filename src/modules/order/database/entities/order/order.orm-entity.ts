@@ -1,10 +1,10 @@
 import { ModelBase, OrmEntityBase } from '@libs/base-classes';
-import { Beneficiary, OrderStatus, Priority } from '@modules/order/types';
-import { StaffOrmEntity } from '@modules/staff/database/entities';
 import {
   ClientOrmEntity,
   WorkOrmEntity,
 } from '@modules/order/database/entities';
+import { Beneficiary, OrderStatus, Priority } from '@modules/order/types';
+import { StaffOrmEntity } from '@modules/staff/database/entities';
 import { WarehouseItemOrmEntity } from '@modules/warehouse/database/entities';
 
 export interface OrderOrmEntityProps {

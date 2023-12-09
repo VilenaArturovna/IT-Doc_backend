@@ -1,12 +1,13 @@
-import { Body, Controller, HttpCode, Patch } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { ExceptionBase } from '@libs/base-classes';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
-import { ExceptionBase } from '@libs/base-classes';
+import { Body, Controller, HttpCode, Patch } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Public } from '@src/common';
+
 import { ForgotPasswordCommand } from './forgot-password.command';
 import { ForgotPasswordRequestDto } from './forgot-password.request.dto';
-import { Public } from '@src/common';
 
 @ApiTags('staff/auth')
 @Controller()

@@ -3,9 +3,10 @@ import {
   OrmEntityProps,
   OrmMapper,
 } from '@libs/base-classes';
-import { WorkEntity, WorkEntityProps } from '@modules/order/domain';
-import { WorkOrmEntity, WorkOrmEntityProps } from '../entities';
 import { Currency, MoneyVO } from '@libs/value-objects';
+import { WorkEntity, WorkEntityProps } from '@modules/order/domain';
+
+import { WorkOrmEntity, WorkOrmEntityProps } from '../entities';
 
 export class WorkOrmMapper extends OrmMapper<
   WorkEntity,

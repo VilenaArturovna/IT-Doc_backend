@@ -1,5 +1,5 @@
-import { ExceptionCodes } from '@libs/exceptions';
 import { ExceptionBase } from '@libs/base-classes';
+import { ExceptionCodes } from '@libs/exceptions';
 
 export class WorkHasEmptyFieldsError extends ExceptionBase {
   public readonly code = ExceptionCodes.VALIDATION;

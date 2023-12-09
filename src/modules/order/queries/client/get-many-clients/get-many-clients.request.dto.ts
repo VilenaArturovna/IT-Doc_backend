@@ -1,8 +1,8 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
 import { PaginationWithSortingRequestDto } from '@libs/pagination';
-import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { IsNotJustSpaces } from '@src/common';
 import { Beneficiary, ClientType } from '@modules/order/types';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNotJustSpaces } from '@src/common';
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export enum GetManyClientsSorting {
   name = 'name',

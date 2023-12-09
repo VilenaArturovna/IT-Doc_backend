@@ -1,4 +1,5 @@
 import { isEnum } from 'class-validator';
+
 import { ValueObject } from '../base-classes/value-object.base';
 
 export enum Currency {

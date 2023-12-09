@@ -1,4 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNotJustSpaces } from '@src/common';
+import { Type } from 'class-transformer';
 import {
   IsInt,
   IsNotEmpty,
@@ -9,8 +11,6 @@ import {
   IsUUID,
   ValidateNested,
 } from 'class-validator';
-import { IsNotJustSpaces } from '@src/common';
-import { Type } from 'class-transformer';
 
 export class RepairPartResponseDto {
   @ApiProperty()

@@ -1,7 +1,7 @@
 import { EntityBase } from '@libs/base-classes';
 import { EmailVO, IdVO, PhoneVO } from '@libs/value-objects';
-import { Beneficiary, ClientType } from '@modules/order/types';
 import { ClientHasEmptyFieldsError } from '@modules/order/domain/errors';
+import { Beneficiary, ClientType } from '@modules/order/types';
 
 export interface ClientEntityProps {
   name: string;

@@ -1,11 +1,12 @@
-import { CommandHandler } from '@nestjs/cqrs';
-import { UpdateStaffCommand } from './update-staff.command';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
-import { DateVO, PhoneVO, UrlVO, UuidVO } from '@libs/value-objects';
-import { StaffEntity } from '@modules/staff/domain';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { Result } from '@libs/utils';
+import { DateVO, PhoneVO, UrlVO, UuidVO } from '@libs/value-objects';
 import { StaffUnitOfWork } from '@modules/staff/database/unit-of-work';
+import { StaffEntity } from '@modules/staff/domain';
+import { CommandHandler } from '@nestjs/cqrs';
+
+import { UpdateStaffCommand } from './update-staff.command';
 
 @CommandHandler(UpdateStaffCommand)
 export class UpdateStaffCommandHandler extends CommandHandlerBase<

@@ -1,16 +1,16 @@
+import { ExceptionBase } from '@libs/base-classes';
+import { routes } from '@libs/routes';
+import { Result } from '@libs/utils';
+import { GetOneClientDaoModel } from '@modules/order/database/read-model';
+import { GetOneClientQuery } from '@modules/order/queries';
 import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { Result } from '@libs/utils';
-import { routes } from '@libs/routes';
-import { ExceptionBase } from '@libs/base-classes';
 import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { GetOneClientQuery } from '@modules/order/queries';
-import { GetOneClientDaoModel } from '@modules/order/database/read-model';
 
 @ApiTags('order/client')
 @Controller()

@@ -1,18 +1,19 @@
-import { Body, Controller, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { ExceptionBase } from '@libs/base-classes';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
-import { ExceptionBase } from '@libs/base-classes';
+import { VendorEntity } from '@modules/warehouse/domain';
+import { VendorResponseDto } from '@modules/warehouse/dtos';
+import { Body, Controller, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+
 import { UpdateVendorCommand } from './update-vendor.command';
 import { UpdateVendorRequestDto } from './update-vendor.request.dto';
-import { VendorResponseDto } from '@modules/warehouse/dtos';
-import { VendorEntity } from '@modules/warehouse/domain';
 
 @ApiTags('warehouse/vendor')
 @Controller()

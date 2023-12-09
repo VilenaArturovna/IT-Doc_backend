@@ -1,8 +1,9 @@
 import { ObjectionRepositoryBase } from '@libs/base-classes';
+import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 import { OrderEntity, OrderEntityProps } from '@modules/order/domain';
+
 import { OrderObjectionOrmEntity, OrderOrmEntity } from '../entities';
 import { OrderOrmMapper } from '../mappers';
-import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 
 export class OrderObjectionRepository extends ObjectionRepositoryBase<
   OrderEntity,

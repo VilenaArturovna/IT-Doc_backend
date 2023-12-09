@@ -1,15 +1,15 @@
 import {
-  GetManyWorksController,
-  GetManyWorksQueryHandler,
-  GetOneWorkController,
-  GetOneWorkQueryHandler,
-} from '@modules/order/queries/work';
-import {
   GetManyClientsController,
   GetManyClientsQueryHandler,
   GetOneClientController,
   GetOneClientQueryHandler,
 } from '@modules/order/queries/client';
+import {
+  GetManyWorksController,
+  GetManyWorksQueryHandler,
+  GetOneWorkController,
+  GetOneWorkQueryHandler,
+} from '@modules/order/queries/work';
 
 export * from './client';
 export * from './work';

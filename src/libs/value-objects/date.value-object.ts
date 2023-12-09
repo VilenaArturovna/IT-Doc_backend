@@ -1,6 +1,7 @@
 import { isDateString } from 'class-validator';
-import { ValueObject } from '../base-classes/value-object.base';
 import * as dayjs from 'dayjs';
+
+import { ValueObject } from '../base-classes/value-object.base';
 
 export class DateVO extends ValueObject<Date> {
   constructor(value: Date | string | number) {

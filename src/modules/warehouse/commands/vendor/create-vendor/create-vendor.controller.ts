@@ -1,18 +1,19 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { ExceptionBase } from '@libs/base-classes';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
-import { ExceptionBase } from '@libs/base-classes';
+import { VendorEntity } from '@modules/warehouse/domain';
+import { VendorResponseDto } from '@modules/warehouse/dtos';
+import { Body, Controller, Post } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+
 import { CreateVendorCommand } from './create-vendor.command';
 import { CreateVendorRequestDto } from './create-vendor.request.dto';
-import { VendorResponseDto } from '@modules/warehouse/dtos';
-import { VendorEntity } from '@modules/warehouse/domain';
 
 @ApiTags('warehouse/vendor')
 @Controller()

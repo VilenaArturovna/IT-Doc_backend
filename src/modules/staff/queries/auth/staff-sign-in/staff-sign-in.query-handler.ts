@@ -1,15 +1,16 @@
-import { QueryHandler } from '@nestjs/cqrs';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
+import { ConflictException } from '@libs/exceptions';
+import { Result } from '@libs/utils';
+import { HashPasswordVO } from '@libs/value-objects';
 import {
   StaffSignInDaoModel,
   StaffSignInReadDao,
 } from '@modules/staff/database/read-model';
-import { StaffSignInQuery } from './staff-sign-in.query';
 import { StaffSignInResponseDto } from '@modules/staff/queries/auth/staff-sign-in/staff-sign-in.response.dto';
+import { QueryHandler } from '@nestjs/cqrs';
 import { JwtServiceAdapter } from '@src/common/services/jwt-service/jwt.service';
-import { HashPasswordVO } from '@libs/value-objects';
-import { ConflictException } from '@libs/exceptions';
+
+import { StaffSignInQuery } from './staff-sign-in.query';
 
 @QueryHandler(StaffSignInQuery)
 export class StaffSignInQueryHandler {

@@ -1,7 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, Matches } from 'class-validator';
-import { IsNotJustSpaces } from '@src/common';
 import { passwordRegexp } from '@libs/utils';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotJustSpaces } from '@src/common';
+import { IsNotEmpty, IsString, Matches } from 'class-validator';
 
 export class ForgotPasswordRequestDto {
   @ApiProperty()

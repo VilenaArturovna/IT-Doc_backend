@@ -1,3 +1,4 @@
+import { Role } from '@modules/staff/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsDateString,
@@ -8,7 +9,6 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { Role } from '@modules/staff/types';
 
 export class CreateStaffRequestDto {
   @ApiProperty()

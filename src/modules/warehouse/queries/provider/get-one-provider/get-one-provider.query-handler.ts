@@ -1,10 +1,11 @@
-import { QueryHandler } from '@nestjs/cqrs';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
+import { Result } from '@libs/utils';
 import {
   GetOneProviderDaoModel,
   GetOneProviderReadDao,
 } from '@modules/warehouse/database/read-model';
+import { QueryHandler } from '@nestjs/cqrs';
+
 import { GetOneProviderQuery } from './get-one-provider.query';
 
 @QueryHandler(GetOneProviderQuery)

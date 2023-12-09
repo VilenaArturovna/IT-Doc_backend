@@ -1,4 +1,5 @@
 import { EntityBase } from '@libs/base-classes';
+import { ValidationException } from '@libs/exceptions';
 import {
   DateVO,
   EmailVO,
@@ -8,9 +9,8 @@ import {
   PhoneVO,
   UrlVO,
 } from '@libs/value-objects';
-import { Role } from '@modules/staff/types';
 import { StaffHasEmptyFieldsError } from '@modules/staff/domain/errors';
-import { ValidationException } from '@libs/exceptions';
+import { Role } from '@modules/staff/types';
 
 export interface StaffEntityProps {
   firstname: string;

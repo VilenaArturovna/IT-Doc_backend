@@ -4,6 +4,7 @@ import {
   OrmMapper,
 } from '@libs/base-classes';
 import { DeadlineEntity, DeadlineEntityProps } from '@modules/order/domain';
+
 import { DeadlineOrmEntity, DeadlineOrmEntityProps } from '../entities';
 
 export class DeadlineOrmMapper extends OrmMapper<

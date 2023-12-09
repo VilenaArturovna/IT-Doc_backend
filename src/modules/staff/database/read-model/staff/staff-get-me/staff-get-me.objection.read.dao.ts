@@ -1,10 +1,10 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { Tables } from '@libs/tables';
 import { Result } from '@libs/utils';
+import { StaffGetMeQuery } from '@modules/staff/queries';
 import { Model } from 'objection';
 
 import { StaffGetMeDaoModel, StaffGetMeReadDao } from './staff-get-me.read.dao';
-import { StaffGetMeQuery } from '@modules/staff/queries';
-import { Tables } from '@libs/tables';
 
 export class StaffGetMeObjectionReadDao extends StaffGetMeReadDao {
   async query(

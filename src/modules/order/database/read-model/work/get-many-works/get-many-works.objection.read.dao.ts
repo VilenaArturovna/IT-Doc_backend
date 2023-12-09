@@ -1,14 +1,14 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { paginate } from '@libs/pagination';
+import { Tables } from '@libs/tables';
 import { Result } from '@libs/utils';
+import { GetManyWorksQuery } from '@modules/order/queries';
 import { Model } from 'objection';
 
 import {
   GetManyWorksDaoModel,
   GetManyWorksReadDao,
 } from './get-many-works.read.dao';
-import { GetManyWorksQuery } from '@modules/order/queries';
-import { paginate } from '@libs/pagination';
-import { Tables } from '@libs/tables';
 
 export class GetManyWorksObjectionReadDao extends GetManyWorksReadDao {
   async query(

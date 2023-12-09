@@ -1,8 +1,8 @@
 import { EntityBase } from '@libs/base-classes';
 import { DateVO, IdVO, MoneyVO } from '@libs/value-objects';
+import { ClientEntity, WorkEntity } from '@modules/order/domain';
 import { Beneficiary, OrderStatus, Priority } from '@modules/order/types';
 import { StaffEntity } from '@modules/staff/domain';
-import { ClientEntity, WorkEntity } from '@modules/order/domain';
 import { WarehouseItemEntity } from '@modules/warehouse/domain';
 
 export interface OrderEntityProps {

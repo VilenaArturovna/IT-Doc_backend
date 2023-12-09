@@ -1,10 +1,9 @@
-import { ReadDaoBase, ExceptionBase } from '@libs/base-classes';
+import { ExceptionBase, ReadDaoBase } from '@libs/base-classes';
+import { PaginationResponseDto } from '@libs/pagination';
 import { Result } from '@libs/utils';
-import { ApiProperty } from '@nestjs/swagger';
-
 import { GetManyClientsQuery } from '@modules/order/queries';
 import { Beneficiary, ClientType } from '@modules/order/types';
-import { PaginationResponseDto } from '@libs/pagination';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class GetManyClientsItem {
   @ApiProperty()

@@ -1,5 +1,6 @@
-import { StaffModel, StaffOrmEntityProps } from './staff.orm-entity';
 import { Tables } from '@libs/tables';
+
+import { StaffModel, StaffOrmEntityProps } from './staff.orm-entity';
 
 export class StaffObjectionOrmEntity extends StaffModel {
   static tableName = Tables.STAFF;

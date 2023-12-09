@@ -1,13 +1,13 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { Tables } from '@libs/tables';
 import { Result } from '@libs/utils';
+import { GetOneWarehouseItemQuery } from '@modules/warehouse/queries';
 import { Model } from 'objection';
 
 import {
   GetOneWarehouseItemDaoModel,
   GetOneWarehouseItemReadDao,
 } from './get-one-warehouse-item.read.dao';
-import { GetOneWarehouseItemQuery } from '@modules/warehouse/queries';
-import { Tables } from '@libs/tables';
 
 export class GetOneWarehouseItemObjectionReadDao extends GetOneWarehouseItemReadDao {
   async query(

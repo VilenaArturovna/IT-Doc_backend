@@ -1,14 +1,14 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { paginate } from '@libs/pagination';
+import { Tables } from '@libs/tables';
 import { Result } from '@libs/utils';
+import { GetManyWarehouseItemsQuery } from '@modules/warehouse/queries';
 import { Model } from 'objection';
 
 import {
   GetManyWarehouseItemsDaoModel,
   GetManyWarehouseItemsReadDao,
 } from './get-many-warehouse-items.read.dao';
-import { GetManyWarehouseItemsQuery } from '@modules/warehouse/queries';
-import { paginate } from '@libs/pagination';
-import { Tables } from '@libs/tables';
 
 export class GetManyWarehouseItemsObjectionReadDao extends GetManyWarehouseItemsReadDao {
   async query(

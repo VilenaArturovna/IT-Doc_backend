@@ -1,12 +1,13 @@
-import { CommandHandler } from '@nestjs/cqrs';
-import { UpdateWorkCommand } from './update-work.command';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
-import { Currency, MoneyVO, UuidVO } from '@libs/value-objects';
-import { ConflictException } from '@libs/exceptions';
-import { WorkEntity } from '@modules/order/domain';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { ConflictException } from '@libs/exceptions';
+import { Result } from '@libs/utils';
+import { Currency, MoneyVO, UuidVO } from '@libs/value-objects';
 import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
+import { WorkEntity } from '@modules/order/domain';
+import { CommandHandler } from '@nestjs/cqrs';
+
+import { UpdateWorkCommand } from './update-work.command';
 
 @CommandHandler(UpdateWorkCommand)
 export class UpdateWorkCommandHandler extends CommandHandlerBase<

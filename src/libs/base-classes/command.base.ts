@@ -1,5 +1,5 @@
-import { ICommand } from '@nestjs/cqrs';
 import { UuidVO } from '@libs/value-objects';
+import { ICommand } from '@nestjs/cqrs';
 
 export interface CommandProps<Payload> {
   payload: Payload;

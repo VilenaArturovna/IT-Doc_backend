@@ -1,11 +1,12 @@
-import { CommandHandler } from '@nestjs/cqrs';
-import { UpdateDeadlineCommand } from './update-deadline.command';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
-import { UuidVO } from '@libs/value-objects';
-import { DeadlineEntity } from '@modules/order/domain';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { Result } from '@libs/utils';
+import { UuidVO } from '@libs/value-objects';
 import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
+import { DeadlineEntity } from '@modules/order/domain';
+import { CommandHandler } from '@nestjs/cqrs';
+
+import { UpdateDeadlineCommand } from './update-deadline.command';
 
 @CommandHandler(UpdateDeadlineCommand)
 export class UpdateDeadlineCommandHandler extends CommandHandlerBase<

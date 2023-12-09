@@ -1,14 +1,14 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { paginate } from '@libs/pagination';
+import { Tables } from '@libs/tables';
 import { Result } from '@libs/utils';
+import { GetManyProvidersQuery } from '@modules/warehouse/queries';
 import { Model } from 'objection';
 
 import {
   GetManyProvidersDaoModel,
   GetManyProvidersReadDao,
 } from './get-many-providers.read.dao';
-import { GetManyProvidersQuery } from '@modules/warehouse/queries';
-import { paginate } from '@libs/pagination';
-import { Tables } from '@libs/tables';
 
 export class GetManyProvidersObjectionReadDao extends GetManyProvidersReadDao {
   async query(

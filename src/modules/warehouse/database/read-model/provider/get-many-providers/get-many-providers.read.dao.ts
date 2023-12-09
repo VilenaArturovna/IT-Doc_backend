@@ -1,9 +1,8 @@
-import { ReadDaoBase, ExceptionBase } from '@libs/base-classes';
-import { Result } from '@libs/utils';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-
-import { GetManyProvidersQuery } from '@modules/warehouse/queries';
+import { ExceptionBase, ReadDaoBase } from '@libs/base-classes';
 import { PaginationResponseDto } from '@libs/pagination';
+import { Result } from '@libs/utils';
+import { GetManyProvidersQuery } from '@modules/warehouse/queries';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class GetManyProvidersItem {
   @ApiProperty()

@@ -1,12 +1,13 @@
-import { CommandHandler } from '@nestjs/cqrs';
-import { UpdateClientCommand } from './update-client.command';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
-import { ConflictException } from '@libs/exceptions';
-import { EmailVO, PhoneVO, UuidVO } from '@libs/value-objects';
-import { ClientEntity } from '@modules/order/domain';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { ConflictException } from '@libs/exceptions';
+import { Result } from '@libs/utils';
+import { EmailVO, PhoneVO, UuidVO } from '@libs/value-objects';
 import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
+import { ClientEntity } from '@modules/order/domain';
+import { CommandHandler } from '@nestjs/cqrs';
+
+import { UpdateClientCommand } from './update-client.command';
 
 @CommandHandler(UpdateClientCommand)
 export class UpdateClientCommandHandler extends CommandHandlerBase<

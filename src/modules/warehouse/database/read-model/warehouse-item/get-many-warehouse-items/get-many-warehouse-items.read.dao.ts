@@ -1,10 +1,9 @@
-import { ReadDaoBase, ExceptionBase } from '@libs/base-classes';
-import { Result } from '@libs/utils';
-import { ApiProperty } from '@nestjs/swagger';
-
-import { GetManyWarehouseItemsQuery } from '@modules/warehouse/queries';
+import { ExceptionBase, ReadDaoBase } from '@libs/base-classes';
 import { PaginationResponseDto } from '@libs/pagination';
+import { Result } from '@libs/utils';
 import { GetOneWarehouseItemDaoModel } from '@modules/warehouse/database/read-model';
+import { GetManyWarehouseItemsQuery } from '@modules/warehouse/queries';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class GetManyWarehouseItemsDaoModel extends PaginationResponseDto<GetOneWarehouseItemDaoModel> {
   @ApiProperty({ type: () => GetOneWarehouseItemDaoModel, isArray: true })

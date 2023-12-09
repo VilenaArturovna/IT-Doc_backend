@@ -1,18 +1,19 @@
-import { Body, Controller, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { ExceptionBase } from '@libs/base-classes';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
-import { ExceptionBase } from '@libs/base-classes';
+import { WorkEntity } from '@modules/order/domain';
+import { WorkResponseDto } from '@modules/order/dtos';
+import { Body, Controller, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+
 import { UpdateWorkCommand } from './update-work.command';
 import { UpdateWorkRequestDto } from './update-work.request.dto';
-import { WorkResponseDto } from '@modules/order/dtos';
-import { WorkEntity } from '@modules/order/domain';
 
 @ApiTags('order/work')
 @Controller()

@@ -1,5 +1,6 @@
-import { ClientModel, ClientOrmEntityProps } from './client.orm-entity';
 import { Tables } from '@libs/tables';
+
+import { ClientModel, ClientOrmEntityProps } from './client.orm-entity';
 
 export class ClientObjectionOrmEntity extends ClientModel {
   static tableName = Tables.CLIENTS;

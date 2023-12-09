@@ -1,6 +1,7 @@
+import { DateVO, IdVO } from '@libs/value-objects';
+
 import { EntityBase } from './entity.base';
 import { ModelBase } from './model.base';
-import { DateVO, IdVO } from '@libs/value-objects';
 
 export type OrmEntityProps<OrmEntity> = Omit<
   OrmEntity,

@@ -1,10 +1,11 @@
-import { ExtractJwt, Strategy } from 'passport-jwt';
-import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
-import { GetStaffReadDao } from '@modules/staff/database/read-model';
-import { ConfigService } from '@nestjs/config';
-import { JwtPayload } from './jwt.payload';
 import { ForbiddenException } from '@libs/exceptions';
+import { GetStaffReadDao } from '@modules/staff/database/read-model';
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+
+import { JwtPayload } from './jwt.payload';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

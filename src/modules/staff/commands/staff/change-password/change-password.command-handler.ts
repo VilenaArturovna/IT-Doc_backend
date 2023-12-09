@@ -1,10 +1,11 @@
-import { CommandHandler } from '@nestjs/cqrs';
-import { ChangePasswordCommand } from './change-password.command';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
-import { UuidVO } from '@libs/value-objects';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { Result } from '@libs/utils';
+import { UuidVO } from '@libs/value-objects';
 import { StaffUnitOfWork } from '@modules/staff/database/unit-of-work';
+import { CommandHandler } from '@nestjs/cqrs';
+
+import { ChangePasswordCommand } from './change-password.command';
 
 @CommandHandler(ChangePasswordCommand)
 export class ChangePasswordCommandHandler extends CommandHandlerBase<

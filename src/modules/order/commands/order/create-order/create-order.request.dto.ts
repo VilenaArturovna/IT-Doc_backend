@@ -1,5 +1,6 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Priority } from '@modules/order/types';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNotJustSpaces } from '@src/common';
 import {
   IsBoolean,
   IsEnum,
@@ -8,7 +9,6 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import { IsNotJustSpaces } from '@src/common';
 
 export class CreateOrderRequestDto {
   @ApiProperty({ enum: Priority, enumName: 'Priority' })

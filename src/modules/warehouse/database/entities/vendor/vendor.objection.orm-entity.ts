@@ -1,5 +1,6 @@
-import { VendorModel, VendorOrmEntityProps } from './vendor.orm-entity';
 import { Tables } from '@libs/tables';
+
+import { VendorModel, VendorOrmEntityProps } from './vendor.orm-entity';
 
 export class VendorObjectionOrmEntity extends VendorModel {
   static tableName = Tables.VENDORS;

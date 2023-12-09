@@ -1,14 +1,14 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { NotFoundException } from '@libs/exceptions';
+import { Tables } from '@libs/tables';
 import { Result } from '@libs/utils';
+import { GetOneProviderQuery } from '@modules/warehouse/queries';
 import { Model } from 'objection';
 
 import {
   GetOneProviderDaoModel,
   GetOneProviderReadDao,
 } from './get-one-provider.read.dao';
-import { GetOneProviderQuery } from '@modules/warehouse/queries';
-import { NotFoundException } from '@libs/exceptions';
-import { Tables } from '@libs/tables';
 
 export class GetOneProviderObjectionReadDao extends GetOneProviderReadDao {
   async query(

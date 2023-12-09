@@ -1,9 +1,8 @@
-import { ReadDaoBase, ExceptionBase } from '@libs/base-classes';
+import { ExceptionBase, ReadDaoBase } from '@libs/base-classes';
 import { Result } from '@libs/utils';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-
 import { GetStaffQuery } from '@modules/staff/queries';
 import { Role } from '@modules/staff/types';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class GetStaffDaoModel {
   @ApiProperty()

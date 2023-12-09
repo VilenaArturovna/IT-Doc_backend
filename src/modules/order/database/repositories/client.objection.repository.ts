@@ -1,10 +1,11 @@
 import { ExceptionBase, ObjectionRepositoryBase } from '@libs/base-classes';
-import { ClientEntity, ClientEntityProps } from '@modules/order/domain';
-import { ClientObjectionOrmEntity, ClientOrmEntity } from '../entities';
-import { ClientOrmMapper } from '../mappers';
-import { Result } from '@libs/utils';
 import { NotFoundException } from '@libs/exceptions';
 import { TrxId, UnitOfWork } from '@libs/unit-of-work';
+import { Result } from '@libs/utils';
+import { ClientEntity, ClientEntityProps } from '@modules/order/domain';
+
+import { ClientObjectionOrmEntity, ClientOrmEntity } from '../entities';
+import { ClientOrmMapper } from '../mappers';
 
 export class ClientObjectionRepository extends ObjectionRepositoryBase<
   ClientEntity,

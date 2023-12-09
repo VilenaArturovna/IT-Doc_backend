@@ -1,3 +1,6 @@
+import { ExceptionBase } from '@libs/base-classes';
+import { routes } from '@libs/routes';
+import { Result } from '@libs/utils';
 import {
   Controller,
   Delete,
@@ -6,10 +9,8 @@ import {
   ParseUUIDPipe,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { routes } from '@libs/routes';
-import { Result } from '@libs/utils';
-import { ExceptionBase } from '@libs/base-classes';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+
 import { RemoveProviderCommand } from './remove-provider.command';
 
 @ApiTags('warehouse/provider')

@@ -1,4 +1,10 @@
 import {
+  ForgotPasswordCommandHandler,
+  ForgotPasswordController,
+  ResetPasswordCommandHandler,
+  ResetPasswordController,
+} from '@modules/staff/commands/auth';
+import {
   ChangePasswordCommandHandler,
   ChangePasswordController,
   CreateStaffCommandHandler,
@@ -8,12 +14,6 @@ import {
   UpdateStaffCommandHandler,
   UpdateStaffController,
 } from '@modules/staff/commands/staff';
-import {
-  ForgotPasswordCommandHandler,
-  ForgotPasswordController,
-  ResetPasswordCommandHandler,
-  ResetPasswordController,
-} from '@modules/staff/commands/auth';
 
 export * from './auth';
 export * from './staff';

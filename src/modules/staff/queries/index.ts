@@ -1,4 +1,8 @@
 import {
+  StaffSignInController,
+  StaffSignInQueryHandler,
+} from '@modules/staff/queries/auth';
+import {
   GetManyStaffController,
   GetManyStaffQueryHandler,
   GetStaffController,
@@ -6,10 +10,6 @@ import {
   StaffGetMeController,
   StaffGetMeQueryHandler,
 } from '@modules/staff/queries/staff';
-import {
-  StaffSignInController,
-  StaffSignInQueryHandler,
-} from '@modules/staff/queries/auth';
 
 export * from './auth';
 export * from './staff';

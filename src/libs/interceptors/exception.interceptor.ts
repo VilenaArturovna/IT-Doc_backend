@@ -1,5 +1,6 @@
 import { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common';
 import { catchError, Observable } from 'rxjs';
+
 import { exceptionMapper } from '../exceptions/exception.mapper';
 
 export class ExceptionInterceptor implements NestInterceptor {

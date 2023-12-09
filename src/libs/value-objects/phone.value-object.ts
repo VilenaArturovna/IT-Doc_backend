@@ -1,5 +1,6 @@
-import { ValueObject } from '../base-classes/value-object.base';
 import { isPhoneNumber } from 'class-validator';
+
+import { ValueObject } from '../base-classes/value-object.base';
 
 export class PhoneVO extends ValueObject<string> {
   constructor(value: string) {

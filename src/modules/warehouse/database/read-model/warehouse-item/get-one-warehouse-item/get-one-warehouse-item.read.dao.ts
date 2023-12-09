@@ -1,9 +1,8 @@
 import { ExceptionBase, ReadDaoBase } from '@libs/base-classes';
 import { Result } from '@libs/utils';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-
 import { GetOneWarehouseItemQuery } from '@modules/warehouse/queries';
 import { Section, Unit } from '@modules/warehouse/types';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class GetOneWarehouseItemVendor {
   @ApiProperty()

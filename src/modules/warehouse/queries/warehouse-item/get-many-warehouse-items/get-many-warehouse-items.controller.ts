@@ -1,16 +1,17 @@
+import { ExceptionBase } from '@libs/base-classes';
+import { routes } from '@libs/routes';
+import { Result } from '@libs/utils';
+import { GetManyWarehouseItemsDaoModel } from '@modules/warehouse/database/read-model';
+import { GetManyWarehouseItemsQuery } from '@modules/warehouse/queries';
 import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { Result } from '@libs/utils';
-import { routes } from '@libs/routes';
-import { ExceptionBase } from '@libs/base-classes';
 import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { GetManyWarehouseItemsQuery } from '@modules/warehouse/queries';
-import { GetManyWarehouseItemsDaoModel } from '@modules/warehouse/database/read-model';
+
 import { GetManyWarehouseItemsRequestDto } from './get-many-warehouse-items.request.dto';
 
 @ApiTags('warehouse/warehouse-item')

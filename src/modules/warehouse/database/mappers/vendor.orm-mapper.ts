@@ -4,6 +4,7 @@ import {
   OrmMapper,
 } from '@libs/base-classes';
 import { VendorEntity, VendorEntityProps } from '@modules/warehouse/domain';
+
 import { VendorOrmEntity, VendorOrmEntityProps } from '../entities';
 
 export class VendorOrmMapper extends OrmMapper<

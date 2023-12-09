@@ -1,12 +1,13 @@
-import { CommandHandler } from '@nestjs/cqrs';
-import { PutInQueueForDiagnosticsCommand } from './put-in-queue-for-diagnostics.command';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
-import { DateVO, UuidVO } from '@libs/value-objects';
-import { OrderStatus } from '@modules/order/types';
-import { OrderEntity } from '@modules/order/domain';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { Result } from '@libs/utils';
+import { DateVO, UuidVO } from '@libs/value-objects';
 import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
+import { OrderEntity } from '@modules/order/domain';
+import { OrderStatus } from '@modules/order/types';
+import { CommandHandler } from '@nestjs/cqrs';
+
+import { PutInQueueForDiagnosticsCommand } from './put-in-queue-for-diagnostics.command';
 
 @CommandHandler(PutInQueueForDiagnosticsCommand)
 export class PutInQueueForDiagnosticsCommandHandler extends CommandHandlerBase<

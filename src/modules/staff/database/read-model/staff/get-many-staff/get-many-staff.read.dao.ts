@@ -1,10 +1,9 @@
-import { ReadDaoBase, ExceptionBase } from '@libs/base-classes';
-import { Result } from '@libs/utils';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-
-import { GetManyStaffQuery } from '@modules/staff/queries';
+import { ExceptionBase, ReadDaoBase } from '@libs/base-classes';
 import { PaginationResponseDto } from '@libs/pagination';
+import { Result } from '@libs/utils';
+import { GetManyStaffQuery } from '@modules/staff/queries';
 import { Role } from '@modules/staff/types';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class GetManyStaffItem {
   @ApiProperty()

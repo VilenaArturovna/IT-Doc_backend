@@ -1,11 +1,11 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { NotFoundException } from '@libs/exceptions';
+import { Tables } from '@libs/tables';
 import { Result } from '@libs/utils';
+import { GetOneWorkQuery } from '@modules/order/queries';
 import { Model } from 'objection';
 
 import { GetOneWorkDaoModel, GetOneWorkReadDao } from './get-one-work.read.dao';
-import { GetOneWorkQuery } from '@modules/order/queries';
-import { NotFoundException } from '@libs/exceptions';
-import { Tables } from '@libs/tables';
 
 export class GetOneWorkObjectionReadDao extends GetOneWorkReadDao {
   async query(

@@ -1,10 +1,11 @@
+import { ExceptionBase } from '@libs/base-classes';
 import {
   BadRequestException,
   ConflictException,
   ForbiddenException,
   NotFoundException,
 } from '@nestjs/common';
-import { ExceptionBase } from '@libs/base-classes';
+
 import { ExceptionCodes } from './exception.codes';
 
 export const exceptionMapper = (ex: ExceptionBase) => {

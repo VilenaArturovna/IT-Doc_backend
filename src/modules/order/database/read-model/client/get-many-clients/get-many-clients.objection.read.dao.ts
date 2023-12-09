@@ -1,14 +1,14 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { paginate } from '@libs/pagination';
+import { Tables } from '@libs/tables';
 import { Result } from '@libs/utils';
+import { GetManyClientsQuery } from '@modules/order/queries';
 import { Model } from 'objection';
 
 import {
   GetManyClientsDaoModel,
   GetManyClientsReadDao,
 } from './get-many-clients.read.dao';
-import { GetManyClientsQuery } from '@modules/order/queries';
-import { paginate } from '@libs/pagination';
-import { Tables } from '@libs/tables';
 
 export class GetManyClientsObjectionReadDao extends GetManyClientsReadDao {
   async query(

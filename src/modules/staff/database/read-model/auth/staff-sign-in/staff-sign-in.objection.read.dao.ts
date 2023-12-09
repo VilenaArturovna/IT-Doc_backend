@@ -1,14 +1,14 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { ConflictException } from '@libs/exceptions';
+import { Tables } from '@libs/tables';
 import { Result } from '@libs/utils';
+import { StaffSignInQuery } from '@modules/staff/queries';
 import { Model } from 'objection';
 
 import {
   StaffSignInDaoModel,
   StaffSignInReadDao,
 } from './staff-sign-in.read.dao';
-import { StaffSignInQuery } from '@modules/staff/queries';
-import { ConflictException } from '@libs/exceptions';
-import { Tables } from '@libs/tables';
 
 export class StaffSignInObjectionReadDao extends StaffSignInReadDao {
   async query(

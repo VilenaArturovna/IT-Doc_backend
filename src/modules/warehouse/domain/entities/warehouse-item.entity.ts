@@ -1,11 +1,11 @@
 import { EntityBase } from '@libs/base-classes';
 import { DateVO, IdVO, MoneyVO } from '@libs/value-objects';
-import { Section, Unit } from '@modules/warehouse/types';
 import {
   ProviderEntity,
   VendorEntity,
   WarehouseItemHasEmptyFieldsError,
 } from '@modules/warehouse/domain';
+import { Section, Unit } from '@modules/warehouse/types';
 
 export interface WarehouseItemEntityProps {
   section: Section;

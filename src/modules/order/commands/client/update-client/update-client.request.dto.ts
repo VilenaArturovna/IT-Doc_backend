@@ -1,4 +1,6 @@
+import { Beneficiary } from '@modules/order/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNotJustSpaces } from '@src/common';
 import {
   IsEmail,
   IsEnum,
@@ -7,8 +9,6 @@ import {
   IsPhoneNumber,
   IsString,
 } from 'class-validator';
-import { IsNotJustSpaces } from '@src/common';
-import { Beneficiary } from '@modules/order/types';
 
 export class UpdateClientRequestDto {
   @ApiProperty()

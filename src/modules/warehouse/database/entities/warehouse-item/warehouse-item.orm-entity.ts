@@ -1,11 +1,11 @@
 import { ModelBase, OrmEntityBase } from '@libs/base-classes';
-import { Section, Unit } from '@modules/warehouse/types';
 import {
   ProviderModel,
   ProviderOrmEntity,
   VendorModel,
   VendorOrmEntity,
 } from '@modules/warehouse/database/entities';
+import { Section, Unit } from '@modules/warehouse/types';
 
 export interface WarehouseItemOrmEntityProps {
   section: Section;

@@ -1,5 +1,5 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { StaffEntity } from '@modules/staff/domain';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class StaffResponseDto {
   @ApiProperty()

@@ -1,5 +1,6 @@
-import { DeadlineModel, DeadlineOrmEntityProps } from './deadline.orm-entity';
 import { Tables } from '@libs/tables';
+
+import { DeadlineModel, DeadlineOrmEntityProps } from './deadline.orm-entity';
 
 export class DeadlineObjectionOrmEntity extends DeadlineModel {
   static tableName = Tables.DEADLINES;

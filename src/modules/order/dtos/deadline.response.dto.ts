@@ -1,6 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { OrderStatus } from '@modules/order/types';
 import { DeadlineEntity } from '@modules/order/domain';
+import { OrderStatus } from '@modules/order/types';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class DeadlineResponseDto {
   @ApiProperty()

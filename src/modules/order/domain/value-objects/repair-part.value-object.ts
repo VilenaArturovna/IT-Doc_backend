@@ -1,5 +1,5 @@
-import { WarehouseItemEntity } from '@modules/warehouse/domain';
 import { ValueObject } from '@libs/base-classes/value-object.base';
+import { WarehouseItemEntity } from '@modules/warehouse/domain';
 
 export interface RepairPartVOProps {
   warehouseItem: WarehouseItemEntity;

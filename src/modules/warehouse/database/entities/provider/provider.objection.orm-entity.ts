@@ -1,5 +1,6 @@
-import { ProviderModel, ProviderOrmEntityProps } from './provider.orm-entity';
 import { Tables } from '@libs/tables';
+
+import { ProviderModel, ProviderOrmEntityProps } from './provider.orm-entity';
 
 export class ProviderObjectionOrmEntity extends ProviderModel {
   static tableName = Tables.PROVIDERS;

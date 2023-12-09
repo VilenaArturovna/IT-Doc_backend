@@ -1,10 +1,11 @@
-import { OrderModel, OrderOrmEntityProps } from './order.orm-entity';
-import { Model } from 'objection';
-import { ClientObjectionOrmEntity } from '../client/client.objection.orm-entity';
-import { StaffObjectionOrmEntity } from '../../../../staff/database/entities/staff/staff.objection.orm-entity';
-import { WorkObjectionOrmEntity } from '../work/work.objection.orm-entity';
-import { WarehouseItemObjectionOrmEntity } from '../../../../warehouse/database/entities/warehouse-item/warehouse-item.objection.orm-entity';
 import { Tables } from '@libs/tables';
+import { Model } from 'objection';
+
+import { StaffObjectionOrmEntity } from '../../../../staff/database/entities/staff/staff.objection.orm-entity';
+import { WarehouseItemObjectionOrmEntity } from '../../../../warehouse/database/entities/warehouse-item/warehouse-item.objection.orm-entity';
+import { ClientObjectionOrmEntity } from '../client/client.objection.orm-entity';
+import { WorkObjectionOrmEntity } from '../work/work.objection.orm-entity';
+import { OrderModel, OrderOrmEntityProps } from './order.orm-entity';
 
 export class OrderObjectionOrmEntity extends OrderModel {
   static tableName = Tables.ORDERS;

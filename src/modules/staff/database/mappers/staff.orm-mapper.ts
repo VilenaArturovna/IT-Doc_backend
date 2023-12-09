@@ -3,8 +3,6 @@ import {
   OrmEntityProps,
   OrmMapper,
 } from '@libs/base-classes';
-import { StaffEntity, StaffEntityProps } from '@modules/staff/domain';
-import { StaffOrmEntity, StaffOrmEntityProps } from '../entities';
 import {
   DateVO,
   EmailVO,
@@ -13,6 +11,9 @@ import {
   PhoneVO,
   UrlVO,
 } from '@libs/value-objects';
+import { StaffEntity, StaffEntityProps } from '@modules/staff/domain';
+
+import { StaffOrmEntity, StaffOrmEntityProps } from '../entities';
 
 export class StaffOrmMapper extends OrmMapper<
   StaffEntity,

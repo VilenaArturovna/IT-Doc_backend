@@ -1,11 +1,12 @@
-import { CommandHandler } from '@nestjs/cqrs';
-import { ArchiveWarehouseItemCommand } from './archive-warehouse-item.command';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
-import { UuidVO } from '@libs/value-objects';
-import { WarehouseItemEntity } from '@modules/warehouse/domain';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { Result } from '@libs/utils';
+import { UuidVO } from '@libs/value-objects';
 import { WarehouseUnitOfWork } from '@modules/warehouse/database/unit-of-work';
+import { WarehouseItemEntity } from '@modules/warehouse/domain';
+import { CommandHandler } from '@nestjs/cqrs';
+
+import { ArchiveWarehouseItemCommand } from './archive-warehouse-item.command';
 
 @CommandHandler(ArchiveWarehouseItemCommand)
 export class ArchiveWarehouseItemCommandHandler extends CommandHandlerBase<

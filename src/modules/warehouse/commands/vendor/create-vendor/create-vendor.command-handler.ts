@@ -1,11 +1,12 @@
-import { CommandHandler } from '@nestjs/cqrs';
-import { CreateVendorCommand } from './create-vendor.command';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
-import { VendorEntity } from '@modules/warehouse/domain';
-import { ConflictException } from '@libs/exceptions';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { ConflictException } from '@libs/exceptions';
+import { Result } from '@libs/utils';
 import { WarehouseUnitOfWork } from '@modules/warehouse/database/unit-of-work';
+import { VendorEntity } from '@modules/warehouse/domain';
+import { CommandHandler } from '@nestjs/cqrs';
+
+import { CreateVendorCommand } from './create-vendor.command';
 
 @CommandHandler(CreateVendorCommand)
 export class CreateVendorCommandHandler extends CommandHandlerBase<

@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { WorkEntity } from '@modules/order/domain';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class WorkResponseDto {
   @ApiProperty()

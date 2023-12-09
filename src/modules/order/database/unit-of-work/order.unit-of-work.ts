@@ -1,12 +1,12 @@
 import { TrxId, UnitOfWorkObjection } from '@libs/unit-of-work';
-import { StaffObjectionRepository } from '@modules/staff/database/repositories';
-import { WarehouseItemObjectionRepository } from '@modules/warehouse/database/repositories';
 import {
   ClientObjectionRepository,
   DeadlineObjectionRepository,
   OrderObjectionRepository,
   WorkObjectionRepository,
 } from '@modules/order/database/repositories';
+import { StaffObjectionRepository } from '@modules/staff/database/repositories';
+import { WarehouseItemObjectionRepository } from '@modules/warehouse/database/repositories';
 
 export class OrderUnitOfWork extends UnitOfWorkObjection {
   public getStaffRepository(trxId: TrxId) {

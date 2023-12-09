@@ -1,10 +1,11 @@
-import { QueryHandler } from '@nestjs/cqrs';
-import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
+import { Result } from '@libs/utils';
 import {
   StaffGetMeDaoModel,
   StaffGetMeReadDao,
 } from '@modules/staff/database/read-model';
+import { QueryHandler } from '@nestjs/cqrs';
+
 import { StaffGetMeQuery } from './staff-get-me.query';
 
 @QueryHandler(StaffGetMeQuery)

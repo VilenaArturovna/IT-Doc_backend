@@ -1,17 +1,18 @@
 import { ExceptionBase, ObjectionRepositoryBase } from '@libs/base-classes';
+import { NotFoundException } from '@libs/exceptions';
+import { TrxId, UnitOfWork } from '@libs/unit-of-work';
+import { Result } from '@libs/utils';
+import { IdVO } from '@libs/value-objects';
 import {
   WarehouseItemEntity,
   WarehouseItemEntityProps,
 } from '@modules/warehouse/domain';
+
 import {
   WarehouseItemObjectionOrmEntity,
   WarehouseItemOrmEntity,
 } from '../entities';
 import { WarehouseItemOrmMapper } from '../mappers';
-import { IdVO } from '@libs/value-objects';
-import { Result } from '@libs/utils';
-import { NotFoundException } from '@libs/exceptions';
-import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 
 export class WarehouseItemObjectionRepository extends ObjectionRepositoryBase<
   WarehouseItemEntity,

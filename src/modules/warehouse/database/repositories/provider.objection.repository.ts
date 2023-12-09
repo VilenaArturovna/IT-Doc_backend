@@ -1,10 +1,11 @@
 import { ExceptionBase, ObjectionRepositoryBase } from '@libs/base-classes';
-import { ProviderEntity, ProviderEntityProps } from '@modules/warehouse/domain';
-import { ProviderObjectionOrmEntity, ProviderOrmEntity } from '../entities';
-import { ProviderOrmMapper } from '../mappers';
-import { Result } from '@libs/utils';
 import { NotFoundException } from '@libs/exceptions';
 import { TrxId, UnitOfWork } from '@libs/unit-of-work';
+import { Result } from '@libs/utils';
+import { ProviderEntity, ProviderEntityProps } from '@modules/warehouse/domain';
+
+import { ProviderObjectionOrmEntity, ProviderOrmEntity } from '../entities';
+import { ProviderOrmMapper } from '../mappers';
 
 export class ProviderObjectionRepository extends ObjectionRepositoryBase<
   ProviderEntity,

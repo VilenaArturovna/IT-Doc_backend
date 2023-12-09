@@ -1,5 +1,5 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ProviderEntity } from '@modules/warehouse/domain';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class ProviderResponseDto {
   @ApiProperty()
