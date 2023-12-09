@@ -5,6 +5,7 @@ import { Result } from '@libs/utils';
 import { EmailVO, HashVO } from '@libs/value-objects';
 import { StaffUnitOfWork } from '@modules/staff/database/unit-of-work';
 import { CommandHandler } from '@nestjs/cqrs';
+import { MailService } from '@src/common';
 
 import { ResetPasswordCommand } from './reset-password.command';
 
@@ -13,7 +14,10 @@ export class ResetPasswordCommandHandler extends CommandHandlerBase<
   StaffUnitOfWork,
   void
 > {
-  constructor(unitOfWork: StaffUnitOfWork) {
+  constructor(
+    unitOfWork: StaffUnitOfWork,
+    private readonly mailService: MailService,
+  ) {
     super(unitOfWork);
   }
 
@@ -22,9 +26,9 @@ export class ResetPasswordCommandHandler extends CommandHandlerBase<
   ): Promise<Result<void, ExceptionBase>> {
     const repository = this.unitOfWork.getStaffRepository(command.trxId);
 
-    const staffResult = await repository.getOneByEmail(
-      new EmailVO(command.payload.email),
-    );
+    const email = new EmailVO(command.payload.email);
+
+    const staffResult = await repository.getOneByEmail(email);
 
     if (staffResult.isErr) {
       return Result.fail(new NotFoundException('Пользователь не найден'));
@@ -32,12 +36,18 @@ export class ResetPasswordCommandHandler extends CommandHandlerBase<
 
     const staff = staffResult.unwrap();
 
-    staff.resetPasswordHash = await HashVO.generateHash(staff.id.value);
+    const resetPasswordHash = await HashVO.generateHash(staff.id.value);
+    staff.resetPasswordHash = resetPasswordHash;
 
     const updateResult = await repository.update(staff);
     updateResult.unwrap();
 
-    //todo: send email
+    const sendEmailResult = await this.mailService.passwordRecovery(
+      resetPasswordHash,
+      staff.name,
+      email,
+    );
+    sendEmailResult.unwrap();
 
     return Result.ok();
   }

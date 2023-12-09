@@ -6,6 +6,7 @@ import { DateVO, EmailVO, HashPasswordVO, PhoneVO } from '@libs/value-objects';
 import { StaffUnitOfWork } from '@modules/staff/database/unit-of-work';
 import { StaffEntity } from '@modules/staff/domain';
 import { CommandHandler } from '@nestjs/cqrs';
+import { MailService } from '@src/common';
 
 import { CreateStaffCommand } from './create-staff.command';
 
@@ -14,7 +15,10 @@ export class CreateStaffCommandHandler extends CommandHandlerBase<
   StaffUnitOfWork,
   StaffEntity
 > {
-  constructor(unitOfWork: StaffUnitOfWork) {
+  constructor(
+    unitOfWork: StaffUnitOfWork,
+    private readonly mailService: MailService,
+  ) {
     super(unitOfWork);
   }
 
@@ -25,9 +29,9 @@ export class CreateStaffCommandHandler extends CommandHandlerBase<
 
     const repository = this.unitOfWork.getStaffRepository(trxId);
 
-    const existedEmailResult = await repository.getOneByEmail(
-      new EmailVO(payload.email),
-    );
+    const email = new EmailVO(payload.email);
+
+    const existedEmailResult = await repository.getOneByEmail(email);
     if (!existedEmailResult.isErr) {
       return Result.fail(
         new ConflictException('Почтовый адрес уже используется в системе'),
@@ -46,7 +50,7 @@ export class CreateStaffCommandHandler extends CommandHandlerBase<
     const password = generatePassword();
 
     const newStaff = StaffEntity.create({
-      email: new EmailVO(payload.email),
+      email,
       firstname: payload.firstname,
       lastname: payload.lastname,
       phone: new PhoneVO(payload.phone),
@@ -56,8 +60,16 @@ export class CreateStaffCommandHandler extends CommandHandlerBase<
       isRemoved: false,
     });
 
-    //todo: send email this password
+    const createdStaffResult = await repository.create(newStaff);
+    createdStaffResult.unwrap();
 
-    return repository.create(newStaff);
+    const sendEmailResult = await this.mailService.sendPasswordToNewStaff(
+      email,
+      newStaff.name,
+      password,
+    );
+    sendEmailResult.unwrap();
+
+    return createdStaffResult;
   }
 }

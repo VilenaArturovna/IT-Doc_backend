@@ -37,6 +37,13 @@ export class StaffEntity extends EntityBase<StaffEntityProps> {
     return new StaffEntity({ props });
   }
 
+  public get name() {
+    return {
+      firstname: this.props.firstname,
+      lastname: this.props.lastname,
+    };
+  }
+
   public update(props: UpdateStaffEntityProps) {
     this.props.lastname = props.lastname;
     this.props.firstname = props.firstname;

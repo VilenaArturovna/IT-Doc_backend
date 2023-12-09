@@ -17,4 +17,14 @@ export const configuration = (): Config => ({
   jwt: {
     secret: process.env.JWT_SECRET,
   },
+  smtp: {
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT),
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+  site: {
+    main: process.env.SITE_MAIN,
+    resetPassword: process.env.SITE_RESET_PASSWORD,
+  },
 });

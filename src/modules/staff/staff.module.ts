@@ -8,11 +8,13 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtConfigService, JwtServiceAdapter } from '@src/common';
 import { JwtStrategy } from '@src/common/guards/auth/strategies/jwt.strategy';
+import { MailModule } from '@src/common/services/mail-service/mail.module';
 
 @Module({
   imports: [
     CqrsModule,
     JwtModule.registerAsync({ useClass: JwtConfigService }),
+    MailModule,
   ],
   controllers: [...queryControllers, ...commandControllers],
   providers: [
