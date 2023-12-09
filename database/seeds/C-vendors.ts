@@ -1,16 +1,19 @@
-import { Knex } from 'knex';
+import { faker } from '@faker-js/faker';
 import {
   VendorObjectionOrmEntity,
   VendorOrmEntityProps,
 } from '@modules/warehouse/database/entities';
-import { faker } from '@faker-js/faker';
+import { Knex } from 'knex';
+
 import { vendorsIds } from './D-warehouse-items';
+
+faker.setLocale('ru');
 
 export async function seed(knex: Knex) {
   const items: VendorOrmEntityProps[] = vendorsIds.map((id) => {
     return {
-      title: faker.lorem.words(1),
-      description: faker.lorem.sentence(5),
+      title: faker.company.name(),
+      description: faker.lorem.paragraph(5),
       id,
     };
   });

@@ -1,10 +1,12 @@
-import { Knex } from 'knex';
 import { faker } from '@faker-js/faker';
-import { v4 as uuid } from 'uuid';
 import {
   WorkObjectionOrmEntity,
   WorkOrmEntityProps,
 } from '@modules/order/database/entities';
+import { Knex } from 'knex';
+import { v4 as uuid } from 'uuid';
+
+faker.setLocale('ru');
 
 export const worksIds: string[] = new Array(3).fill('').map(() => uuid());
 
