@@ -8,6 +8,7 @@ import {
 } from './get-many-staff.read.dao';
 import { GetManyStaffQuery } from '@modules/staff/queries';
 import { paginate } from '@libs/pagination';
+import { Tables } from '@libs/tables';
 
 export class GetManyStaffObjectionReadDao extends GetManyStaffReadDao {
   async query(
@@ -17,7 +18,7 @@ export class GetManyStaffObjectionReadDao extends GetManyStaffReadDao {
 
     const { page, limit, search } = query.params;
 
-    const qb = knex('staff').select(
+    const qb = knex(Tables.STAFF).select(
       'id',
       'email',
       'phone',

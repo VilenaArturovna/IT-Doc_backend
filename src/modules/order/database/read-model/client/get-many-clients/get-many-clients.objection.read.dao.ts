@@ -8,6 +8,7 @@ import {
 } from './get-many-clients.read.dao';
 import { GetManyClientsQuery } from '@modules/order/queries';
 import { paginate } from '@libs/pagination';
+import { Tables } from '@libs/tables';
 
 export class GetManyClientsObjectionReadDao extends GetManyClientsReadDao {
   async query(
@@ -18,7 +19,7 @@ export class GetManyClientsObjectionReadDao extends GetManyClientsReadDao {
     const { type, beneficiary, page, order, search, sort, limit } =
       query.params;
 
-    const qb = knex('clients')
+    const qb = knex(Tables.CLIENTS)
       .select('id', 'name', 'phone', 'type', 'beneficiary')
       .groupBy('id');
 

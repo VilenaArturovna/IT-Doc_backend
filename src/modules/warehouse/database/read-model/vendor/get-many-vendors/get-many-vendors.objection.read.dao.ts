@@ -8,6 +8,7 @@ import {
 } from './get-many-vendors.read.dao';
 import { GetManyVendorsQuery } from '@modules/warehouse/queries';
 import { paginate } from '@libs/pagination';
+import { Tables } from '@libs/tables';
 
 export class GetManyVendorsObjectionReadDao extends GetManyVendorsReadDao {
   async query(
@@ -17,7 +18,7 @@ export class GetManyVendorsObjectionReadDao extends GetManyVendorsReadDao {
 
     const { page, limit, search } = query.params;
 
-    const qb = knex('vendors')
+    const qb = knex(Tables.VENDORS)
       .select('id', 'title', 'description')
       .orderBy('title')
       .groupBy(['id', 'title']);

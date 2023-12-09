@@ -8,6 +8,7 @@ import {
 } from './get-one-client.read.dao';
 import { GetOneClientQuery } from '@modules/order/queries';
 import { NotFoundException } from '@libs/exceptions';
+import { Tables } from '@libs/tables';
 
 export class GetOneClientObjectionReadDao extends GetOneClientReadDao {
   async query(
@@ -15,7 +16,9 @@ export class GetOneClientObjectionReadDao extends GetOneClientReadDao {
   ): Promise<Result<GetOneClientDaoModel, ExceptionBase>> {
     const knex = Model.knex();
 
-    const client = await knex('clients').where('id', query.params.id).first();
+    const client = await knex(Tables.CLIENTS)
+      .where('id', query.params.id)
+      .first();
 
     if (!client) {
       return Result.fail(new NotFoundException('Клиент не найден'));

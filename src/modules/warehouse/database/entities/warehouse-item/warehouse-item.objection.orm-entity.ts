@@ -5,9 +5,10 @@ import {
 import { ProviderObjectionOrmEntity } from '../provider/provider.objection.orm-entity';
 import { VendorObjectionOrmEntity } from '../vendor/vendor.objection.orm-entity';
 import { Model } from 'objection';
+import { Tables } from '@libs/tables';
 
 export class WarehouseItemObjectionOrmEntity extends WarehouseItemModel {
-  static tableName = 'warehouse_items';
+  static tableName = Tables.WAREHOUSE_ITEMS;
 
   static create(props: WarehouseItemOrmEntityProps) {
     return this.fromJson(props);

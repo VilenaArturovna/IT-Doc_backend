@@ -4,9 +4,10 @@ import { ClientObjectionOrmEntity } from '../client/client.objection.orm-entity'
 import { StaffObjectionOrmEntity } from '../../../../staff/database/entities/staff/staff.objection.orm-entity';
 import { WorkObjectionOrmEntity } from '../work/work.objection.orm-entity';
 import { WarehouseItemObjectionOrmEntity } from '../../../../warehouse/database/entities/warehouse-item/warehouse-item.objection.orm-entity';
+import { Tables } from '@libs/tables';
 
 export class OrderObjectionOrmEntity extends OrderModel {
-  static tableName = 'orders';
+  static tableName = Tables.ORDERS;
 
   static create(props: OrderOrmEntityProps) {
     return this.fromJson(props);

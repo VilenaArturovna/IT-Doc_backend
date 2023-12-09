@@ -8,6 +8,7 @@ import {
 } from './get-many-warehouse-items.read.dao';
 import { GetManyWarehouseItemsQuery } from '@modules/warehouse/queries';
 import { paginate } from '@libs/pagination';
+import { Tables } from '@libs/tables';
 
 export class GetManyWarehouseItemsObjectionReadDao extends GetManyWarehouseItemsReadDao {
   async query(
@@ -17,7 +18,7 @@ export class GetManyWarehouseItemsObjectionReadDao extends GetManyWarehouseItems
 
     const { limit, page, ...params } = query.params;
 
-    const qb = knex('warehouse_items as wi')
+    const qb = knex(`${Tables.WAREHOUSE_ITEMS} as wi`)
       .select(
         'wi.*',
         knex.raw(`
@@ -25,8 +26,8 @@ export class GetManyWarehouseItemsObjectionReadDao extends GetManyWarehouseItems
         jsonb_build_object('id', p.id, 'title', p.title) as provider
       `),
       )
-      .innerJoin('vendors as v', 'v.id', 'wi.vendorId')
-      .innerJoin('providers as p', 'p.id', 'wi.providerId');
+      .innerJoin(`${Tables.VENDORS} as v`, 'v.id', 'wi.vendorId')
+      .innerJoin(`${Tables.PROVIDERS} as p`, 'p.id', 'wi.providerId');
 
     if (params.isArchived != undefined) {
       qb.where('isArchived', params.isArchived);

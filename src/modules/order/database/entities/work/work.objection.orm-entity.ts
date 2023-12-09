@@ -1,7 +1,8 @@
 import { WorkModel, WorkOrmEntityProps } from './work.orm-entity';
+import { Tables } from '@libs/tables';
 
 export class WorkObjectionOrmEntity extends WorkModel {
-  static tableName = 'works';
+  static tableName = Tables.WORKS;
 
   static create(props: WorkOrmEntityProps) {
     return this.fromJson(props);

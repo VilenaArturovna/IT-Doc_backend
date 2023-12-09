@@ -24,7 +24,7 @@ export class UpdateStaffCommandHandler extends CommandHandlerBase<
       trxId,
     } = command;
 
-    const repository = this.unitOfWork.getStaffRepository(command.trxId);
+    const repository = this.unitOfWork.getStaffRepository(trxId);
 
     const staffResult = await repository.getOneById(new UuidVO(id));
     const staff = staffResult.unwrap();

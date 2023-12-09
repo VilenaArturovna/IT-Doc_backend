@@ -22,7 +22,7 @@ export class CreateStaffCommandHandler extends CommandHandlerBase<
   ): Promise<Result<StaffEntity, ExceptionBase>> {
     const { payload, trxId } = command;
 
-    const repository = this.unitOfWork.getStaffRepository(command.trxId);
+    const repository = this.unitOfWork.getStaffRepository(trxId);
 
     const existedEmailResult = await repository.getOneByEmail(
       new EmailVO(payload.email),

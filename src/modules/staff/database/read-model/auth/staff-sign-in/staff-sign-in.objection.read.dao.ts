@@ -8,6 +8,7 @@ import {
 } from './staff-sign-in.read.dao';
 import { StaffSignInQuery } from '@modules/staff/queries';
 import { ConflictException } from '@libs/exceptions';
+import { Tables } from '@libs/tables';
 
 export class StaffSignInObjectionReadDao extends StaffSignInReadDao {
   async query(
@@ -15,7 +16,7 @@ export class StaffSignInObjectionReadDao extends StaffSignInReadDao {
   ): Promise<Result<StaffSignInDaoModel, ExceptionBase>> {
     const knex = Model.knex();
 
-    const staff = await knex('staff')
+    const staff = await knex(Tables.STAFF)
       .select('id', 'role', 'password')
       .where('email', query.params.email)
       .first();

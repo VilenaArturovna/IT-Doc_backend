@@ -8,6 +8,7 @@ import {
 } from './get-many-works.read.dao';
 import { GetManyWorksQuery } from '@modules/order/queries';
 import { paginate } from '@libs/pagination';
+import { Tables } from '@libs/tables';
 
 export class GetManyWorksObjectionReadDao extends GetManyWorksReadDao {
   async query(
@@ -17,7 +18,7 @@ export class GetManyWorksObjectionReadDao extends GetManyWorksReadDao {
 
     const { limit, search, page } = query.params;
 
-    const qb = knex('works').select('*');
+    const qb = knex(Tables.WORKS).select('*');
 
     if (search) {
       qb.whereILike('name', `%${search}%`);

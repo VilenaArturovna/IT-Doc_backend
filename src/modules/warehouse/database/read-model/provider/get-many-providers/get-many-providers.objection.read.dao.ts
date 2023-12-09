@@ -8,6 +8,7 @@ import {
 } from './get-many-providers.read.dao';
 import { GetManyProvidersQuery } from '@modules/warehouse/queries';
 import { paginate } from '@libs/pagination';
+import { Tables } from '@libs/tables';
 
 export class GetManyProvidersObjectionReadDao extends GetManyProvidersReadDao {
   async query(
@@ -17,7 +18,7 @@ export class GetManyProvidersObjectionReadDao extends GetManyProvidersReadDao {
 
     const { page, limit, search } = query.params;
 
-    const qb = knex('providers')
+    const qb = knex(Tables.PROVIDERS)
       .select('id', 'title', 'description')
       .orderBy('title')
       .groupBy(['id', 'title']);

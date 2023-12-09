@@ -8,6 +8,7 @@ import {
 } from './get-one-provider.read.dao';
 import { GetOneProviderQuery } from '@modules/warehouse/queries';
 import { NotFoundException } from '@libs/exceptions';
+import { Tables } from '@libs/tables';
 
 export class GetOneProviderObjectionReadDao extends GetOneProviderReadDao {
   async query(
@@ -15,7 +16,7 @@ export class GetOneProviderObjectionReadDao extends GetOneProviderReadDao {
   ): Promise<Result<GetOneProviderDaoModel, ExceptionBase>> {
     const knex = Model.knex();
 
-    const provider = await knex('providers')
+    const provider = await knex(Tables.PROVIDERS)
       .select('id', 'title', 'description')
       .where('id', query.params.id)
       .first();

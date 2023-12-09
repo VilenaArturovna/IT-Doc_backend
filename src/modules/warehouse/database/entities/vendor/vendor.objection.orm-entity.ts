@@ -1,7 +1,8 @@
 import { VendorModel, VendorOrmEntityProps } from './vendor.orm-entity';
+import { Tables } from '@libs/tables';
 
 export class VendorObjectionOrmEntity extends VendorModel {
-  static tableName = 'vendors';
+  static tableName = Tables.VENDORS;
 
   static create(props: VendorOrmEntityProps) {
     return this.fromJson(props);

@@ -4,6 +4,7 @@ import { Model } from 'objection';
 
 import { StaffGetMeDaoModel, StaffGetMeReadDao } from './staff-get-me.read.dao';
 import { StaffGetMeQuery } from '@modules/staff/queries';
+import { Tables } from '@libs/tables';
 
 export class StaffGetMeObjectionReadDao extends StaffGetMeReadDao {
   async query(
@@ -11,7 +12,7 @@ export class StaffGetMeObjectionReadDao extends StaffGetMeReadDao {
   ): Promise<Result<StaffGetMeDaoModel, ExceptionBase>> {
     const knex = Model.knex();
 
-    const staff = await knex('staff')
+    const staff = await knex(Tables.STAFF)
       .select(
         'id',
         'email',

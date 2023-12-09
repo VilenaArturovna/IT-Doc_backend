@@ -1,7 +1,8 @@
 import { ProviderModel, ProviderOrmEntityProps } from './provider.orm-entity';
+import { Tables } from '@libs/tables';
 
 export class ProviderObjectionOrmEntity extends ProviderModel {
-  static tableName = 'providers';
+  static tableName = Tables.PROVIDERS;
 
   static create(props: ProviderOrmEntityProps) {
     return this.fromJson(props);
