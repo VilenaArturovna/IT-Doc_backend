@@ -4,6 +4,7 @@ import { ClientObjectionOrmEntity, ClientOrmEntity } from '../entities';
 import { ClientOrmMapper } from '../mappers';
 import { Result } from '@libs/utils';
 import { NotFoundException } from '@libs/exceptions';
+import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 
 export class ClientObjectionRepository extends ObjectionRepositoryBase<
   ClientEntity,
@@ -12,8 +13,11 @@ export class ClientObjectionRepository extends ObjectionRepositoryBase<
   ClientObjectionOrmEntity,
   ClientOrmMapper
 > {
-  constructor() {
-    super(ClientObjectionOrmEntity, new ClientOrmMapper());
+  constructor(
+    protected readonly unitOfWork: UnitOfWork,
+    protected readonly trxId: TrxId,
+  ) {
+    super(ClientObjectionOrmEntity, new ClientOrmMapper(), unitOfWork, trxId);
   }
 
   async getOneByName(

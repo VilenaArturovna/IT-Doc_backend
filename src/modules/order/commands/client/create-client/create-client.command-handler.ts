@@ -1,23 +1,34 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { CreateClientCommand } from './create-client.command';
-import { ClientObjectionRepository } from '@modules/order/database/repositories';
 import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
 import { ClientEntity } from '@modules/order/domain';
 import { EmailVO, PhoneVO } from '@libs/value-objects';
 import { Beneficiary, ClientType } from '@modules/order/types';
 import { ConflictException } from '@libs/exceptions';
+import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
 
 @CommandHandler(CreateClientCommand)
-export class CreateClientCommandHandler {
-  constructor(private readonly repository: ClientObjectionRepository) {}
+export class CreateClientCommandHandler extends CommandHandlerBase<
+  OrderUnitOfWork,
+  ClientEntity
+> {
+  constructor(unitOfWork: OrderUnitOfWork) {
+    super(unitOfWork);
+  }
 
-  async execute(
+  async handle(
     command: CreateClientCommand,
   ): Promise<Result<ClientEntity, ExceptionBase>> {
-    const { name, ...payload } = command.payload;
+    const {
+      trxId,
+      payload: { name, ...payload },
+    } = command;
 
-    const existedClientResult = await this.repository.getOneByName(name);
+    const repository = this.unitOfWork.getClientRepository(trxId);
+
+    const existedClientResult = await repository.getOneByName(name);
     if (!existedClientResult.isErr) {
       return Result.fail(
         new ConflictException('Клиент с таким именем/названием уже существует'),
@@ -46,6 +57,6 @@ export class CreateClientCommandHandler {
       beneficiary: payload.beneficiary || Beneficiary.IP,
     });
 
-    return this.repository.create(client);
+    return repository.create(client);
   }
 }

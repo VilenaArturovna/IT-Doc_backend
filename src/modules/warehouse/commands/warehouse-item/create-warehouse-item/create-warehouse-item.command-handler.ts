@@ -1,31 +1,37 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { CreateWarehouseItemCommand } from './create-warehouse-item.command';
-import {
-  ProviderObjectionRepository,
-  VendorObjectionRepository,
-  WarehouseItemObjectionRepository,
-} from '@modules/warehouse/database/repositories';
 import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
 import { WarehouseItemEntity } from '@modules/warehouse/domain';
 import { Currency, DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
+import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { WarehouseUnitOfWork } from '@modules/warehouse/database/unit-of-work';
 
 @CommandHandler(CreateWarehouseItemCommand)
-export class CreateWarehouseItemCommandHandler {
-  constructor(
-    private readonly warehouseItemObjectionRepository: WarehouseItemObjectionRepository,
-    private readonly providerObjectionRepository: ProviderObjectionRepository,
-    private readonly vendorObjectionRepository: VendorObjectionRepository,
-  ) {}
+export class CreateWarehouseItemCommandHandler extends CommandHandlerBase<
+  WarehouseUnitOfWork,
+  WarehouseItemEntity
+> {
+  constructor(unitOfWork: WarehouseUnitOfWork) {
+    super(unitOfWork);
+  }
 
-  async execute(
+  async handle(
     command: CreateWarehouseItemCommand,
   ): Promise<Result<WarehouseItemEntity, ExceptionBase>> {
-    const { vendorId, providerId, ...payload } = command.payload;
+    const {
+      trxId,
+      payload: { vendorId, providerId, ...payload },
+    } = command;
+
+    const providerRepository = this.unitOfWork.getProviderRepository(trxId);
+    const vendorRepository = this.unitOfWork.getVendorRepository(trxId);
+    const warehouseItemRepository =
+      this.unitOfWork.getWarehouseItemRepository(trxId);
 
     const [vendorResult, providerResult] = await Promise.all([
-      this.vendorObjectionRepository.getOneById(new UuidVO(vendorId)),
-      this.providerObjectionRepository.getOneById(new UuidVO(providerId)),
+      vendorRepository.getOneById(new UuidVO(vendorId)),
+      providerRepository.getOneById(new UuidVO(providerId)),
     ]);
 
     const vendor = vendorResult.unwrap();
@@ -51,6 +57,6 @@ export class CreateWarehouseItemCommandHandler {
       provider,
     });
 
-    return this.warehouseItemObjectionRepository.create(warehouseItemEntity);
+    return warehouseItemRepository.create(warehouseItemEntity);
   }
 }

@@ -22,6 +22,14 @@ export interface OrderEntityProps {
   repairParts?: WarehouseItemEntity[];
 }
 
+interface EndDiagnosticProps {
+  price?: MoneyVO;
+  repairParts?: WarehouseItemEntity[];
+  deadline: DateVO;
+  equipmentCondition: string;
+  work: WorkEntity;
+}
+
 export class OrderEntity extends EntityBase<OrderEntityProps> {
   protected readonly _id: IdVO;
 
@@ -46,6 +54,16 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
   public startDiagnostic(deadline: DateVO) {
     this.props.status = OrderStatus.DIAGNOSTIC;
     this.props.deadline = deadline;
+
+    this.updatedAtNow();
+    this.validate();
+  }
+
+  public endDiagnostic(props: EndDiagnosticProps) {
+    this.props.status = OrderStatus.DIAGNOSED;
+    this.props.deadline = props.deadline;
+    this.props.equipmentCondition = props.equipmentCondition;
+    this.props.work = props.work;
 
     this.updatedAtNow();
     this.validate();

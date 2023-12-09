@@ -3,11 +3,11 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtConfigService, JwtServiceAdapter } from '@src/common';
 import { GetStaffReadDao } from '@modules/staff/database/read-model';
-import { readDaoProviders, repositories } from '@modules/staff/database';
+import { readDaoProviders } from '@modules/staff/database';
 import { queryControllers, queryHandlers } from '@modules/staff/queries';
 import { commandControllers, commandHandlers } from '@modules/staff/commands';
 import { JwtStrategy } from '@src/common/guards/auth/strategies/jwt.strategy';
-import { StaffObjectionRepository } from '@modules/staff/database/repositories';
+import { StaffUnitOfWork } from '@modules/staff/database/unit-of-work';
 
 @Module({
   imports: [
@@ -20,9 +20,9 @@ import { StaffObjectionRepository } from '@modules/staff/database/repositories';
     JwtServiceAdapter,
     ...readDaoProviders,
     ...queryHandlers,
-    ...repositories,
     ...commandHandlers,
+    StaffUnitOfWork,
   ],
-  exports: [GetStaffReadDao, StaffObjectionRepository],
+  exports: [GetStaffReadDao],
 })
 export class StaffModule {}

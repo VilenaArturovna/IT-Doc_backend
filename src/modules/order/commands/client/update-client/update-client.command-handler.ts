@@ -1,25 +1,36 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { UpdateClientCommand } from './update-client.command';
-import { ClientObjectionRepository } from '@modules/order/database/repositories';
 import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
 import { ConflictException } from '@libs/exceptions';
 import { EmailVO, PhoneVO, UuidVO } from '@libs/value-objects';
 import { ClientEntity } from '@modules/order/domain';
+import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
 
 @CommandHandler(UpdateClientCommand)
-export class UpdateClientCommandHandler {
-  constructor(private readonly repository: ClientObjectionRepository) {}
+export class UpdateClientCommandHandler extends CommandHandlerBase<
+  OrderUnitOfWork,
+  ClientEntity
+> {
+  constructor(unitOfWork: OrderUnitOfWork) {
+    super(unitOfWork);
+  }
 
-  async execute(
+  async handle(
     command: UpdateClientCommand,
   ): Promise<Result<ClientEntity, ExceptionBase>> {
-    const { id, name, ...payload } = command.payload;
+    const {
+      trxId,
+      payload: { id, name, ...payload },
+    } = command;
 
-    const clientResult = await this.repository.getOneById(new UuidVO(id));
+    const repository = this.unitOfWork.getClientRepository(trxId);
+
+    const clientResult = await repository.getOneById(new UuidVO(id));
     const client = clientResult.unwrap();
 
-    const existedClientResult = await this.repository.getOneByName(name);
+    const existedClientResult = await repository.getOneByName(name);
     if (
       !existedClientResult.isErr &&
       existedClientResult.unwrap().id.value !== id
@@ -40,6 +51,6 @@ export class UpdateClientCommandHandler {
       beneficiary: payload.beneficiary ?? client.beneficiary,
     });
 
-    return this.repository.update(client);
+    return repository.update(client);
   }
 }

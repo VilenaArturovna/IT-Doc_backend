@@ -9,6 +9,7 @@ OrmEntity = Entity + 'OrmEntity'
 OrmMapper = Entity + 'OrmMapper'
 ObjectionRepository = Entity + 'ObjectionRepository' %>
 import { ObjectionRepositoryBase } from '@libs/base-classes';
+import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 import { <%= DomainEntity%>, <%= EntityProps %> } from '@modules/<%= module %>/domain';
 import { <%= ObjectionOrmEntity %>, <%= OrmEntity %> } from '../entities';
 import { <%= OrmMapper %> } from '../mappers';
@@ -20,7 +21,10 @@ export class <%= ObjectionRepository %> extends ObjectionRepositoryBase<
   <%= ObjectionOrmEntity %>,
   <%= OrmMapper%>
 > {
-  constructor() {
-    super(<%= ObjectionOrmEntity %>, new <%= OrmMapper %>());
+  constructor(
+    protected readonly unitOfWork: UnitOfWork,
+    protected readonly trxId: TrxId,
+  ) {
+    super(<%= ObjectionOrmEntity %>, new <%= OrmMapper %>(), unitOfWork, trxId);
   }
 }

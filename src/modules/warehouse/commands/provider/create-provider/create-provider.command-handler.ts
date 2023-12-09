@@ -1,21 +1,32 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { CreateProviderCommand } from './create-provider.command';
-import { ProviderObjectionRepository } from '@modules/warehouse/database/repositories';
 import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
 import { ConflictException } from '@libs/exceptions';
 import { ProviderEntity } from '@modules/warehouse/domain';
+import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { WarehouseUnitOfWork } from '@modules/warehouse/database/unit-of-work';
 
 @CommandHandler(CreateProviderCommand)
-export class CreateProviderCommandHandler {
-  constructor(private readonly repository: ProviderObjectionRepository) {}
+export class CreateProviderCommandHandler extends CommandHandlerBase<
+  WarehouseUnitOfWork,
+  ProviderEntity
+> {
+  constructor(unitOfWork: WarehouseUnitOfWork) {
+    super(unitOfWork);
+  }
 
-  async execute(
+  async handle(
     command: CreateProviderCommand,
   ): Promise<Result<ProviderEntity, ExceptionBase>> {
-    const { title, description } = command.payload;
+    const {
+      trxId,
+      payload: { title, description },
+    } = command;
 
-    const existedProviderResult = await this.repository.getOneByTitle(title);
+    const repository = this.unitOfWork.getProviderRepository(trxId);
+
+    const existedProviderResult = await repository.getOneByTitle(title);
 
     if (!existedProviderResult.isErr) {
       return Result.fail(
@@ -28,6 +39,6 @@ export class CreateProviderCommandHandler {
       description,
     });
 
-    return this.repository.create(provider);
+    return repository.create(provider);
   }
 }

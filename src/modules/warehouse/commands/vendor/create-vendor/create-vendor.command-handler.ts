@@ -1,21 +1,32 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { CreateVendorCommand } from './create-vendor.command';
-import { VendorObjectionRepository } from '@modules/warehouse/database/repositories';
 import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
 import { VendorEntity } from '@modules/warehouse/domain';
 import { ConflictException } from '@libs/exceptions';
+import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { WarehouseUnitOfWork } from '@modules/warehouse/database/unit-of-work';
 
 @CommandHandler(CreateVendorCommand)
-export class CreateVendorCommandHandler {
-  constructor(private readonly repository: VendorObjectionRepository) {}
+export class CreateVendorCommandHandler extends CommandHandlerBase<
+  WarehouseUnitOfWork,
+  VendorEntity
+> {
+  constructor(unitOfWork: WarehouseUnitOfWork) {
+    super(unitOfWork);
+  }
 
-  async execute(
+  async handle(
     command: CreateVendorCommand,
   ): Promise<Result<VendorEntity, ExceptionBase>> {
-    const { title, description } = command.payload;
+    const {
+      trxId,
+      payload: { title, description },
+    } = command;
 
-    const existedVendorResult = await this.repository.getOneByTitle(title);
+    const repository = this.unitOfWork.getVendorRepository(trxId);
+
+    const existedVendorResult = await repository.getOneByTitle(title);
 
     if (!existedVendorResult.isErr) {
       return Result.fail(
@@ -28,6 +39,6 @@ export class CreateVendorCommandHandler {
       description,
     });
 
-    return this.repository.create(vendorEntity);
+    return repository.create(vendorEntity);
   }
 }

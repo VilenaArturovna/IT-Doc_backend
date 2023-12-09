@@ -1,21 +1,32 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { UpdateStaffCommand } from './update-staff.command';
-import { StaffObjectionRepository } from '@modules/staff/database/repositories';
 import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
 import { DateVO, PhoneVO, UrlVO, UuidVO } from '@libs/value-objects';
 import { StaffEntity } from '@modules/staff/domain';
+import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { StaffUnitOfWork } from '@modules/staff/database/unit-of-work';
 
 @CommandHandler(UpdateStaffCommand)
-export class UpdateStaffCommandHandler {
-  constructor(private readonly repository: StaffObjectionRepository) {}
+export class UpdateStaffCommandHandler extends CommandHandlerBase<
+  StaffUnitOfWork,
+  StaffEntity
+> {
+  constructor(unitOfWork: StaffUnitOfWork) {
+    super(unitOfWork);
+  }
 
-  async execute(
+  async handle(
     command: UpdateStaffCommand,
   ): Promise<Result<StaffEntity, ExceptionBase>> {
-    const { id, ...payload } = command.payload;
+    const {
+      payload: { id, ...payload },
+      trxId,
+    } = command;
 
-    const staffResult = await this.repository.getOneById(new UuidVO(id));
+    const repository = this.unitOfWork.getStaffRepository(command.trxId);
+
+    const staffResult = await repository.getOneById(new UuidVO(id));
     const staff = staffResult.unwrap();
 
     staff.update({
@@ -26,6 +37,6 @@ export class UpdateStaffCommandHandler {
       birthdate: payload.birthdate ? new DateVO(payload.birthdate) : undefined,
     });
 
-    return this.repository.update(staff);
+    return repository.update(staff);
   }
 }

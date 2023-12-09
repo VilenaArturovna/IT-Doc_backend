@@ -4,6 +4,7 @@ import { VendorObjectionOrmEntity, VendorOrmEntity } from '../entities';
 import { VendorOrmMapper } from '../mappers';
 import { Result } from '@libs/utils';
 import { NotFoundException } from '@libs/exceptions';
+import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 
 export class VendorObjectionRepository extends ObjectionRepositoryBase<
   VendorEntity,
@@ -12,8 +13,11 @@ export class VendorObjectionRepository extends ObjectionRepositoryBase<
   VendorObjectionOrmEntity,
   VendorOrmMapper
 > {
-  constructor() {
-    super(VendorObjectionOrmEntity, new VendorOrmMapper());
+  constructor(
+    protected readonly unitOfWork: UnitOfWork,
+    protected readonly trxId: TrxId,
+  ) {
+    super(VendorObjectionOrmEntity, new VendorOrmMapper(), unitOfWork, trxId);
   }
 
   async getOneByTitle(

@@ -1,22 +1,30 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { CreateStaffCommand } from './create-staff.command';
-import { StaffObjectionRepository } from '@modules/staff/database/repositories';
 import { generatePassword, Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
 import { StaffEntity } from '@modules/staff/domain';
 import { DateVO, EmailVO, HashPasswordVO, PhoneVO } from '@libs/value-objects';
 import { ConflictException } from '@libs/exceptions';
+import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { StaffUnitOfWork } from '@modules/staff/database/unit-of-work';
 
 @CommandHandler(CreateStaffCommand)
-export class CreateStaffCommandHandler {
-  constructor(private readonly repository: StaffObjectionRepository) {}
+export class CreateStaffCommandHandler extends CommandHandlerBase<
+  StaffUnitOfWork,
+  StaffEntity
+> {
+  constructor(unitOfWork: StaffUnitOfWork) {
+    super(unitOfWork);
+  }
 
-  async execute(
+  async handle(
     command: CreateStaffCommand,
   ): Promise<Result<StaffEntity, ExceptionBase>> {
-    const payload = command.payload;
+    const { payload, trxId } = command;
 
-    const existedEmailResult = await this.repository.getOneByEmail(
+    const repository = this.unitOfWork.getStaffRepository(command.trxId);
+
+    const existedEmailResult = await repository.getOneByEmail(
       new EmailVO(payload.email),
     );
     if (!existedEmailResult.isErr) {
@@ -25,7 +33,7 @@ export class CreateStaffCommandHandler {
       );
     }
 
-    const existedPhoneResult = await this.repository.getOneByPhone(
+    const existedPhoneResult = await repository.getOneByPhone(
       new PhoneVO(payload.phone),
     );
     if (!existedPhoneResult.isErr) {
@@ -49,6 +57,6 @@ export class CreateStaffCommandHandler {
 
     //todo: send email this password
 
-    return this.repository.create(newStaff);
+    return repository.create(newStaff);
   }
 }

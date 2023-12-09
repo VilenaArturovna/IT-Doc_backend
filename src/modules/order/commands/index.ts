@@ -17,6 +17,8 @@ import {
 import {
   CreateOrderCommandHandler,
   CreateOrderController,
+  OrderHasBeenDiagnosedCommandHandler,
+  OrderHasBeenDiagnosedController,
   PutInQueueForDiagnosticsCommandHandler,
   PutInQueueForDiagnosticsController,
   StartDiagnosticCommandHandler,
@@ -38,6 +40,7 @@ export const commandControllers = [
   UpdateDeadlineController,
   PutInQueueForDiagnosticsController,
   StartDiagnosticController,
+  OrderHasBeenDiagnosedController,
 ];
 export const commandHandlers = [
   CreateWorkCommandHandler,
@@ -50,4 +53,5 @@ export const commandHandlers = [
   UpdateDeadlineCommandHandler,
   PutInQueueForDiagnosticsCommandHandler,
   StartDiagnosticCommandHandler,
+  OrderHasBeenDiagnosedCommandHandler,
 ];

@@ -5,10 +5,11 @@ to: src/modules/<%= module %>/database/entities/<%= entity %>/<%= entity %>.obje
 ObjectionOrmEntity = Entity + 'ObjectionOrmEntity'
 OrmEntityProps = Entity + 'OrmEntityProps'
 Model = Entity + 'Model' %>
+import { Tables } from '@libs/tables';
 import { <%= Model %>, <%= OrmEntityProps %>} from './<%= entity %>.orm-entity';
 
 export class <%= ObjectionOrmEntity %> extends <%= Model %> {
-  static tableName = '';
+  static tableName = Tables.;
 
   static create(props: <%= OrmEntityProps %>) {
     return this.fromJson(props);
@@ -17,7 +18,7 @@ export class <%= ObjectionOrmEntity %> extends <%= Model %> {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['id', 'createdAt', 'updatedAt'],
+      required: [],
       properties: {
         id: { type: 'string' },
         createdAt: { type: 'string' },

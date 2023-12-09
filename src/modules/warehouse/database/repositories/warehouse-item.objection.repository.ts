@@ -11,6 +11,7 @@ import { WarehouseItemOrmMapper } from '../mappers';
 import { IdVO } from '@libs/value-objects';
 import { Result } from '@libs/utils';
 import { NotFoundException } from '@libs/exceptions';
+import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 
 export class WarehouseItemObjectionRepository extends ObjectionRepositoryBase<
   WarehouseItemEntity,
@@ -19,8 +20,16 @@ export class WarehouseItemObjectionRepository extends ObjectionRepositoryBase<
   WarehouseItemObjectionOrmEntity,
   WarehouseItemOrmMapper
 > {
-  constructor() {
-    super(WarehouseItemObjectionOrmEntity, new WarehouseItemOrmMapper());
+  constructor(
+    protected readonly unitOfWork: UnitOfWork,
+    protected readonly trxId: TrxId,
+  ) {
+    super(
+      WarehouseItemObjectionOrmEntity,
+      new WarehouseItemOrmMapper(),
+      unitOfWork,
+      trxId,
+    );
   }
 
   async getOneById(

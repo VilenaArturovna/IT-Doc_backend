@@ -5,6 +5,7 @@ import { DeadlineOrmMapper } from '../mappers';
 import { Result } from '@libs/utils';
 import { NotFoundException } from '@libs/exceptions';
 import { OrderStatus } from '@modules/order/types';
+import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 
 export class DeadlineObjectionRepository extends ObjectionRepositoryBase<
   DeadlineEntity,
@@ -13,8 +14,16 @@ export class DeadlineObjectionRepository extends ObjectionRepositoryBase<
   DeadlineObjectionOrmEntity,
   DeadlineOrmMapper
 > {
-  constructor() {
-    super(DeadlineObjectionOrmEntity, new DeadlineOrmMapper());
+  constructor(
+    protected readonly unitOfWork: UnitOfWork,
+    protected readonly trxId: TrxId,
+  ) {
+    super(
+      DeadlineObjectionOrmEntity,
+      new DeadlineOrmMapper(),
+      unitOfWork,
+      trxId,
+    );
   }
 
   async getOneByName(

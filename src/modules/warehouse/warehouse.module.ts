@@ -4,17 +4,18 @@ import {
   commandControllers,
   commandHandlers,
 } from '@modules/warehouse/commands';
-import { readDaoProviders, repositories } from '@modules/warehouse/database';
+import { readDaoProviders } from '@modules/warehouse/database';
 import { queryControllers, queryHandlers } from '@modules/warehouse/queries';
+import { WarehouseUnitOfWork } from '@modules/warehouse/database/unit-of-work';
 
 @Module({
   imports: [CqrsModule],
   controllers: [...commandControllers, ...queryControllers],
   providers: [
     ...commandHandlers,
-    ...repositories,
     ...readDaoProviders,
     ...queryHandlers,
+    WarehouseUnitOfWork,
   ],
 })
 export class WarehouseModule {}

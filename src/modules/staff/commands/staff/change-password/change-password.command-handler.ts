@@ -1,25 +1,33 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { ChangePasswordCommand } from './change-password.command';
-import { StaffObjectionRepository } from '@modules/staff/database/repositories';
 import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
 import { UuidVO } from '@libs/value-objects';
+import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { StaffUnitOfWork } from '@modules/staff/database/unit-of-work';
 
 @CommandHandler(ChangePasswordCommand)
-export class ChangePasswordCommandHandler {
-  constructor(private readonly repository: StaffObjectionRepository) {}
+export class ChangePasswordCommandHandler extends CommandHandlerBase<
+  StaffUnitOfWork,
+  void
+> {
+  constructor(unitOfWork: StaffUnitOfWork) {
+    super(unitOfWork);
+  }
 
-  async execute(
+  async handle(
     command: ChangePasswordCommand,
   ): Promise<Result<void, ExceptionBase>> {
     const { id, oldPassword, newPassword } = command.payload;
 
-    const staffResult = await this.repository.getOneById(new UuidVO(id));
+    const repository = this.unitOfWork.getStaffRepository(command.trxId);
+
+    const staffResult = await repository.getOneById(new UuidVO(id));
     const staff = staffResult.unwrap();
 
     staff.changePassword(oldPassword, newPassword);
 
-    const updateResult = await this.repository.update(staff);
+    const updateResult = await repository.update(staff);
     updateResult.unwrap();
 
     return Result.ok();

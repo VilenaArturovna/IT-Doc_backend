@@ -1,25 +1,36 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { UpdateProviderCommand } from './update-provider.command';
-import { ProviderObjectionRepository } from '@modules/warehouse/database/repositories';
 import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
 import { ConflictException } from '@libs/exceptions';
 import { UuidVO } from '@libs/value-objects';
 import { ProviderEntity } from '@modules/warehouse/domain';
+import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { WarehouseUnitOfWork } from '@modules/warehouse/database/unit-of-work';
 
 @CommandHandler(UpdateProviderCommand)
-export class UpdateProviderCommandHandler {
-  constructor(private readonly repository: ProviderObjectionRepository) {}
+export class UpdateProviderCommandHandler extends CommandHandlerBase<
+  WarehouseUnitOfWork,
+  ProviderEntity
+> {
+  constructor(unitOfWork: WarehouseUnitOfWork) {
+    super(unitOfWork);
+  }
 
-  async execute(
+  async handle(
     command: UpdateProviderCommand,
   ): Promise<Result<ProviderEntity, ExceptionBase>> {
-    const { id, title, description } = command.payload;
+    const {
+      trxId,
+      payload: { id, title, description },
+    } = command;
 
-    const providerResult = await this.repository.getOneById(new UuidVO(id));
+    const repository = this.unitOfWork.getProviderRepository(trxId);
+
+    const providerResult = await repository.getOneById(new UuidVO(id));
     const provider = providerResult.unwrap();
 
-    const existedProviderResult = await this.repository.getOneByTitle(title);
+    const existedProviderResult = await repository.getOneByTitle(title);
 
     if (
       !existedProviderResult.isErr &&
@@ -32,6 +43,6 @@ export class UpdateProviderCommandHandler {
 
     provider.update({ title, description });
 
-    return this.repository.update(provider);
+    return repository.update(provider);
   }
 }

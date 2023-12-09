@@ -4,6 +4,7 @@ import { WorkObjectionOrmEntity, WorkOrmEntity } from '../entities';
 import { WorkOrmMapper } from '../mappers';
 import { Result } from '@libs/utils';
 import { NotFoundException } from '@libs/exceptions';
+import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 
 export class WorkObjectionRepository extends ObjectionRepositoryBase<
   WorkEntity,
@@ -12,8 +13,11 @@ export class WorkObjectionRepository extends ObjectionRepositoryBase<
   WorkObjectionOrmEntity,
   WorkOrmMapper
 > {
-  constructor() {
-    super(WorkObjectionOrmEntity, new WorkOrmMapper());
+  constructor(
+    protected readonly unitOfWork: UnitOfWork,
+    protected readonly trxId: TrxId,
+  ) {
+    super(WorkObjectionOrmEntity, new WorkOrmMapper(), unitOfWork, trxId);
   }
 
   async getWorkByName(

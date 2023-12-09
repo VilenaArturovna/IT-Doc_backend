@@ -1,19 +1,27 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { ResetPasswordCommand } from './reset-password.command';
-import { StaffObjectionRepository } from '@modules/staff/database/repositories';
 import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
 import { EmailVO, HashVO } from '@libs/value-objects';
 import { NotFoundException } from '@libs/exceptions';
+import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { StaffUnitOfWork } from '@modules/staff/database/unit-of-work';
 
 @CommandHandler(ResetPasswordCommand)
-export class ResetPasswordCommandHandler {
-  constructor(private readonly repository: StaffObjectionRepository) {}
+export class ResetPasswordCommandHandler extends CommandHandlerBase<
+  StaffUnitOfWork,
+  void
+> {
+  constructor(unitOfWork: StaffUnitOfWork) {
+    super(unitOfWork);
+  }
 
-  async execute(
+  async handle(
     command: ResetPasswordCommand,
   ): Promise<Result<void, ExceptionBase>> {
-    const staffResult = await this.repository.getOneByEmail(
+    const repository = this.unitOfWork.getStaffRepository(command.trxId);
+
+    const staffResult = await repository.getOneByEmail(
       new EmailVO(command.payload.email),
     );
 
@@ -25,7 +33,7 @@ export class ResetPasswordCommandHandler {
 
     staff.resetPasswordHash = await HashVO.generateHash(staff.id.value);
 
-    const updateResult = await this.repository.update(staff);
+    const updateResult = await repository.update(staff);
     updateResult.unwrap();
 
     //todo: send email

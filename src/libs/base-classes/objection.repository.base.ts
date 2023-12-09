@@ -1,10 +1,12 @@
-import { EntityBase } from './entity.base';
-import { IdVO } from '../value-objects';
-import { OrmMapper } from './orm-mapper.base';
-import { Result } from '../utils';
-import { ExceptionBase } from './exception.base';
-import { NotFoundException } from '../exceptions';
+import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 import { Model, ModelClass } from 'objection';
+
+import { NotFoundException } from '../exceptions';
+import { Result } from '../utils';
+import { IdVO } from '../value-objects';
+import { EntityBase } from './entity.base';
+import { ExceptionBase } from './exception.base';
+import { OrmMapper } from './orm-mapper.base';
 
 export interface ObjectionRepository<Entity> {
   getOneById(id: IdVO): Promise<Result<Entity, ExceptionBase>>;
@@ -24,11 +26,16 @@ export abstract class ObjectionRepositoryBase<
   constructor(
     protected readonly repository: ModelClass<ObjectionOrmEntity>,
     protected readonly mapper: Mapper,
+    protected readonly unitOfWork: UnitOfWork,
+    protected readonly trxId: TrxId,
   ) {}
 
   async getOneById(id: IdVO): Promise<Result<Entity, ExceptionBase>> {
+    const transaction = this.unitOfWork.getTrx(this.trxId);
     try {
-      const ormEntity = await this.repository.query().findById(id.value);
+      const ormEntity = await this.repository
+        .query(transaction)
+        .findById(id.value);
 
       if (!ormEntity) {
         return Result.fail(new NotFoundException('Entity not found'));
@@ -45,10 +52,11 @@ export abstract class ObjectionRepositoryBase<
   }
 
   async create(entity: Entity): Promise<Result<Entity, ExceptionBase>> {
+    const transaction = this.unitOfWork.getTrx(this.trxId);
     try {
       const ormEntity = this.mapper.toOrmEntity(entity);
 
-      await this.repository.query().insert(ormEntity);
+      await this.repository.query(transaction).insert(ormEntity);
 
       return Result.ok(entity);
     } catch (e) {
@@ -57,9 +65,10 @@ export abstract class ObjectionRepositoryBase<
   }
 
   async getManyByIds(ids: IdVO[]): Promise<Result<Entity[], ExceptionBase>> {
+    const transaction = this.unitOfWork.getTrx(this.trxId);
     try {
       const ormEntities = await this.repository
-        .query()
+        .query(transaction)
         .findByIds(ids.map((id) => id.value));
 
       if (ids.length !== (ormEntities as unknown as OrmEntity[]).length) {
@@ -77,14 +86,17 @@ export abstract class ObjectionRepositoryBase<
   }
 
   async remove(id: IdVO): Promise<Result<void, ExceptionBase>> {
+    const transaction = this.unitOfWork.getTrx(this.trxId);
     try {
-      const ormEntity = await this.repository.query().findById(id.value);
+      const ormEntity = await this.repository
+        .query(transaction)
+        .findById(id.value);
 
       if (!ormEntity) {
         return Result.fail(new NotFoundException('Entity not found'));
       }
 
-      await this.repository.query().deleteById(id.value);
+      await this.repository.query(transaction).deleteById(id.value);
 
       return Result.ok();
     } catch (e) {
@@ -93,9 +105,11 @@ export abstract class ObjectionRepositoryBase<
   }
 
   async update(entity: Entity): Promise<Result<Entity, ExceptionBase>> {
+    const transaction = this.unitOfWork.getTrx(this.trxId);
+
     try {
       await this.repository
-        .query()
+        .query(transaction)
         .findById(entity.id.value)
         .patch(this.mapper.toOrmEntity(entity));
 

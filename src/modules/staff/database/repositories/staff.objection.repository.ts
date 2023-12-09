@@ -5,6 +5,7 @@ import { StaffOrmMapper } from '../mappers';
 import { EmailVO, HashVO, PhoneVO } from '@libs/value-objects';
 import { Result } from '@libs/utils';
 import { NotFoundException } from '@libs/exceptions';
+import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 
 export class StaffObjectionRepository extends ObjectionRepositoryBase<
   StaffEntity,
@@ -13,8 +14,11 @@ export class StaffObjectionRepository extends ObjectionRepositoryBase<
   StaffObjectionOrmEntity,
   StaffOrmMapper
 > {
-  constructor() {
-    super(StaffObjectionOrmEntity, new StaffOrmMapper());
+  constructor(
+    protected readonly unitOfWork: UnitOfWork,
+    protected readonly trxId: TrxId,
+  ) {
+    super(StaffObjectionOrmEntity, new StaffOrmMapper(), unitOfWork, trxId);
   }
 
   async getOneByPhone(

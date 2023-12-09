@@ -1,33 +1,39 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { UpdateWarehouseItemCommand } from './update-warehouse-item.command';
-import {
-  ProviderObjectionRepository,
-  VendorObjectionRepository,
-  WarehouseItemObjectionRepository,
-} from '@modules/warehouse/database/repositories';
 import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
 import { Currency, DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
 import { WarehouseItemEntity } from '@modules/warehouse/domain';
+import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { WarehouseUnitOfWork } from '@modules/warehouse/database/unit-of-work';
 
 @CommandHandler(UpdateWarehouseItemCommand)
-export class UpdateWarehouseItemCommandHandler {
-  constructor(
-    private readonly warehouseItemObjectionRepository: WarehouseItemObjectionRepository,
-    private readonly providerObjectionRepository: ProviderObjectionRepository,
-    private readonly vendorObjectionRepository: VendorObjectionRepository,
-  ) {}
+export class UpdateWarehouseItemCommandHandler extends CommandHandlerBase<
+  WarehouseUnitOfWork,
+  WarehouseItemEntity
+> {
+  constructor(unitOfWork: WarehouseUnitOfWork) {
+    super(unitOfWork);
+  }
 
-  async execute(
+  async handle(
     command: UpdateWarehouseItemCommand,
   ): Promise<Result<WarehouseItemEntity, ExceptionBase>> {
-    const { vendorId, providerId, id, ...payload } = command.payload;
+    const {
+      trxId,
+      payload: { id, vendorId, providerId, ...payload },
+    } = command;
+
+    const providerRepository = this.unitOfWork.getProviderRepository(trxId);
+    const vendorRepository = this.unitOfWork.getVendorRepository(trxId);
+    const warehouseItemRepository =
+      this.unitOfWork.getWarehouseItemRepository(trxId);
 
     const [warehouseItemResult, vendorResult, providerResult] =
       await Promise.all([
-        this.warehouseItemObjectionRepository.getOneById(new UuidVO(id)),
-        this.vendorObjectionRepository.getOneById(new UuidVO(vendorId)),
-        this.providerObjectionRepository.getOneById(new UuidVO(providerId)),
+        warehouseItemRepository.getOneById(new UuidVO(id)),
+        vendorRepository.getOneById(new UuidVO(vendorId)),
+        providerRepository.getOneById(new UuidVO(providerId)),
       ]);
 
     const warehouseItem = warehouseItemResult.unwrap();
@@ -52,6 +58,6 @@ export class UpdateWarehouseItemCommandHandler {
       provider,
     });
 
-    return this.warehouseItemObjectionRepository.update(warehouseItem);
+    return warehouseItemRepository.update(warehouseItem);
   }
 }

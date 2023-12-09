@@ -20,13 +20,13 @@ export class <%= OrmMapper %> extends OrmMapper<
   <%= EntityProps %>,
   <%= OrmEntity %>
 > {
-  protected getEntityConstructor(ormEntity: <%= OrmEntity %>): {
-    new (props: CreateEntityProps<<%= EntityProps %>>): <%= DomainEntity%>;
+  protected getEntityConstructor(): {
+    new (props: CreateEntityProps< <%= EntityProps %>>): <%= DomainEntity%>;
   } {
     return <%= DomainEntity%>;
   }
 
-  protected getOrmEntityConstructor(entity: <%= DomainEntity%>): {
+  protected getOrmEntityConstructor(): {
     new (props: <%= OrmEntityProps %>,): <%= OrmEntity %>;
   } {
     return <%= OrmEntity %>;

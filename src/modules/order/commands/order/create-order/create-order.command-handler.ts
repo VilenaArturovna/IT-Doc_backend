@@ -1,32 +1,36 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { CreateOrderCommand } from './create-order.command';
-import {
-  ClientObjectionRepository,
-  DeadlineObjectionRepository,
-  OrderObjectionRepository,
-} from '@modules/order/database/repositories';
 import { Result } from '@libs/utils';
 import { ExceptionBase } from '@libs/base-classes';
-import { StaffObjectionRepository } from '@modules/staff/database/repositories';
 import { OrderEntity } from '@modules/order/domain';
 import { Currency, DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
 import { OrderStatus } from '@modules/order/types';
+import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
+import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
 
 @CommandHandler(CreateOrderCommand)
-export class CreateOrderCommandHandler {
-  constructor(
-    private readonly orderRepository: OrderObjectionRepository,
-    private readonly clientRepository: ClientObjectionRepository,
-    private readonly staffRepository: StaffObjectionRepository,
-    private readonly deadlineRepository: DeadlineObjectionRepository,
-  ) {}
+export class CreateOrderCommandHandler extends CommandHandlerBase<
+  OrderUnitOfWork,
+  OrderEntity
+> {
+  constructor(unitOfWork: OrderUnitOfWork) {
+    super(unitOfWork);
+  }
 
-  async execute(
+  async handle(
     command: CreateOrderCommand,
   ): Promise<Result<OrderEntity, ExceptionBase>> {
-    const { clientId, responsibleStaffId, ...payload } = command.payload;
+    const {
+      trxId,
+      payload: { clientId, responsibleStaffId, ...payload },
+    } = command;
 
-    const clientResult = await this.clientRepository.getOneById(
+    const orderRepository = this.unitOfWork.getOrderRepository(trxId);
+    const clientRepository = this.unitOfWork.getClientRepository(trxId);
+    const staffRepository = this.unitOfWork.getStaffRepository(trxId);
+    const deadlineRepository = this.unitOfWork.getDeadlineRepository(trxId);
+
+    const clientResult = await clientRepository.getOneById(
       new UuidVO(clientId),
     );
     const client = clientResult.unwrap();
@@ -34,7 +38,7 @@ export class CreateOrderCommandHandler {
     let staff;
 
     if (responsibleStaffId) {
-      const staffResult = await this.staffRepository.getOneById(
+      const staffResult = await staffRepository.getOneById(
         new UuidVO(responsibleStaffId),
       );
       staff = staffResult.unwrap();
@@ -44,9 +48,7 @@ export class CreateOrderCommandHandler {
       ? OrderStatus.REGISTERED
       : OrderStatus.IN_DIAGNOSTICS_QUEUE;
 
-    const deadlineEntityResult = await this.deadlineRepository.getOneByName(
-      status,
-    );
+    const deadlineEntityResult = await deadlineRepository.getOneByName(status);
     const deadlineEntity = deadlineEntityResult.unwrap();
 
     const deadline = DateVO.now().addMinutes(
@@ -67,7 +69,7 @@ export class CreateOrderCommandHandler {
       price: MoneyVO.toVO({ amount: 0, currency: Currency.RUB }),
     });
 
-    const createResult = await this.orderRepository.create(order);
+    const createResult = await orderRepository.create(order);
     createResult.unwrap();
 
     return Result.ok(order);
