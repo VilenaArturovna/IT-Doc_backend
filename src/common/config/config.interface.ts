@@ -17,14 +17,8 @@ export interface Config {
   jwt: {
     secret: string;
   };
-  smtp: {
-    host: string;
-    port: number;
-    user: string;
-    pass: string;
-  };
-  site: {
-    main: string;
-    resetPassword: string;
+  telegram: {
+    name: string;
+    token: string;
   };
 }

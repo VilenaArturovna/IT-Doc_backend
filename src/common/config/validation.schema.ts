@@ -1,4 +1,4 @@
-import * as Joi from '@hapi/joi';
+import * as Joi from 'joi';
 
 export const validationSchema = Joi.object({
   //APP
@@ -15,13 +15,7 @@ export const validationSchema = Joi.object({
   //JWT
   JWT_SECRET: Joi.string().required(),
 
-  //SMTP
-  SMTP_HOST: Joi.string().required(),
-  SMTP_PORT: Joi.number().required(),
-  SMTP_USER: Joi.string().required(),
-  SMTP_PASS: Joi.string().required(),
-
-  //SITE
-  SITE_MAIN: Joi.string().required(),
-  SITE_RESET_PASSWORD: Joi.string().required(),
+  //TELEGRAM
+  TG_BOT_TOKEN: Joi.string().required(),
+  TG_BOT_NAME: Joi.string().required(),
 });

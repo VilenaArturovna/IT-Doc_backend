@@ -9,9 +9,6 @@ export class StaffGetMeDaoModel {
   id: string;
 
   @ApiProperty()
-  email: string;
-
-  @ApiProperty()
   firstname: string;
 
   @ApiProperty()

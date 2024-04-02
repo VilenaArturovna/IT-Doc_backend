@@ -15,7 +15,6 @@ export class StaffGetMeObjectionReadDao extends StaffGetMeReadDao {
     const staff = await knex(Tables.STAFF)
       .select(
         'id',
-        'email',
         'phone',
         'firstname',
         'lastname',

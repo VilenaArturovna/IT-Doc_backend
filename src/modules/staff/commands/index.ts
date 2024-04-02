@@ -1,12 +1,8 @@
 import {
-  ForgotPasswordCommandHandler,
-  ForgotPasswordController,
-  ResetPasswordCommandHandler,
-  ResetPasswordController,
+  LoginViaTgCommandHandler,
+  LoginViaTgController,
 } from '@modules/staff/commands/auth';
 import {
-  ChangePasswordCommandHandler,
-  ChangePasswordController,
   CreateStaffCommandHandler,
   CreateStaffController,
   RemoveStaffCommandHandler,
@@ -19,19 +15,15 @@ export * from './auth';
 export * from './staff';
 
 export const commandControllers = [
-  ChangePasswordController,
+  LoginViaTgController,
   CreateStaffController,
   RemoveStaffController,
   UpdateStaffController,
-  ForgotPasswordController,
-  ResetPasswordController,
 ];
 
 export const commandHandlers = [
-  ChangePasswordCommandHandler,
+  LoginViaTgCommandHandler,
   CreateStaffCommandHandler,
   RemoveStaffCommandHandler,
   UpdateStaffCommandHandler,
-  ForgotPasswordCommandHandler,
-  ResetPasswordCommandHandler,
 ];

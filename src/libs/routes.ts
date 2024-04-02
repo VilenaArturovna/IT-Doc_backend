@@ -15,10 +15,7 @@ export const routes = {
     changePassword: 'change-password',
     getMe: 'get-me',
     auth: {
-      signIn: 'sign-in',
-      acceptInvite: 'accept-invite:hash',
-      forgotPassword: 'forgot-password',
-      resetPassword: 'reset-password',
+      login: 'login',
     },
   },
   warehouseItem: {

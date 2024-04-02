@@ -1,21 +1,21 @@
-import * as bcrypt from 'bcrypt';
-
-import { Knex } from 'knex';
 import {
   StaffObjectionOrmEntity,
   StaffOrmEntityProps,
 } from '@modules/staff/database/entities';
 import { Role } from '@modules/staff/types';
+import { Knex } from 'knex';
 
 export async function seed(knex: Knex): Promise<any> {
   const superAdmin: StaffOrmEntityProps = {
-    email: 'admin@itdoc.ru',
     firstname: 'super',
     lastname: 'admin',
     isRemoved: false,
     phone: '+79620496314',
     role: Role.ADMIN,
-    password: bcrypt.hashSync('qweQWE123$', 10),
+    tgUsername: 'vilena_arturovna',
+    tgId: '762652372',
+    avatar:
+      'https://t.me/i/userpic/320/GMaHJnJm7l9rWFOHeFjreAWklcnfbaGPvrhJn1PLRAI.jpg',
   };
 
   const { count } = await knex(StaffObjectionOrmEntity.tableName)

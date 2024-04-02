@@ -18,9 +18,6 @@ export class StaffResponseDto {
   lastname: string;
 
   @ApiProperty()
-  email: string;
-
-  @ApiProperty()
   role: string;
 
   @ApiProperty()
@@ -37,7 +34,6 @@ export class StaffResponseDto {
     this.id = entity.id.value;
     this.updatedAt = entity.updatedAt.ISOString;
     this.createdAt = entity.createdAt.ISOString;
-    this.email = props.email.value;
     this.firstname = props.firstname;
     this.lastname = props.lastname;
     this.birthdate = props.birthdate?.ISOString;

@@ -9,9 +9,6 @@ export class GetStaffDaoModel {
   id: string;
 
   @ApiProperty()
-  email: string;
-
-  @ApiProperty()
   firstname: string;
 
   @ApiProperty()

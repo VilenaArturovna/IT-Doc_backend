@@ -20,7 +20,6 @@ export class GetManyStaffObjectionReadDao extends GetManyStaffReadDao {
 
     const qb = knex(Tables.STAFF).select(
       'id',
-      'email',
       'phone',
       'firstname',
       'lastname',

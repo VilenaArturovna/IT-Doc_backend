@@ -1,28 +1,18 @@
 import { EntityBase } from '@libs/base-classes';
-import { ValidationException } from '@libs/exceptions';
-import {
-  DateVO,
-  EmailVO,
-  HashPasswordVO,
-  HashVO,
-  IdVO,
-  PhoneVO,
-  UrlVO,
-} from '@libs/value-objects';
+import { DateVO, IdVO, PhoneVO, UrlVO } from '@libs/value-objects';
 import { StaffHasEmptyFieldsError } from '@modules/staff/domain/errors';
 import { Role } from '@modules/staff/types';
 
 export interface StaffEntityProps {
   firstname: string;
   lastname: string;
-  email: EmailVO;
   phone: PhoneVO;
-  password: HashPasswordVO;
   birthdate?: DateVO;
   avatar?: UrlVO;
-  resetPasswordHash?: HashVO;
   role: Role;
   isRemoved: boolean;
+  tgId?: string;
+  tgUsername: string;
 }
 
 type UpdateStaffEntityProps = Pick<
@@ -44,6 +34,10 @@ export class StaffEntity extends EntityBase<StaffEntityProps> {
     };
   }
 
+  public get role() {
+    return this.props.role;
+  }
+
   public update(props: UpdateStaffEntityProps) {
     this.props.lastname = props.lastname;
     this.props.firstname = props.firstname;
@@ -54,51 +48,21 @@ export class StaffEntity extends EntityBase<StaffEntityProps> {
     this.validate();
   }
 
-  public changePassword(oldPassword: string, newPassword: string) {
-    if (oldPassword === newPassword) {
-      throw new ValidationException(
-        'Новый пароль должен быть отличным от старого',
-      );
-    }
-
-    const isValid = this.props.password.compare(oldPassword);
-
-    if (!isValid) {
-      throw new ValidationException('Старый пароль не совпадает');
-    }
-
-    this.props.password = new HashPasswordVO(newPassword);
-    this.updatedAtNow();
-  }
-
   public remove() {
     this.props.isRemoved = true;
     this.updatedAtNow();
   }
 
-  public set resetPasswordHash(value: HashVO) {
-    this.props.resetPasswordHash = value;
-    this.updatedAtNow();
-  }
-
-  public forgotPassword(password: string) {
-    const isEquals = this.props.password.compare(password);
-
-    if (isEquals) {
-      throw new ValidationException(
-        'Новый пароль должен быть отличным от старого',
-      );
-    }
-
-    this.props.password = new HashPasswordVO(password);
-    this.props.resetPasswordHash = undefined;
+  public activate(tgId: string, avatar?: UrlVO) {
+    this.props.tgId = tgId;
+    this.props.avatar = this.props.avatar ?? avatar;
     this.updatedAtNow();
   }
 
   protected validate() {
-    const { firstname, lastname, email, password, phone, role } = this.props;
+    const { firstname, lastname, phone, role, tgUsername } = this.props;
 
-    const requiredFields = [firstname, lastname, email, password, phone, role];
+    const requiredFields = [firstname, lastname, tgUsername, phone, role];
 
     if (requiredFields.some((f) => f === null || f === undefined)) {
       throw new StaffHasEmptyFieldsError();

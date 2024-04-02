@@ -2,7 +2,7 @@ import { ExceptionBase, ObjectionRepositoryBase } from '@libs/base-classes';
 import { NotFoundException } from '@libs/exceptions';
 import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 import { Result } from '@libs/utils';
-import { EmailVO, HashVO, PhoneVO } from '@libs/value-objects';
+import { PhoneVO } from '@libs/value-objects';
 import { StaffEntity, StaffEntityProps } from '@modules/staff/domain';
 
 import { StaffObjectionOrmEntity, StaffOrmEntity } from '../entities';
@@ -34,7 +34,7 @@ export class StaffObjectionRepository extends ObjectionRepositoryBase<
         return Result.fail(new NotFoundException('Entity not found'));
       }
 
-      const domainEntity = await this.mapper.toDomainEntity(ormEntity);
+      const domainEntity = this.mapper.toDomainEntity(ormEntity);
 
       return Result.ok(domainEntity);
     } catch (e) {
@@ -42,19 +42,19 @@ export class StaffObjectionRepository extends ObjectionRepositoryBase<
     }
   }
 
-  async getOneByEmail(
-    email: EmailVO,
+  async getOneByTgUsername(
+    tgUsername: string,
   ): Promise<Result<StaffEntity, ExceptionBase>> {
     try {
       const ormEntity = await this.repository
         .query()
-        .findOne('email', email.value);
+        .findOne('tgUsername', tgUsername);
 
       if (!ormEntity) {
         return Result.fail(new NotFoundException('Entity not found'));
       }
 
-      const domainEntity = await this.mapper.toDomainEntity(ormEntity);
+      const domainEntity = this.mapper.toDomainEntity(ormEntity);
 
       return Result.ok(domainEntity);
     } catch (e) {
@@ -62,19 +62,17 @@ export class StaffObjectionRepository extends ObjectionRepositoryBase<
     }
   }
 
-  async getOneByResetPasswordHash(
-    hash: HashVO,
+  async getOneByTgId(
+    tgId: string,
   ): Promise<Result<StaffEntity, ExceptionBase>> {
     try {
-      const ormEntity = await this.repository
-        .query()
-        .findOne('resetPasswordHash', hash.value);
+      const ormEntity = await this.repository.query().findOne('tgId', tgId);
 
       if (!ormEntity) {
         return Result.fail(new NotFoundException('Entity not found'));
       }
 
-      const domainEntity = await this.mapper.toDomainEntity(ormEntity);
+      const domainEntity = this.mapper.toDomainEntity(ormEntity);
 
       return Result.ok(domainEntity);
     } catch (e) {

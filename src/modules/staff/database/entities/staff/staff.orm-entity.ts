@@ -4,14 +4,13 @@ import { Role } from '@modules/staff/types';
 export interface StaffOrmEntityProps {
   firstname: string;
   lastname: string;
-  email: string;
   phone: string;
-  password: string;
   birthdate?: string;
   avatar?: string;
-  resetPasswordHash?: string;
   role: Role;
   isRemoved: boolean;
+  tgId?: string;
+  tgUsername: string;
 }
 
 export class StaffOrmEntity
@@ -20,25 +19,23 @@ export class StaffOrmEntity
 {
   firstname: string;
   lastname: string;
-  email: string;
   phone: string;
-  password: string;
   birthdate?: string;
   avatar?: string;
-  resetPasswordHash?: string;
   role: Role;
   isRemoved: boolean;
+  tgId?: string;
+  tgUsername: string;
 }
 
 export class StaffModel extends ModelBase implements StaffOrmEntity {
   firstname: string;
   lastname: string;
-  email: string;
   phone: string;
-  password: string;
   birthdate?: string;
   avatar?: string;
-  resetPasswordHash?: string;
   role: Role;
   isRemoved: boolean;
+  tgId?: string;
+  tgUsername: string;
 }

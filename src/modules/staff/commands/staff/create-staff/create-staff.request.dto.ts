@@ -2,7 +2,6 @@ import { Role } from '@modules/staff/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsDateString,
-  IsEmail,
   IsEnum,
   IsMobilePhone,
   IsNotEmpty,
@@ -22,8 +21,9 @@ export class CreateStaffRequestDto {
   lastname: string;
 
   @ApiProperty()
-  @IsEmail()
-  email: string;
+  @IsString()
+  @IsNotEmpty()
+  tgUsername: string;
 
   @ApiProperty({ example: '+79137773344' })
   @IsMobilePhone('ru-RU')

@@ -10,9 +10,6 @@ export class GetManyStaffItem {
   id: string;
 
   @ApiProperty()
-  email: string;
-
-  @ApiProperty()
   firstname: string;
 
   @ApiProperty()
