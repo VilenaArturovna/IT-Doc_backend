@@ -5,6 +5,7 @@ import { Currency, DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
 import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
 import { OrderEntity } from '@modules/order/domain';
 import { OrderStatus } from '@modules/order/types';
+import { StaffEntity } from '@modules/staff/domain';
 import { CommandHandler } from '@nestjs/cqrs';
 
 import { CreateOrderCommand } from './create-order.command';
@@ -36,7 +37,7 @@ export class CreateOrderCommandHandler extends CommandHandlerBase<
     );
     const client = clientResult.unwrap();
 
-    let staff;
+    let staff: StaffEntity;
 
     if (responsibleStaffId) {
       const staffResult = await staffRepository.getOneById(

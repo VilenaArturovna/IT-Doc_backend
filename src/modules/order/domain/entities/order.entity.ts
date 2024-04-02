@@ -64,6 +64,15 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
     this.props.deadline = props.deadline;
     this.props.equipmentCondition = props.equipmentCondition;
     this.props.work = props.work;
+    this.props.repairParts = props.repairParts;
+
+    this.updatedAtNow();
+    this.validate();
+  }
+
+  public takeToWork(deadline: DateVO) {
+    this.props.status = OrderStatus.IN_PROGRESS;
+    this.props.deadline = deadline;
 
     this.updatedAtNow();
     this.validate();

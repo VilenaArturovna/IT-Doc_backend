@@ -5,6 +5,7 @@ import { Currency, DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
 import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
 import { OrderEntity } from '@modules/order/domain';
 import { OrderStatus } from '@modules/order/types';
+import { WarehouseItemEntity } from '@modules/warehouse/domain';
 import { CommandHandler } from '@nestjs/cqrs';
 
 import { OrderHasBeenDiagnosedCommand } from './order-has-been-diagnosed.command';
@@ -49,14 +50,14 @@ export class OrderHasBeenDiagnosedCommandHandler extends CommandHandlerBase<
     );
     const work = workResult.unwrap();
 
-    let repairParts;
+    let repairParts: WarehouseItemEntity[];
 
     if (payload.repairParts) {
       const warehouseItemsResult = await warehouseItemRepository.getManyByIds(
         payload.repairParts.map((part) => new UuidVO(part.warehouseItemId)),
       );
 
-      //todo продолжить здесь
+      repairParts = warehouseItemsResult.unwrap();
     }
 
     order.endDiagnostic({
@@ -66,6 +67,7 @@ export class OrderHasBeenDiagnosedCommandHandler extends CommandHandlerBase<
       price: payload.price
         ? new MoneyVO({ amount: payload.price, currency: Currency.RUB })
         : undefined,
+      repairParts,
     });
 
     return orderRepository.update(order);

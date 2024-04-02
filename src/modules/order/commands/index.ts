@@ -19,6 +19,8 @@ import {
   PutInQueueForDiagnosticsController,
   StartDiagnosticCommandHandler,
   StartDiagnosticController,
+  TakeOrderToWorkCommandHandler,
+  TakeOrderToWorkController,
 } from '@modules/order/commands/order';
 import {
   CreateWorkCommandHandler,
@@ -41,6 +43,7 @@ export const commandControllers = [
   PutInQueueForDiagnosticsController,
   StartDiagnosticController,
   OrderHasBeenDiagnosedController,
+  TakeOrderToWorkController,
 ];
 export const commandHandlers = [
   CreateWorkCommandHandler,
@@ -54,4 +57,5 @@ export const commandHandlers = [
   PutInQueueForDiagnosticsCommandHandler,
   StartDiagnosticCommandHandler,
   OrderHasBeenDiagnosedCommandHandler,
+  TakeOrderToWorkCommandHandler,
 ];
