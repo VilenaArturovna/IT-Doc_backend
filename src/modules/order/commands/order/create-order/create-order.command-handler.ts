@@ -3,7 +3,7 @@ import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
 import { Result } from '@libs/utils';
 import { Currency, DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
 import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
-import { OrderEntity } from '@modules/order/domain';
+import { OrderEntity, OrderStageEntity } from '@modules/order/domain';
 import { OrderStatus } from '@modules/order/types';
 import { StaffEntity } from '@modules/staff/domain';
 import { CommandHandler } from '@nestjs/cqrs';
@@ -69,6 +69,13 @@ export class CreateOrderCommandHandler extends CommandHandlerBase<
       beneficiary: client.beneficiary,
       deadline,
       price: MoneyVO.toVO({ amount: 0, currency: Currency.RUB }),
+      stages: [
+        OrderStageEntity.create({
+          status,
+          deadline,
+          number: 1,
+        }),
+      ],
     });
 
     const createResult = await orderRepository.create(order);

@@ -41,7 +41,7 @@ export abstract class ObjectionRepositoryBase<
         return Result.fail(new NotFoundException('Entity not found'));
       }
 
-      const domainEntity = await this.mapper.toDomainEntity(
+      const domainEntity = this.mapper.toDomainEntity(
         ormEntity as unknown as OrmEntity,
       );
 

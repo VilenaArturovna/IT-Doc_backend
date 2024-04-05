@@ -1,15 +1,19 @@
 import { Knex } from 'knex';
 
-const tableName = 'orders';
+const orders = 'orders';
+const ordersWarehouseItems = 'orders_warehouse_items';
+const clients = 'clients';
+const works = 'works';
+const staff = 'staff';
+const warehouseItems = 'warehouse_items';
 
 export async function up(knex: Knex) {
   return knex.schema
-    .createTable(tableName, (t) => {
+    .createTable(orders, (t) => {
       t.uuid('id').defaultTo(knex.raw('uuid_generate_v4()')).primary();
       t.timestamp('createdAt').defaultTo(knex.fn.now());
       t.timestamp('updatedAt').defaultTo(knex.fn.now());
       t.string('status').notNullable();
-      //t.string('number').notNullable().defaultTo('').index();
       t.timestamp('deadline').notNullable();
       t.string('equipment').notNullable();
       t.string('equipmentCondition').notNullable();
@@ -18,26 +22,26 @@ export async function up(knex: Knex) {
       t.enum('beneficiary', ['OOO', 'IP']).notNullable();
       t.uuid('clientId')
         .references('id')
-        .inTable('clients')
+        .inTable(clients)
         .onDelete('set null')
         .notNullable();
-      t.uuid('workId').references('id').inTable('works').nullable();
+      t.uuid('workId').references('id').inTable(works).nullable();
       t.uuid('responsibleStaffId')
         .references('id')
-        .inTable('staff')
+        .inTable(staff)
         .onDelete('set null')
         .nullable();
     })
-    .createTable('orders_warehouse_items', (t) => {
+    .createTable(ordersWarehouseItems, (t) => {
       t.uuid('id').defaultTo(knex.raw('uuid_generate_v4()')).primary();
       t.uuid('orderId')
         .references('id')
-        .inTable('orders')
+        .inTable(orders)
         .onDelete('cascade')
         .notNullable();
       t.uuid('warehouseItemId')
         .references('id')
-        .inTable('warehouse_items')
+        .inTable(warehouseItems)
         .onDelete('set null')
         .notNullable();
       t.integer('quantity').notNullable();
@@ -52,5 +56,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  return knex.schema.dropTable('orders_warehouse_items').dropTable(tableName);
+  return knex.schema.dropTable(ordersWarehouseItems).dropTable(orders);
 }

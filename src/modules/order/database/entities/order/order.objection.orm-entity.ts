@@ -4,6 +4,7 @@ import { Model } from 'objection';
 import { StaffObjectionOrmEntity } from '../../../../staff/database/entities/staff/staff.objection.orm-entity';
 import { WarehouseItemObjectionOrmEntity } from '../../../../warehouse/database/entities/warehouse-item/warehouse-item.objection.orm-entity';
 import { ClientObjectionOrmEntity } from '../client/client.objection.orm-entity';
+import { OrderStageObjectionOrmEntity } from '../order-stage/order-stage.objection.orm-entity';
 import { WorkObjectionOrmEntity } from '../work/work.objection.orm-entity';
 import { OrderModel, OrderOrmEntityProps } from './order.orm-entity';
 
@@ -84,6 +85,14 @@ export class OrderObjectionOrmEntity extends OrderModel {
           to: 'orders_warehouse_items.warehouseItemId',
         },
         to: `${WarehouseItemObjectionOrmEntity.tableName}.id`,
+      },
+    },
+    stages: {
+      relation: Model.HasManyRelation,
+      modelClass: OrderStageObjectionOrmEntity,
+      join: {
+        from: `${this.tableName}.id`,
+        to: `${OrderStageObjectionOrmEntity.tableName}.orderId`,
       },
     },
   };

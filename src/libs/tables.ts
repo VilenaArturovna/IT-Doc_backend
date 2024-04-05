@@ -7,4 +7,5 @@ export enum Tables {
   PROVIDERS = 'providers',
   VENDORS = 'vendors',
   WAREHOUSE_ITEMS = 'warehouse_items',
+  ORDER_STAGES = 'order_stages',
 }

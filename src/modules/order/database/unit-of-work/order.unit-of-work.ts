@@ -3,6 +3,7 @@ import {
   ClientObjectionRepository,
   DeadlineObjectionRepository,
   OrderObjectionRepository,
+  OrderStageObjectionRepository,
   WorkObjectionRepository,
 } from '@modules/order/database/repositories';
 import { StaffObjectionRepository } from '@modules/staff/database/repositories';
@@ -31,5 +32,9 @@ export class OrderUnitOfWork extends UnitOfWorkObjection {
 
   public getWarehouseItemRepository(trxId: TrxId) {
     return new WarehouseItemObjectionRepository(this, trxId);
+  }
+
+  public getOrderStageRepository(trxId: TrxId) {
+    return new OrderStageObjectionRepository(this, trxId);
   }
 }

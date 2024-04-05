@@ -5,6 +5,7 @@ import {
 } from '@libs/base-classes';
 import { Currency, DateVO, MoneyVO } from '@libs/value-objects';
 import { ClientOrmMapper } from '@modules/order/database/mappers/client.orm-mapper';
+import { OrderStageOrmMapper } from '@modules/order/database/mappers/order-stage.orm-mapper';
 import { WorkOrmMapper } from '@modules/order/database/mappers/work.orm-mapper';
 import { OrderEntity, OrderEntityProps } from '@modules/order/domain';
 import { StaffOrmMapper } from '@modules/staff/database/mappers';
@@ -56,6 +57,9 @@ export class OrderOrmMapper extends OrmMapper<
             new WarehouseItemOrmMapper().toDomainEntity(part),
           )
         : undefined,
+      stages: ormEntity.stages.map((stage) =>
+        new OrderStageOrmMapper().toDomainEntity(stage),
+      ),
     };
   }
 
@@ -82,6 +86,9 @@ export class OrderOrmMapper extends OrmMapper<
             new WarehouseItemOrmMapper().toOrmEntity(part),
           )
         : null,
+      stages: props.stages
+        .map((stage) => new OrderStageOrmMapper().toOrmEntity(stage))
+        .map((stage) => ({ ...stage, orderId: props.id.value })),
     };
   }
 }
