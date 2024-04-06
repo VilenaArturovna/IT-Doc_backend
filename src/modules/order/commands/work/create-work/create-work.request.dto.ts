@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsInt,
-  IsNotEmpty,
-  IsNumber,
-  IsPositive,
-  IsString,
-} from 'class-validator';
+import { IsInt, IsNotEmpty, IsPositive, IsString } from 'class-validator';
 
 export class CreateWorkRequestDto {
   @ApiProperty()
@@ -14,9 +8,8 @@ export class CreateWorkRequestDto {
   name: string;
 
   @ApiProperty()
-  @IsNumber()
-  @IsPositive()
-  price: number;
+  @IsString()
+  price: string;
 
   @ApiProperty()
   @IsInt()

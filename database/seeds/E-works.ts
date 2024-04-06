@@ -14,7 +14,7 @@ export async function seed(knex: Knex) {
   const items: WorkOrmEntityProps[] = worksIds.map((id) => {
     return {
       name: faker.lorem.words(5),
-      price: faker.datatype.number({ min: 1000, max: 15000, precision: 0.01 }),
+      price: faker.finance.amount(1000, 15000, 0.01),
       time: faker.datatype.number({ min: 120, max: 600 }),
       id,
     };

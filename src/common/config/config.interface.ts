@@ -21,4 +21,5 @@ export interface Config {
     name: string;
     token: string;
   };
+  margin: number;
 }

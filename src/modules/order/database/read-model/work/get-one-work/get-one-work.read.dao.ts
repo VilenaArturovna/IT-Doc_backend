@@ -14,7 +14,7 @@ export class GetOneWorkDaoModel {
   name: string;
 
   @ApiProperty()
-  price: number;
+  price: string;
 }
 
 export abstract class GetOneWorkReadDao extends ReadDaoBase<

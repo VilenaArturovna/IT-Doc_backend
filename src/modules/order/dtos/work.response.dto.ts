@@ -9,7 +9,7 @@ export class WorkResponseDto {
   name: string;
 
   @ApiProperty()
-  price: number;
+  price: string;
 
   @ApiProperty()
   time: number;

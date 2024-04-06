@@ -22,7 +22,7 @@ export async function seed(knex: Knex) {
         criticalMargin: faker.datatype.number({ min: 10, max: 100 }),
         isArchived: false,
         unit: Unit.PIECE,
-        price: +faker.finance.amount(100, 5000, 0.01),
+        price: faker.finance.amount(100, 5000, 0.01),
         section: Section.PRODUCT,
         providerId: providersIds[index],
         vendorId: vendorsIds[index],

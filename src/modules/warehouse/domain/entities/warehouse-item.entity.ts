@@ -43,6 +43,10 @@ export class WarehouseItemEntity extends EntityBase<WarehouseItemEntityProps> {
     return new WarehouseItemEntity({ props });
   }
 
+  public get price() {
+    return this.props.price;
+  }
+
   public update(props: UpdateWarehouseItemEntityProps) {
     this.props.vendor = props.vendor;
     this.props.provider = props.provider;

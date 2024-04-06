@@ -18,4 +18,6 @@ export const validationSchema = Joi.object({
   //TELEGRAM
   TG_BOT_TOKEN: Joi.string().required(),
   TG_BOT_NAME: Joi.string().required(),
+
+  MARGIN: Joi.number().required(),
 });

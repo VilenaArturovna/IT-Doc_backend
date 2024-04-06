@@ -21,4 +21,5 @@ export const configuration = (): Config => ({
     token: process.env.TG_BOT_NAME,
     name: process.env.TG_BOT_TOKEN,
   },
+  margin: parseInt(process.env.MARGIN),
 });

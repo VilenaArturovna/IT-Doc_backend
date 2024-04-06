@@ -39,7 +39,7 @@ export class WarehouseItemObjectionOrmEntity extends WarehouseItemModel {
         section: { type: 'string' },
         title: { type: 'string' },
         unit: { type: 'string' },
-        price: { type: 'number' },
+        price: { type: 'string' },
         balance: { type: 'number' },
         criticalMargin: { type: 'number' },
         isArchived: { type: 'boolean' },

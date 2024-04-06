@@ -15,6 +15,10 @@ export class WorkEntity extends EntityBase<WorkEntityProps> {
     return new WorkEntity({ props });
   }
 
+  public get price() {
+    return this.props.price;
+  }
+
   public update(props: WorkEntityProps) {
     this.props.name = props.name;
     this.props.price = props.price;

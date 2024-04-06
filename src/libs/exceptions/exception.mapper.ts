@@ -24,6 +24,9 @@ export const exceptionMapper = (ex: ExceptionBase) => {
       case ExceptionCodes.VALIDATION:
         throw new BadRequestException(exception.message);
 
+      case ExceptionCodes.ARGUMENT_INVALID:
+        throw new BadRequestException(exception.message);
+
       default:
         break;
     }

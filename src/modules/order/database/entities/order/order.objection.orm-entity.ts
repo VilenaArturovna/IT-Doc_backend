@@ -41,7 +41,7 @@ export class OrderObjectionOrmEntity extends OrderModel {
         equipmentCondition: { type: 'string' },
         malfunction: { type: 'string' },
         beneficiary: { type: 'string' },
-        price: { type: 'number' },
+        price: { type: 'string' },
         clientId: { type: 'string' },
         responsibleStaffId: { type: ['string', 'null'] },
         workId: { type: ['string', 'null'] },

@@ -7,12 +7,12 @@ export enum Currency {
 }
 
 interface MoneyVOProps {
-  amount: number;
+  amount: string;
   currency: Currency;
 }
 
 interface MoneyPrimitiveProps {
-  amount: number;
+  amount: string;
   currency: Currency;
 }
 
@@ -46,5 +46,9 @@ export class MoneyVO extends ValueObject<MoneyVOProps> {
       currency: value.currency,
       amount: value.amount,
     });
+  }
+
+  public static ZERO() {
+    return new MoneyVO({ amount: '0.00', currency: Currency.RUB });
   }
 }

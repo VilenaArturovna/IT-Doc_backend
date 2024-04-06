@@ -31,7 +31,7 @@ export class WarehouseItemResponseDto {
   packing?: string;
 
   @ApiProperty()
-  price: number;
+  price: string;
 
   @ApiProperty()
   balance: number;

@@ -40,7 +40,7 @@ export class OrderResponseDto {
   deadline: string;
 
   @ApiProperty()
-  price: number;
+  price: string;
 
   constructor(entity: OrderEntity) {
     const props = entity.getCopiedProps();

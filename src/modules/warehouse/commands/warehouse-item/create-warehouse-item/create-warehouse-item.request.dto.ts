@@ -44,9 +44,8 @@ export class CreateWarehouseItemRequestDto {
   packing?: string;
 
   @ApiProperty()
-  @IsNumber()
-  @IsPositive()
-  price: number;
+  @IsString()
+  price: string;
 
   @ApiProperty()
   @IsNumber()

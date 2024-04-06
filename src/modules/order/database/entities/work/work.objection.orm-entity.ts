@@ -18,7 +18,7 @@ export class WorkObjectionOrmEntity extends WorkModel {
         createdAt: { type: 'string' },
         updatedAt: { type: 'string' },
         name: { type: 'string' },
-        price: { type: 'number' },
+        price: { type: 'string' },
         time: { type: 'number' },
       },
     };

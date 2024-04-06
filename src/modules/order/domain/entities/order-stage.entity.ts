@@ -7,6 +7,7 @@ export interface OrderStageEntityProps {
   deadline?: DateVO;
   number: number;
   status: OrderStatus;
+  comment?: string;
 }
 
 export class OrderStageEntity extends EntityBase<OrderStageEntityProps> {
@@ -22,8 +23,9 @@ export class OrderStageEntity extends EntityBase<OrderStageEntityProps> {
     return this.props.number;
   }
 
-  public complete() {
+  public complete(comment?: string) {
     this.props.completedAt = DateVO.now();
+    this.props.comment = comment;
 
     this.updatedAtNow();
     this.validate();

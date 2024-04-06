@@ -24,7 +24,7 @@ export interface OrderOrmEntityProps {
   client?: ClientOrmEntity;
   clientId: string;
   beneficiary: Beneficiary;
-  price: number;
+  price: string;
   repairParts?: WarehouseItemOrmEntity[];
   stages: OrderStageOrmEntity[];
 }
@@ -48,7 +48,7 @@ export class OrderOrmEntity
   client?: ClientOrmEntity;
   clientId: string;
   beneficiary: Beneficiary;
-  price: number;
+  price: string;
   repairParts?: WarehouseItemOrmEntity[];
   stages: OrderStageOrmEntity[];
 }
@@ -69,7 +69,7 @@ export class OrderModel extends ModelBase implements OrderOrmEntity {
   client?: ClientOrmEntity;
   clientId: string;
   beneficiary: Beneficiary;
-  price: number;
+  price: string;
   repairParts?: WarehouseItemOrmEntity[];
   stages: OrderStageOrmEntity[];
 }

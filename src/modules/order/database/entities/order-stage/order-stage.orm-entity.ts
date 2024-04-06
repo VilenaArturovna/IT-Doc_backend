@@ -7,6 +7,7 @@ export interface OrderStageOrmEntityProps {
   number: number;
   status: OrderStatus;
   orderId: string;
+  comment?: string;
 }
 
 export class OrderStageOrmEntity
@@ -18,6 +19,7 @@ export class OrderStageOrmEntity
   number: number;
   status: OrderStatus;
   orderId: string;
+  comment?: string;
 }
 
 export class OrderStageModel extends ModelBase implements OrderStageOrmEntity {
@@ -26,4 +28,5 @@ export class OrderStageModel extends ModelBase implements OrderStageOrmEntity {
   number: number;
   status: OrderStatus;
   orderId: string;
+  comment?: string;
 }

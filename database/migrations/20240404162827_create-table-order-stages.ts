@@ -17,6 +17,7 @@ export async function up(knex: Knex) {
     t.string('status').notNullable();
     t.timestamp('deadline');
     t.timestamp('completedAt');
+    t.text('comment');
   });
 }
 

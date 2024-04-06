@@ -4,7 +4,6 @@ import { Type } from 'class-transformer';
 import {
   IsInt,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsPositive,
   IsString,
@@ -33,11 +32,6 @@ export class OrderHasBeenDiagnosedRequestDto {
   @IsNotEmpty()
   @IsNotJustSpaces()
   equipmentCondition: string;
-
-  @ApiPropertyOptional({ nullable: true })
-  @IsOptional()
-  @IsNumber()
-  price?: number;
 
   @ApiPropertyOptional({
     type: () => RepairPartResponseDto,

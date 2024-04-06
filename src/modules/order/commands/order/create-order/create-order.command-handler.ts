@@ -1,7 +1,7 @@
 import { ExceptionBase } from '@libs/base-classes';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
 import { Result } from '@libs/utils';
-import { Currency, DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
+import { DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
 import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
 import { OrderEntity, OrderStageEntity } from '@modules/order/domain';
 import { OrderStatus } from '@modules/order/types';
@@ -68,7 +68,7 @@ export class CreateOrderCommandHandler extends CommandHandlerBase<
       malfunction: payload.malfunction,
       beneficiary: client.beneficiary,
       deadline,
-      price: MoneyVO.toVO({ amount: 0, currency: Currency.RUB }),
+      price: MoneyVO.ZERO(),
       stages: [
         OrderStageEntity.create({
           status,

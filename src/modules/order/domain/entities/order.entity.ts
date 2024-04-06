@@ -1,4 +1,5 @@
 import { EntityBase } from '@libs/base-classes';
+import { MoneyCalculator } from '@libs/utils';
 import { DateVO, IdVO, MoneyVO } from '@libs/value-objects';
 import {
   ClientEntity,
@@ -68,13 +69,14 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
     this.validate();
   }
 
-  public endDiagnostic(props: EndDiagnosticProps) {
+  public endDiagnostic(props: EndDiagnosticProps, margin: number) {
     this.props.status = OrderStatus.DIAGNOSED;
     this.props.deadline = props.deadline;
     this.props.equipmentCondition = props.equipmentCondition;
     this.props.work = props.work;
     this.props.repairParts = props.repairParts;
 
+    this.calculatePrice(margin);
     this.addNewStage(this.props.status, props.deadline);
 
     this.updatedAtNow();
@@ -118,5 +120,27 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
         deadline,
       }),
     );
+  }
+
+  private calculatePrice(margin: number) {
+    const calculator = MoneyCalculator.fromRUB();
+
+    if (this.props.repairParts?.length) {
+      this.props.repairParts.forEach((part) => {
+        calculator.plus(part.price);
+      });
+    }
+
+    calculator.multiplyOnPercent(margin);
+
+    if (this.props.work) {
+      calculator.plus(this.props.work.price);
+    }
+
+    calculator.multiplyOnPercent(
+      this.props.beneficiary === Beneficiary.OOO ? 120 : 106,
+    );
+
+    this.props.price = calculator.result();
   }
 }

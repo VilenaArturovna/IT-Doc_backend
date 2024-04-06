@@ -35,6 +35,7 @@ export class OrderStageOrmMapper extends OrmMapper<
       deadline: ormEntity.deadline ? new DateVO(ormEntity.deadline) : undefined,
       status: ormEntity.status,
       number: ormEntity.number,
+      comment: ormEntity.comment,
     };
   }
 
@@ -48,6 +49,7 @@ export class OrderStageOrmMapper extends OrmMapper<
       deadline: props.deadline ? props.deadline.ISOString : null,
       completedAt: props.completedAt ? props.completedAt.ISOString : null,
       orderId: '',
+      comment: props.comment,
     };
   }
 }

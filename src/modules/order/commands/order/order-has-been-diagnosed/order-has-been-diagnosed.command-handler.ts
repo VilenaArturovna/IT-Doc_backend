@@ -1,11 +1,12 @@
 import { ExceptionBase } from '@libs/base-classes';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
 import { Result } from '@libs/utils';
-import { Currency, DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
+import { DateVO, UuidVO } from '@libs/value-objects';
 import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
 import { OrderEntity } from '@modules/order/domain';
 import { OrderStatus } from '@modules/order/types';
 import { WarehouseItemEntity } from '@modules/warehouse/domain';
+import { ConfigService } from '@nestjs/config';
 import { CommandHandler } from '@nestjs/cqrs';
 
 import { OrderHasBeenDiagnosedCommand } from './order-has-been-diagnosed.command';
@@ -15,7 +16,10 @@ export class OrderHasBeenDiagnosedCommandHandler extends CommandHandlerBase<
   OrderUnitOfWork,
   OrderEntity
 > {
-  constructor(unitOfWork: OrderUnitOfWork) {
+  constructor(
+    unitOfWork: OrderUnitOfWork,
+    private readonly configService: ConfigService,
+  ) {
     super(unitOfWork);
   }
 
@@ -60,15 +64,17 @@ export class OrderHasBeenDiagnosedCommandHandler extends CommandHandlerBase<
       repairParts = warehouseItemsResult.unwrap();
     }
 
-    order.endDiagnostic({
-      deadline,
-      equipmentCondition: payload.equipmentCondition,
-      work,
-      price: payload.price
-        ? new MoneyVO({ amount: payload.price, currency: Currency.RUB })
-        : undefined,
-      repairParts,
-    });
+    const margin = this.configService.get<number>('margin');
+
+    order.endDiagnostic(
+      {
+        deadline,
+        equipmentCondition: payload.equipmentCondition,
+        work,
+        repairParts,
+      },
+      margin,
+    );
 
     return orderRepository.update(order);
   }

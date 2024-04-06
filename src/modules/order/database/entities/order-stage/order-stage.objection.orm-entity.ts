@@ -25,6 +25,7 @@ export class OrderStageObjectionOrmEntity extends OrderStageModel {
         orderId: { type: 'string' },
         deadline: { type: ['string', 'null'] },
         completedAt: { type: ['string', 'null'] },
+        comment: { type: ['string', 'null'] },
       },
     };
   }

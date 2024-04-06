@@ -14,7 +14,7 @@ export interface WarehouseItemOrmEntityProps {
   compatibleModels?: string;
   unit: Unit;
   packing?: string;
-  price: number;
+  price: string;
   balance: number;
   expense?: number;
   expenseReserve?: number;
@@ -37,7 +37,7 @@ export class WarehouseItemOrmEntity
   compatibleModels?: string;
   unit: Unit;
   packing?: string;
-  price: number;
+  price: string;
   balance: number;
   expense?: number;
   expenseReserve?: number;
@@ -60,7 +60,7 @@ export class WarehouseItemModel
   compatibleModels?: string;
   unit: Unit;
   packing?: string;
-  price: number;
+  price: string;
   balance: number;
   expense?: number;
   expenseReserve?: number;
