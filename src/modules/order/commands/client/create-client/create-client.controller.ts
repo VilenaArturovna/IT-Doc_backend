@@ -1,9 +1,11 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import { ClientEntity } from '@modules/order/domain';
 import { ClientResponseDto } from '@modules/order/dtos';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Role } from '@modules/staff/types';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -23,6 +25,7 @@ export class CreateClientController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create client' })
   @ApiOkResponse({ type: () => ClientResponseDto })
+  @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER, Role.ENGINEER]))
   @Post(routes.client.root)
   async createClient(
     @Body() body: CreateClientRequestDto,

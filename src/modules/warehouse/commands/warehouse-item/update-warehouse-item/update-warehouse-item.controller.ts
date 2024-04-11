@@ -1,9 +1,18 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
+import { Role } from '@modules/staff/types';
 import { WarehouseItemEntity } from '@modules/warehouse/domain';
 import { WarehouseItemResponseDto } from '@modules/warehouse/dtos';
-import { Body, Controller, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -23,6 +32,7 @@ export class UpdateWarehouseItemController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update warehouse item' })
   @ApiOkResponse({ type: () => WarehouseItemResponseDto })
+  @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER, Role.ENGINEER]))
   @Patch(routes.warehouseItem.byId)
   async updateWarehouseItem(
     @Param('id', ParseUUIDPipe) id: string,

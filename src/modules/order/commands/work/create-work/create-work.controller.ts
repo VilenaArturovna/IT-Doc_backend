@@ -1,9 +1,11 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import { WorkEntity } from '@modules/order/domain';
 import { WorkResponseDto } from '@modules/order/dtos';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Role } from '@modules/staff/types';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -23,6 +25,7 @@ export class CreateWorkController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create work' })
   @ApiOkResponse({ type: () => WorkResponseDto })
+  @UseGuards(RoleGuard([Role.ADMIN]))
   @Post(routes.work.root)
   async createWork(
     @Body() body: CreateWorkRequestDto,

@@ -1,9 +1,17 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import { GetManyStaffItem } from '@modules/staff/database/read-model';
 import { GetStaffQuery } from '@modules/staff/queries';
-import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Role } from '@modules/staff/types';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  UseGuards,
+} from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -20,6 +28,7 @@ export class GetStaffController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get staff' })
   @ApiOkResponse({ type: () => GetManyStaffItem })
+  @UseGuards(RoleGuard([Role.ADMIN]))
   @Get(routes.staff.byId)
   async getStaff(
     @Param('id', ParseUUIDPipe) id: string,

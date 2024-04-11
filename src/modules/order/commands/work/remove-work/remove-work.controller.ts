@@ -1,12 +1,15 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
+import { Role } from '@modules/staff/types';
 import {
   Controller,
   Delete,
   HttpCode,
   Param,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -21,6 +24,7 @@ export class RemoveWorkController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Remove work' })
   @HttpCode(204)
+  @UseGuards(RoleGuard([Role.ADMIN]))
   @Delete(routes.work.byId)
   async removeWork(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     const command = new RemoveWorkCommand({ payload: { id } });

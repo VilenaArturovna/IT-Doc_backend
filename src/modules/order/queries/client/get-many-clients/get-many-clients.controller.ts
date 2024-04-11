@@ -1,9 +1,11 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import { GetManyClientsDaoModel } from '@modules/order/database/read-model';
 import { GetManyClientsQuery } from '@modules/order/queries';
-import { Controller, Get, Query } from '@nestjs/common';
+import { Role } from '@modules/staff/types';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -22,6 +24,7 @@ export class GetManyClientsController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get many clients' })
   @ApiOkResponse({ type: () => GetManyClientsDaoModel })
+  @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER, Role.ENGINEER]))
   @Get(routes.client.root)
   async getManyClients(
     @Query() params: GetManyClientsRequestDto,

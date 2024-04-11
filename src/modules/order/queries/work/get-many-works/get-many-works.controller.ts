@@ -1,9 +1,11 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import { GetManyWorksDaoModel } from '@modules/order/database/read-model';
 import { GetManyWorksQuery } from '@modules/order/queries';
-import { Controller, Get, Query } from '@nestjs/common';
+import { Role } from '@modules/staff/types';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -22,6 +24,7 @@ export class GetManyWorksController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get many works' })
   @ApiOkResponse({ type: () => GetManyWorksDaoModel })
+  @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER, Role.ENGINEER]))
   @Get(routes.work.root)
   async getManyWorks(
     @Query() params: GetManyWorksRequestDto,

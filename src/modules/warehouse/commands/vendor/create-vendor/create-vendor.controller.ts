@@ -1,9 +1,11 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
+import { Role } from '@modules/staff/types';
 import { VendorEntity } from '@modules/warehouse/domain';
 import { VendorResponseDto } from '@modules/warehouse/dtos';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -23,6 +25,7 @@ export class CreateVendorController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create vendor' })
   @ApiOkResponse({ type: () => VendorResponseDto })
+  @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER, Role.ENGINEER]))
   @Post(routes.vendor.root)
   async createVendor(
     @Body() body: CreateVendorRequestDto,

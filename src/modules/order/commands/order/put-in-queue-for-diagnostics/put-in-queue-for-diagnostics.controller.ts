@@ -1,9 +1,17 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import { OrderEntity } from '@modules/order/domain';
 import { OrderResponseDto } from '@modules/order/dtos';
-import { Controller, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
+import { Role } from '@modules/staff/types';
+import {
+  Controller,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -22,6 +30,7 @@ export class PutInQueueForDiagnosticsController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Put in queue for diagnostics' })
   @ApiOkResponse({ type: () => OrderResponseDto })
+  @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER, Role.ENGINEER]))
   @Patch(routes.order.putInQueueForDiagnostics)
   async putInQueueForDiagnostics(
     @Param('id', ParseUUIDPipe) id: string,

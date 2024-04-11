@@ -1,9 +1,17 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import { GetOneClientDaoModel } from '@modules/order/database/read-model';
 import { GetOneClientQuery } from '@modules/order/queries';
-import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Role } from '@modules/staff/types';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  UseGuards,
+} from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -20,6 +28,7 @@ export class GetOneClientController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get one client' })
   @ApiOkResponse({ type: () => GetOneClientDaoModel })
+  @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER, Role.ENGINEER]))
   @Get(routes.client.byId)
   async getOneClient(
     @Param('id', ParseUUIDPipe) id: string,

@@ -1,9 +1,18 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import { WorkEntity } from '@modules/order/domain';
 import { WorkResponseDto } from '@modules/order/dtos';
-import { Body, Controller, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
+import { Role } from '@modules/staff/types';
+import {
+  Body,
+  Controller,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -23,6 +32,7 @@ export class UpdateWorkController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update work' })
   @ApiOkResponse({ type: () => WorkResponseDto })
+  @UseGuards(RoleGuard([Role.ADMIN]))
   @Patch(routes.work.byId)
   async updateWork(
     @Param('id', ParseUUIDPipe) id: string,

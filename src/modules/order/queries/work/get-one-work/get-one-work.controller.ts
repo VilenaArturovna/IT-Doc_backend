@@ -1,9 +1,17 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import { GetOneWorkDaoModel } from '@modules/order/database/read-model';
 import { GetOneWorkQuery } from '@modules/order/queries';
-import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Role } from '@modules/staff/types';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  UseGuards,
+} from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -20,6 +28,7 @@ export class GetOneWorkController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get one work' })
   @ApiOkResponse({ type: () => GetOneWorkDaoModel })
+  @UseGuards(RoleGuard([Role.ADMIN]))
   @Get(routes.work.byId)
   async getOneWork(
     @Param('id', ParseUUIDPipe) id: string,

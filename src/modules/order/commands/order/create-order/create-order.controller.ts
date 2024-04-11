@@ -1,9 +1,11 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import { OrderEntity } from '@modules/order/domain';
 import { OrderResponseDto } from '@modules/order/dtos';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Role } from '@modules/staff/types';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -23,6 +25,7 @@ export class CreateOrderController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create order' })
   @ApiOkResponse({ type: () => OrderResponseDto })
+  @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER, Role.ENGINEER]))
   @Post(routes.order.root)
   async createOrder(
     @Body() body: CreateOrderRequestDto,

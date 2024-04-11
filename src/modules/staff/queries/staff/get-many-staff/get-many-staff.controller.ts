@@ -1,9 +1,11 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import { GetManyStaffDaoModel } from '@modules/staff/database/read-model';
 import { GetManyStaffQuery } from '@modules/staff/queries';
-import { Controller, Get, Query } from '@nestjs/common';
+import { Role } from '@modules/staff/types';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -22,6 +24,7 @@ export class GetManyStaffController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get many staff' })
   @ApiOkResponse({ type: () => GetManyStaffDaoModel })
+  @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER]))
   @Get(routes.staff.root)
   async getManyStaff(
     @Query() params: GetManyStaffRequestDto,

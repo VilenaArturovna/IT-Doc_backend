@@ -1,9 +1,18 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
+import { Role } from '@modules/staff/types';
 import { VendorEntity } from '@modules/warehouse/domain';
 import { VendorResponseDto } from '@modules/warehouse/dtos';
-import { Body, Controller, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -23,6 +32,7 @@ export class UpdateVendorController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update vendor' })
   @ApiOkResponse({ type: () => VendorResponseDto })
+  @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER, Role.ENGINEER]))
   @Patch(routes.vendor.byId)
   async updateVendor(
     @Param('id', ParseUUIDPipe) id: string,

@@ -1,9 +1,11 @@
 import { ExceptionBase } from '@libs/base-classes';
+import { RoleGuard } from '@libs/guards';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import { StaffEntity } from '@modules/staff/domain';
 import { StaffResponseDto } from '@modules/staff/dtos';
-import { Body, Controller, Patch } from '@nestjs/common';
+import { Role } from '@modules/staff/types';
+import { Body, Controller, Patch, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
@@ -24,6 +26,7 @@ export class UpdateStaffController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update staff' })
   @ApiOkResponse({ type: () => StaffResponseDto })
+  @UseGuards(RoleGuard([Role.ADMIN]))
   @Patch(routes.staff.root)
   async updateUser(
     @MyId() id: string,
