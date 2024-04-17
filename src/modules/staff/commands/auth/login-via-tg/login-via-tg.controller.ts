@@ -6,12 +6,8 @@ import { StaffEntity } from '@modules/staff/domain';
 import { StaffResponseDto } from '@modules/staff/dtos';
 import { Body, Controller, Patch } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import {
-  ApiBearerAuth,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Public } from '@src/common';
 
 import { LoginViaTgCommand } from './login-via-tg.command';
 import { LoginViaTgRequestDto } from './login-via-tg.request.dto';
@@ -21,8 +17,8 @@ import { LoginViaTgRequestDto } from './login-via-tg.request.dto';
 export class LoginViaTgController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Login via tg' })
+  @Public()
+  @ApiOperation({ summary: 'Login via telegram' })
   @ApiOkResponse({ type: LoginViaTgResponseDto })
   @Patch(routes.staff.auth.login)
   async loginViaTg(

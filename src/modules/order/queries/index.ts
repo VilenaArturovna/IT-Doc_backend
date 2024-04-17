@@ -5,6 +5,8 @@ import {
   GetOneClientQueryHandler,
 } from '@modules/order/queries/client';
 import {
+  GetInfoAboutOrderForClientController,
+  GetInfoAboutOrderForClientQueryHandler,
   GetOneOrderController,
   GetOneOrderQueryHandler,
 } from '@modules/order/queries/order';
@@ -25,6 +27,7 @@ export const queryControllers = [
   GetManyClientsController,
   GetOneClientController,
   GetOneOrderController,
+  GetInfoAboutOrderForClientController,
 ];
 export const queryHandlers = [
   GetManyWorksQueryHandler,
@@ -32,4 +35,5 @@ export const queryHandlers = [
   GetManyClientsQueryHandler,
   GetOneClientQueryHandler,
   GetOneOrderQueryHandler,
+  GetInfoAboutOrderForClientQueryHandler,
 ];
