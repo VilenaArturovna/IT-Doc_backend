@@ -50,10 +50,10 @@ export class OrderHasBeenDiagnosedCommandHandler extends CommandHandlerBase<
       deadlineEntity.getPriorityDeadline(order.priority),
     );
 
-    const workResult = await workRepository.getOneById(
-      new UuidVO(payload.workId),
+    const worksResult = await workRepository.getManyByIds(
+      payload.worksIds.map((id) => new UuidVO(id)),
     );
-    const work = workResult.unwrap();
+    const works = worksResult.unwrap();
 
     const repairParts: RepairPartVO[] = [];
 
@@ -91,7 +91,7 @@ export class OrderHasBeenDiagnosedCommandHandler extends CommandHandlerBase<
       {
         deadline,
         equipmentCondition: payload.equipmentCondition,
-        work,
+        works,
         repairParts,
       },
       margin,

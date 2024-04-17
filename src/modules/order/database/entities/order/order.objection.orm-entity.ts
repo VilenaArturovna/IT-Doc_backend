@@ -1,5 +1,5 @@
 import { Tables } from '@libs/tables';
-import { Model } from 'objection';
+import { Model, RelationMappings } from 'objection';
 
 import { StaffObjectionOrmEntity } from '../../../../staff/database/entities/staff/staff.objection.orm-entity';
 import { ClientObjectionOrmEntity } from '../client/client.objection.orm-entity';
@@ -44,13 +44,12 @@ export class OrderObjectionOrmEntity extends OrderModel {
         price: { type: 'string' },
         clientId: { type: 'string' },
         responsibleStaffId: { type: ['string', 'null'] },
-        workId: { type: ['string', 'null'] },
         serialNumberEquipment: { type: ['string', 'null'] },
       },
     };
   }
 
-  static relationMappings = {
+  static relationMappings: RelationMappings = {
     client: {
       relation: Model.HasOneRelation,
       modelClass: ClientObjectionOrmEntity,
@@ -67,11 +66,15 @@ export class OrderObjectionOrmEntity extends OrderModel {
         to: `${StaffObjectionOrmEntity.tableName}.id`,
       },
     },
-    work: {
-      relation: Model.HasOneRelation,
+    works: {
+      relation: Model.ManyToManyRelation,
       modelClass: WorkObjectionOrmEntity,
       join: {
-        from: `${this.tableName}.workId`,
+        from: `${this.tableName}.id`,
+        through: {
+          from: `${Tables.ORDERS_WORKS}.orderId`,
+          to: `${Tables.ORDERS_WORKS}.workId`,
+        },
         to: `${WorkObjectionOrmEntity.tableName}.id`,
       },
     },

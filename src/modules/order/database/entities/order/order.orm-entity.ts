@@ -19,8 +19,7 @@ export interface OrderOrmEntityProps {
   equipmentCondition: string;
   serialNumberEquipment?: string;
   malfunction: string;
-  work?: WorkOrmEntity;
-  workId?: string;
+  works?: WorkOrmEntity[];
   client?: ClientOrmEntity;
   clientId: string;
   beneficiary: Beneficiary;
@@ -43,8 +42,7 @@ export class OrderOrmEntity
   equipmentCondition: string;
   serialNumberEquipment?: string;
   malfunction: string;
-  work?: WorkOrmEntity;
-  workId?: string;
+  works?: WorkOrmEntity[];
   client?: ClientOrmEntity;
   clientId: string;
   beneficiary: Beneficiary;
@@ -64,8 +62,7 @@ export class OrderModel extends ModelBase implements OrderOrmEntity {
   equipmentCondition: string;
   serialNumberEquipment?: string;
   malfunction: string;
-  work?: WorkOrmEntity;
-  workId?: string;
+  works?: WorkOrmEntity[];
   client?: ClientOrmEntity;
   clientId: string;
   beneficiary: Beneficiary;

@@ -9,4 +9,5 @@ export enum Tables {
   WAREHOUSE_ITEMS = 'warehouse_items',
   ORDER_STAGES = 'order_stages',
   ORDERS_WAREHOUSE_ITEMS = 'orders_warehouse_items',
+  ORDERS_WORKS = 'orders_works',
 }

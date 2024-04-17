@@ -2,6 +2,8 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotJustSpaces } from '@src/common';
 import { Type } from 'class-transformer';
 import {
+  ArrayMinSize,
+  IsArray,
   IsInt,
   IsNotEmpty,
   IsOptional,
@@ -24,8 +26,10 @@ export class RepairPartRequestDto {
 
 export class OrderHasBeenDiagnosedRequestDto {
   @ApiProperty()
-  @IsUUID()
-  workId: string;
+  @IsArray()
+  @ArrayMinSize(1)
+  @IsUUID('4', { each: true })
+  worksIds: string[];
 
   @ApiProperty()
   @IsString()

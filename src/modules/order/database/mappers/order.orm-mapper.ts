@@ -45,8 +45,10 @@ export class OrderOrmMapper extends OrmMapper<
       responsibleStaff: ormEntity.responsibleStaff
         ? new StaffOrmMapper().toDomainEntity(ormEntity.responsibleStaff)
         : undefined,
-      work: ormEntity.work
-        ? new WorkOrmMapper().toDomainEntity(ormEntity.work)
+      works: ormEntity.works?.length
+        ? ormEntity.works.map((work) =>
+            new WorkOrmMapper().toDomainEntity(work),
+          )
         : undefined,
       price: MoneyVO.toVO({
         amount: ormEntity.price,
@@ -84,7 +86,6 @@ export class OrderOrmMapper extends OrmMapper<
       responsibleStaffId: props.responsibleStaff
         ? props.responsibleStaff.id.value
         : undefined,
-      workId: props.work ? props.work.id.value : null,
       price: props.price.amount,
       serialNumberEquipment: props.serialNumberEquipment ?? null,
       repairParts: props.repairParts
@@ -101,6 +102,9 @@ export class OrderOrmMapper extends OrmMapper<
       stages: props.stages
         .map((stage) => new OrderStageOrmMapper().toOrmEntity(stage))
         .map((stage) => ({ ...stage, orderId: props.id.value })),
+      works: props.works?.length
+        ? props.works.map((work) => new WorkOrmMapper().toOrmEntity(work))
+        : null,
     };
   }
 }

@@ -18,7 +18,19 @@ export class GetOneOrderObjectionReadDao extends GetOneOrderReadDao {
 
     const { id } = query.params;
 
-    //TODO add works
+    const worksQb = knex(`${Tables.ORDERS_WORKS} as ow`)
+      .innerJoin(`${Tables.WORKS} as w`, 'w.id', 'ow.workId')
+      .select(
+        'ow.orderId',
+        knex.raw(`
+          array_agg(jsonb_build_object(
+          'id', w.id,
+          'name', w.name,
+          'price', w.price
+          )) as works
+        `),
+      )
+      .groupBy('ow.orderId');
 
     const stagesQb = knex(Tables.ORDER_STAGES)
       .select(
@@ -63,6 +75,7 @@ export class GetOneOrderObjectionReadDao extends GetOneOrderReadDao {
         'o.*',
         's.stages',
         'p.repairParts',
+        'w.works',
         knex.raw(`
           jsonb_build_object(
             'id', staff.id,
@@ -79,6 +92,7 @@ export class GetOneOrderObjectionReadDao extends GetOneOrderReadDao {
       .innerJoin(`${Tables.CLIENTS} as cl`, 'cl.id', 'o.clientId')
       .innerJoin(knex.raw(`(${stagesQb}) as s on s."orderId" = o.id`))
       .leftJoin(knex.raw(`(${partsQb}) as p on p."orderId" = o.id`))
+      .leftJoin(knex.raw(`(${worksQb}) as w on w."orderId" = o.id`))
       .where('o.id', id)
       .first();
 

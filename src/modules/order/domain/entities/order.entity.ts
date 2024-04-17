@@ -20,7 +20,7 @@ export interface OrderEntityProps {
   equipmentCondition: string; //Состояние оборудования
   serialNumberEquipment?: string;
   malfunction: string; //неисправность
-  work?: WorkEntity;
+  works?: WorkEntity[];
   client: ClientEntity;
   beneficiary: Beneficiary; //выгодоприобретатель
   price: MoneyVO;
@@ -30,7 +30,7 @@ export interface OrderEntityProps {
 
 type EndDiagnosticProps = Pick<
   OrderEntityProps,
-  'repairParts' | 'deadline' | 'equipmentCondition' | 'work'
+  'repairParts' | 'deadline' | 'equipmentCondition' | 'works'
 >;
 
 export class OrderEntity extends EntityBase<OrderEntityProps> {
@@ -70,7 +70,7 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
     this.props.status = OrderStatus.DIAGNOSED;
     this.props.deadline = props.deadline;
     this.props.equipmentCondition = props.equipmentCondition;
-    this.props.work = props.work;
+    this.props.works = props.works;
     this.props.repairParts = props.repairParts;
 
     this.calculatePrice(margin);
@@ -130,10 +130,11 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
 
     calculator.multiplyOnPercent(margin);
 
-    if (this.props.work) {
-      calculator.plus(this.props.work.price);
+    if (this.props.works?.length) {
+      this.props.works.forEach((work) => calculator.plus(work.price));
     }
 
+    // добавление НДС
     calculator.multiplyOnPercent(
       this.props.beneficiary === Beneficiary.OOO ? 120 : 106,
     );
