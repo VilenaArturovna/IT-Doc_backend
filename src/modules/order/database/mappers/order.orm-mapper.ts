@@ -8,6 +8,7 @@ import { ClientOrmMapper } from '@modules/order/database/mappers/client.orm-mapp
 import { OrderStageOrmMapper } from '@modules/order/database/mappers/order-stage.orm-mapper';
 import { WorkOrmMapper } from '@modules/order/database/mappers/work.orm-mapper';
 import { OrderEntity, OrderEntityProps } from '@modules/order/domain';
+import { RepairPartVO } from '@modules/order/domain/value-objects';
 import { StaffOrmMapper } from '@modules/staff/database/mappers';
 import { WarehouseItemOrmMapper } from '@modules/warehouse/database/mappers';
 
@@ -54,7 +55,12 @@ export class OrderOrmMapper extends OrmMapper<
       serialNumberEquipment: ormEntity.serialNumberEquipment,
       repairParts: ormEntity.repairParts
         ? ormEntity.repairParts.map((part) =>
-            new WarehouseItemOrmMapper().toDomainEntity(part),
+            RepairPartVO.toVO({
+              ...part,
+              warehouseItem: new WarehouseItemOrmMapper().toDomainEntity(
+                part.warehouseItem,
+              ),
+            }),
           )
         : undefined,
       stages: ormEntity.stages.map((stage) =>
@@ -82,9 +88,15 @@ export class OrderOrmMapper extends OrmMapper<
       price: props.price.amount,
       serialNumberEquipment: props.serialNumberEquipment ?? null,
       repairParts: props.repairParts
-        ? props.repairParts.map((part) =>
-            new WarehouseItemOrmMapper().toOrmEntity(part),
-          )
+        ? props.repairParts.map((part) => {
+            const repairPartProps = RepairPartVO.toJSON(part);
+            return {
+              orderId: props.id.value,
+              cost: repairPartProps.cost,
+              quantity: repairPartProps.quantity,
+              warehouseItemId: repairPartProps.warehouseItemId,
+            };
+          })
         : null,
       stages: props.stages
         .map((stage) => new OrderStageOrmMapper().toOrmEntity(stage))

@@ -2,11 +2,11 @@ import { ModelBase, OrmEntityBase } from '@libs/base-classes';
 import {
   ClientOrmEntity,
   OrderStageOrmEntity,
+  OrderWarehouseItemOrmEntity,
   WorkOrmEntity,
 } from '@modules/order/database/entities';
 import { Beneficiary, OrderStatus, Priority } from '@modules/order/types';
 import { StaffOrmEntity } from '@modules/staff/database/entities';
-import { WarehouseItemOrmEntity } from '@modules/warehouse/database/entities';
 
 export interface OrderOrmEntityProps {
   priority: Priority;
@@ -25,7 +25,7 @@ export interface OrderOrmEntityProps {
   clientId: string;
   beneficiary: Beneficiary;
   price: string;
-  repairParts?: WarehouseItemOrmEntity[];
+  repairParts?: OrderWarehouseItemOrmEntity[];
   stages: OrderStageOrmEntity[];
 }
 
@@ -49,7 +49,7 @@ export class OrderOrmEntity
   clientId: string;
   beneficiary: Beneficiary;
   price: string;
-  repairParts?: WarehouseItemOrmEntity[];
+  repairParts?: OrderWarehouseItemOrmEntity[];
   stages: OrderStageOrmEntity[];
 }
 
@@ -70,6 +70,6 @@ export class OrderModel extends ModelBase implements OrderOrmEntity {
   clientId: string;
   beneficiary: Beneficiary;
   price: string;
-  repairParts?: WarehouseItemOrmEntity[];
+  repairParts?: OrderWarehouseItemOrmEntity[];
   stages: OrderStageOrmEntity[];
 }

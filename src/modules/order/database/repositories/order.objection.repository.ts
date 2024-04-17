@@ -22,13 +22,23 @@ export class OrderObjectionRepository extends ObjectionRepositoryBase<
     super(OrderObjectionOrmEntity, new OrderOrmMapper(), unitOfWork, trxId);
   }
 
+  private graph: {
+    stages: true;
+    repairParts: {
+      warehouseItem: true;
+    };
+    client: true;
+    responsibleStaff: true;
+    works: true;
+  };
+
   async getOneById(id: IdVO): Promise<Result<OrderEntity, ExceptionBase>> {
     const transaction = this.unitOfWork.getTrx(this.trxId);
     try {
       const ormEntity = await this.repository
         .query(transaction)
         .findById(id.value)
-        .withGraphJoined({ stages: true });
+        .withGraphJoined(this.graph);
 
       if (!ormEntity) {
         return Result.fail(new NotFoundException('Entity not found'));
@@ -65,7 +75,7 @@ export class OrderObjectionRepository extends ObjectionRepositoryBase<
       const ormEntities = await this.repository
         .query(transaction)
         .findByIds(ids.map((id) => id.value))
-        .withGraphJoined({ stages: true });
+        .withGraphJoined(this.graph);
 
       if (ids.length !== ormEntities.length) {
         return Result.fail(new NotFoundException('Entities not found'));

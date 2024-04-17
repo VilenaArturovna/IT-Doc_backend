@@ -2,9 +2,9 @@ import { Tables } from '@libs/tables';
 import { Model } from 'objection';
 
 import { StaffObjectionOrmEntity } from '../../../../staff/database/entities/staff/staff.objection.orm-entity';
-import { WarehouseItemObjectionOrmEntity } from '../../../../warehouse/database/entities/warehouse-item/warehouse-item.objection.orm-entity';
 import { ClientObjectionOrmEntity } from '../client/client.objection.orm-entity';
 import { OrderStageObjectionOrmEntity } from '../order-stage/order-stage.objection.orm-entity';
+import { OrderWarehouseItemObjectionOrmEntity } from '../orders-warehouse-items/order-warehouse-item.objection.orm-entity';
 import { WorkObjectionOrmEntity } from '../work/work.objection.orm-entity';
 import { OrderModel, OrderOrmEntityProps } from './order.orm-entity';
 
@@ -76,15 +76,11 @@ export class OrderObjectionOrmEntity extends OrderModel {
       },
     },
     repairParts: {
-      relation: Model.ManyToManyRelation,
-      modelClass: WarehouseItemObjectionOrmEntity,
+      relation: Model.HasManyRelation,
+      modelClass: OrderWarehouseItemObjectionOrmEntity,
       join: {
         from: `${this.tableName}.id`,
-        through: {
-          from: `${Tables.ORDERS_WAREHOUSE_ITEMS}.orderId`,
-          to: `${Tables.ORDERS_WAREHOUSE_ITEMS}.warehouseItemId`,
-        },
-        to: `${WarehouseItemObjectionOrmEntity.tableName}.id`,
+        to: `${OrderWarehouseItemObjectionOrmEntity}.orderId`,
       },
     },
     stages: {

@@ -1,11 +1,12 @@
 import { ExceptionBase } from '@libs/base-classes';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
-import { Result } from '@libs/utils';
-import { DateVO, UuidVO } from '@libs/value-objects';
+import { NotFoundException } from '@libs/exceptions';
+import { MoneyCalculator, Result } from '@libs/utils';
+import { Currency, DateVO, UuidVO } from '@libs/value-objects';
 import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
 import { OrderEntity } from '@modules/order/domain';
+import { RepairPartVO } from '@modules/order/domain/value-objects';
 import { OrderStatus } from '@modules/order/types';
-import { WarehouseItemEntity } from '@modules/warehouse/domain';
 import { ConfigService } from '@nestjs/config';
 import { CommandHandler } from '@nestjs/cqrs';
 
@@ -54,14 +55,34 @@ export class OrderHasBeenDiagnosedCommandHandler extends CommandHandlerBase<
     );
     const work = workResult.unwrap();
 
-    let repairParts: WarehouseItemEntity[];
+    const repairParts: RepairPartVO[] = [];
 
     if (payload.repairParts) {
       const warehouseItemsResult = await warehouseItemRepository.getManyByIds(
         payload.repairParts.map((part) => new UuidVO(part.warehouseItemId)),
       );
 
-      repairParts = warehouseItemsResult.unwrap();
+      const warehouseItems = warehouseItemsResult.unwrap();
+
+      for (const repairPart of payload.repairParts) {
+        const item = warehouseItems.find((i) =>
+          i.id.equals(new UuidVO(repairPart.warehouseItemId)),
+        );
+        if (!item) return Result.fail(new NotFoundException('ЗИП не найден'));
+
+        const cost = new MoneyCalculator(Currency.RUB)
+          .plus(item.price)
+          .multiply(repairPart.quantity)
+          .result();
+
+        repairParts.push(
+          new RepairPartVO({
+            cost,
+            warehouseItem: item,
+            quantity: repairPart.quantity,
+          }),
+        );
+      }
     }
 
     const margin = this.configService.get<number>('margin');

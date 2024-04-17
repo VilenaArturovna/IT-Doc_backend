@@ -6,9 +6,9 @@ import {
   OrderStageEntity,
   WorkEntity,
 } from '@modules/order/domain';
+import { RepairPartVO } from '@modules/order/domain/value-objects';
 import { Beneficiary, OrderStatus, Priority } from '@modules/order/types';
 import { StaffEntity } from '@modules/staff/domain';
-import { WarehouseItemEntity } from '@modules/warehouse/domain';
 
 export interface OrderEntityProps {
   priority: Priority;
@@ -24,17 +24,14 @@ export interface OrderEntityProps {
   client: ClientEntity;
   beneficiary: Beneficiary; //выгодоприобретатель
   price: MoneyVO;
-  repairParts?: WarehouseItemEntity[];
+  repairParts?: RepairPartVO[];
   stages: OrderStageEntity[];
 }
 
-interface EndDiagnosticProps {
-  price?: MoneyVO;
-  repairParts?: WarehouseItemEntity[];
-  deadline: DateVO;
-  equipmentCondition: string;
-  work: WorkEntity;
-}
+type EndDiagnosticProps = Pick<
+  OrderEntityProps,
+  'repairParts' | 'deadline' | 'equipmentCondition' | 'work'
+>;
 
 export class OrderEntity extends EntityBase<OrderEntityProps> {
   protected readonly _id: IdVO;
@@ -127,7 +124,7 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
 
     if (this.props.repairParts?.length) {
       this.props.repairParts.forEach((part) => {
-        calculator.plus(part.price);
+        calculator.plus(part.cost);
       });
     }
 

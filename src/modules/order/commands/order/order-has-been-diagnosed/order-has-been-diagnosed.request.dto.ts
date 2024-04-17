@@ -11,7 +11,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-export class RepairPartResponseDto {
+export class RepairPartRequestDto {
   @ApiProperty()
   @IsUUID()
   warehouseItemId: string;
@@ -34,12 +34,12 @@ export class OrderHasBeenDiagnosedRequestDto {
   equipmentCondition: string;
 
   @ApiPropertyOptional({
-    type: () => RepairPartResponseDto,
+    type: () => RepairPartRequestDto,
     isArray: true,
     nullable: true,
   })
   @IsOptional()
-  @Type(() => RepairPartResponseDto)
+  @Type(() => RepairPartRequestDto)
   @ValidateNested({ each: true })
-  repairParts?: RepairPartResponseDto[];
+  repairParts?: RepairPartRequestDto[];
 }
