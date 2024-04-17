@@ -28,6 +28,7 @@ export class OrderObjectionOrmEntity extends OrderModel {
         'beneficiary',
         'price',
         'priority',
+        'checkCode',
       ],
       properties: {
         id: { type: 'string' },
@@ -43,6 +44,7 @@ export class OrderObjectionOrmEntity extends OrderModel {
         beneficiary: { type: 'string' },
         price: { type: 'string' },
         clientId: { type: 'string' },
+        checkCode: { type: 'string' },
         responsibleStaffId: { type: ['string', 'null'] },
         serialNumberEquipment: { type: ['string', 'null'] },
       },

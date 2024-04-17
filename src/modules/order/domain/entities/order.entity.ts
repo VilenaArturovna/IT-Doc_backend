@@ -6,7 +6,7 @@ import {
   OrderStageEntity,
   WorkEntity,
 } from '@modules/order/domain';
-import { RepairPartVO } from '@modules/order/domain/value-objects';
+import { CheckCodeVO, RepairPartVO } from '@modules/order/domain/value-objects';
 import { Beneficiary, OrderStatus, Priority } from '@modules/order/types';
 import { StaffEntity } from '@modules/staff/domain';
 
@@ -26,6 +26,7 @@ export interface OrderEntityProps {
   price: MoneyVO;
   repairParts?: RepairPartVO[];
   stages: OrderStageEntity[];
+  checkCode: CheckCodeVO;
 }
 
 type EndDiagnosticProps = Pick<

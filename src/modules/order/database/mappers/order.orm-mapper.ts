@@ -8,7 +8,7 @@ import { ClientOrmMapper } from '@modules/order/database/mappers/client.orm-mapp
 import { OrderStageOrmMapper } from '@modules/order/database/mappers/order-stage.orm-mapper';
 import { WorkOrmMapper } from '@modules/order/database/mappers/work.orm-mapper';
 import { OrderEntity, OrderEntityProps } from '@modules/order/domain';
-import { RepairPartVO } from '@modules/order/domain/value-objects';
+import { CheckCodeVO, RepairPartVO } from '@modules/order/domain/value-objects';
 import { StaffOrmMapper } from '@modules/staff/database/mappers';
 import { WarehouseItemOrmMapper } from '@modules/warehouse/database/mappers';
 
@@ -68,6 +68,7 @@ export class OrderOrmMapper extends OrmMapper<
       stages: ormEntity.stages.map((stage) =>
         new OrderStageOrmMapper().toDomainEntity(stage),
       ),
+      checkCode: new CheckCodeVO(ormEntity.checkCode),
     };
   }
 
@@ -105,6 +106,7 @@ export class OrderOrmMapper extends OrmMapper<
       works: props.works?.length
         ? props.works.map((work) => new WorkOrmMapper().toOrmEntity(work))
         : null,
+      checkCode: props.checkCode.value,
     };
   }
 }

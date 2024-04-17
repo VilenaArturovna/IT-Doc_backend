@@ -26,6 +26,7 @@ export interface OrderOrmEntityProps {
   price: string;
   repairParts?: OrderWarehouseItemOrmEntity[];
   stages: OrderStageOrmEntity[];
+  checkCode: string;
 }
 
 export class OrderOrmEntity
@@ -49,6 +50,7 @@ export class OrderOrmEntity
   price: string;
   repairParts?: OrderWarehouseItemOrmEntity[];
   stages: OrderStageOrmEntity[];
+  checkCode: string;
 }
 
 export class OrderModel extends ModelBase implements OrderOrmEntity {
@@ -69,4 +71,5 @@ export class OrderModel extends ModelBase implements OrderOrmEntity {
   price: string;
   repairParts?: OrderWarehouseItemOrmEntity[];
   stages: OrderStageOrmEntity[];
+  checkCode: string;
 }

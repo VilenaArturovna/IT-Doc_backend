@@ -4,6 +4,7 @@ import { Result } from '@libs/utils';
 import { DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
 import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
 import { OrderEntity, OrderStageEntity } from '@modules/order/domain';
+import { CheckCodeVO } from '@modules/order/domain/value-objects';
 import { OrderStatus } from '@modules/order/types';
 import { StaffEntity } from '@modules/staff/domain';
 import { CommandHandler } from '@nestjs/cqrs';
@@ -76,6 +77,7 @@ export class CreateOrderCommandHandler extends CommandHandlerBase<
           number: 1,
         }),
       ],
+      checkCode: CheckCodeVO.generate(),
     });
 
     const createResult = await orderRepository.create(order);

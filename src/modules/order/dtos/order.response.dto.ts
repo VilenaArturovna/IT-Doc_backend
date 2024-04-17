@@ -45,6 +45,8 @@ export class OrderResponseDto {
   constructor(entity: OrderEntity) {
     const props = entity.getCopiedProps();
 
+    //TODO add works, parts, etc.
+
     this.id = props.id.value;
     this.priority = props.priority;
     this.status = props.status;
