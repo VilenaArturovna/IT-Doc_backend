@@ -69,6 +69,7 @@ export class OrderOrmMapper extends OrmMapper<
         new OrderStageOrmMapper().toDomainEntity(stage),
       ),
       checkCode: new CheckCodeVO(ormEntity.checkCode),
+      isPaid: ormEntity.isPaid,
     };
   }
 
@@ -107,6 +108,7 @@ export class OrderOrmMapper extends OrmMapper<
         ? props.works.map((work) => new WorkOrmMapper().toOrmEntity(work))
         : null,
       checkCode: props.checkCode.value,
+      isPaid: props.isPaid,
     };
   }
 }

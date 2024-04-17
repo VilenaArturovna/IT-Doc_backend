@@ -78,6 +78,7 @@ export class CreateOrderCommandHandler extends CommandHandlerBase<
         }),
       ],
       checkCode: CheckCodeVO.generate(),
+      isPaid: false,
     });
 
     const createResult = await orderRepository.create(order);

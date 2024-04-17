@@ -21,6 +21,8 @@ import {
   StartDiagnosticController,
   TakeOrderToWorkCommandHandler,
   TakeOrderToWorkController,
+  UpdateOrderCommandHandler,
+  UpdateOrderController,
 } from '@modules/order/commands/order';
 import {
   CreateWorkCommandHandler,
@@ -44,6 +46,7 @@ export const commandControllers = [
   StartDiagnosticController,
   OrderHasBeenDiagnosedController,
   TakeOrderToWorkController,
+  UpdateOrderController,
 ];
 export const commandHandlers = [
   CreateWorkCommandHandler,
@@ -58,4 +61,5 @@ export const commandHandlers = [
   StartDiagnosticCommandHandler,
   OrderHasBeenDiagnosedCommandHandler,
   TakeOrderToWorkCommandHandler,
+  UpdateOrderCommandHandler,
 ];

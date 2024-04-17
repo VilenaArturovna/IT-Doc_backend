@@ -18,8 +18,8 @@ export class DeadlineObjectionOrmEntity extends DeadlineModel {
         createdAt: { type: 'string' },
         updatedAt: { type: 'string' },
         name: { type: 'string' },
-        normal: { type: 'string' },
-        urgent: { type: 'string' },
+        normal: { type: 'number' },
+        urgent: { type: 'number' },
       },
     };
   }

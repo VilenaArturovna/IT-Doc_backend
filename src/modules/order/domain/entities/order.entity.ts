@@ -27,12 +27,22 @@ export interface OrderEntityProps {
   repairParts?: RepairPartVO[];
   stages: OrderStageEntity[];
   checkCode: CheckCodeVO;
+  isPaid: boolean;
 }
 
 type EndDiagnosticProps = Pick<
   OrderEntityProps,
   'repairParts' | 'deadline' | 'equipmentCondition' | 'works'
 >;
+
+interface UpdateOrderProps {
+  comment?: string;
+  deadline?: DateVO;
+  responsibleStaff?: StaffEntity;
+  price?: MoneyVO;
+  beneficiary?: Beneficiary;
+  isPaid?: boolean;
+}
 
 export class OrderEntity extends EntityBase<OrderEntityProps> {
   protected readonly _id: IdVO;
@@ -109,13 +119,18 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
     this.validate();
   }
 
-  private addNewStage(status: OrderStatus, deadline?: DateVO) {
+  private addNewStage(
+    status: OrderStatus,
+    deadline?: DateVO,
+    comment?: string,
+  ) {
     this.completeLastStage();
     this.props.stages.push(
       OrderStageEntity.create({
         status,
         number: this.props.stages.length + 1,
         deadline,
+        comment,
       }),
     );
   }
@@ -141,5 +156,18 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
     );
 
     this.props.price = calculator.result();
+  }
+
+  public update(props: UpdateOrderProps) {
+    this.props.isPaid = props.isPaid ?? this.props.isPaid;
+    this.props.deadline = props.deadline ?? this.props.deadline;
+    this.props.beneficiary = props.beneficiary ?? this.props.beneficiary;
+    this.props.responsibleStaff =
+      props.responsibleStaff ?? this.props.responsibleStaff;
+    this.props.price = props.price ?? this.props.price;
+
+    props.comment &&
+      this.addNewStage(this.props.status, this.props.deadline, props.comment);
+    this.validate();
   }
 }
