@@ -230,6 +230,7 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
       );
     }
 
+    //TODO deadline??
     this.props.status = OrderStatus.READY;
     this.props.refusalToRepair = refusalToRepair ?? false;
 
@@ -244,6 +245,7 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
       throw new ConflictException('Завершить можно только готовую заявку');
     }
 
+    //TODO deadline??
     this.props.status = OrderStatus.COMPLETED;
 
     this.addNewStage(this.props.status);
