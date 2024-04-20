@@ -49,6 +49,7 @@ export class OrderObjectionOrmEntity extends OrderModel {
         isPaid: { type: 'boolean' },
         responsibleStaffId: { type: ['string', 'null'] },
         serialNumberEquipment: { type: ['string', 'null'] },
+        refusalToRepair: { type: ['boolean', 'null'] },
       },
     };
   }

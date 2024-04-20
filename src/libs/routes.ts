@@ -46,6 +46,7 @@ export const routes = {
     diagnosed: `${orderById}/diagnosed`,
     approved: `${orderById}/approved`,
     takeToWork: `${orderById}/take-to-work`,
+    ready: `${orderById}/ready`,
     infoForClient: `info-about-order`,
   },
   deadline: {

@@ -29,6 +29,7 @@ export interface OrderEntityProps {
   stages: OrderStageEntity[];
   checkCode: CheckCodeVO;
   isPaid: boolean;
+  refusalToRepair?: boolean;
 }
 
 type EndDiagnosticProps = Pick<
@@ -213,6 +214,26 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
     this.props.deadline = deadline;
 
     this.addNewStage(this.props.status, this.props.deadline);
+
+    this.validate();
+    this.updatedAtNow();
+  }
+
+  public ready(refusalToRepair?: boolean) {
+    if (
+      ![OrderStatus.IN_PROGRESS, OrderStatus.DIAGNOSED].includes(
+        this.props.status,
+      )
+    ) {
+      throw new ConflictException(
+        'Заявка должна быть в работе или продиагностирована',
+      );
+    }
+
+    this.props.status = OrderStatus.READY;
+    this.props.refusalToRepair = refusalToRepair ?? false;
+
+    this.addNewStage(this.props.status);
 
     this.validate();
     this.updatedAtNow();

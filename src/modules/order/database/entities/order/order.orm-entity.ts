@@ -28,6 +28,7 @@ export interface OrderOrmEntityProps {
   stages: OrderStageOrmEntity[];
   checkCode: string;
   isPaid: boolean;
+  refusalToRepair?: boolean;
 }
 
 export class OrderOrmEntity
@@ -53,6 +54,7 @@ export class OrderOrmEntity
   stages: OrderStageOrmEntity[];
   checkCode: string;
   isPaid: boolean;
+  refusalToRepair?: boolean;
 }
 
 export class OrderModel extends ModelBase implements OrderOrmEntity {
@@ -75,4 +77,5 @@ export class OrderModel extends ModelBase implements OrderOrmEntity {
   stages: OrderStageOrmEntity[];
   checkCode: string;
   isPaid: boolean;
+  refusalToRepair?: boolean;
 }

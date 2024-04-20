@@ -70,6 +70,7 @@ export class OrderOrmMapper extends OrmMapper<
       ),
       checkCode: new CheckCodeVO(ormEntity.checkCode),
       isPaid: ormEntity.isPaid,
+      refusalToRepair: ormEntity.refusalToRepair,
     };
   }
 
@@ -109,6 +110,7 @@ export class OrderOrmMapper extends OrmMapper<
         : null,
       checkCode: props.checkCode.value,
       isPaid: props.isPaid,
+      refusalToRepair: props.refusalToRepair,
     };
   }
 }
