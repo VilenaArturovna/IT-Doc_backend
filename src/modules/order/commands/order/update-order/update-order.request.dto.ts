@@ -19,7 +19,7 @@ export class UpdateOrderRequestDto {
   @IsBoolean()
   isPaid?: boolean;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ enum: Beneficiary, enumName: 'Beneficiary' })
   @IsOptional()
   @IsEnum(Beneficiary)
   beneficiary?: Beneficiary;

@@ -1,4 +1,5 @@
 import { EntityBase } from '@libs/base-classes';
+import { ConflictException } from '@libs/exceptions';
 import { MoneyCalculator } from '@libs/utils';
 import { DateVO, IdVO, MoneyVO } from '@libs/value-objects';
 import {
@@ -58,6 +59,12 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
   }
 
   public putInQueueForDiagnostics(deadline: DateVO) {
+    if (this.props.status !== OrderStatus.IN_DIAGNOSTICS_QUEUE) {
+      throw new ConflictException(
+        'Чтобы поставить оборудование в очередь на диагностику, заявка должна быть зарегистрирована',
+      );
+    }
+
     this.props.status = OrderStatus.IN_DIAGNOSTICS_QUEUE;
     this.props.deadline = deadline;
 
@@ -68,6 +75,12 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
   }
 
   public startDiagnostic(deadline: DateVO) {
+    if (this.props.status !== OrderStatus.IN_DIAGNOSTICS_QUEUE) {
+      throw new ConflictException(
+        'Для начала диагностики необходимо сначала поставить оборудование в очередь на диагностику',
+      );
+    }
+
     this.props.status = OrderStatus.DIAGNOSTIC;
     this.props.deadline = deadline;
 
@@ -78,6 +91,12 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
   }
 
   public endDiagnostic(props: EndDiagnosticProps, margin: number) {
+    if (this.props.status !== OrderStatus.DIAGNOSTIC) {
+      throw new ConflictException(
+        'Для завершения диагностики необходимо сначала взять на диагностику оборудование',
+      );
+    }
+
     this.props.status = OrderStatus.DIAGNOSED;
     this.props.deadline = props.deadline;
     this.props.equipmentCondition = props.equipmentCondition;
@@ -92,6 +111,14 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
   }
 
   public takeToWork(deadline: DateVO) {
+    if (
+      this.props.status !== OrderStatus.APPROVED &&
+      this.props.status !== OrderStatus.APPROVED_AND_SPARE_PART_IS_ORDERED
+    ) {
+      throw new ConflictException(
+        'Чтобы начать работы по заявке, необходимо сначала ее согласовать',
+      );
+    }
     this.props.status = OrderStatus.IN_PROGRESS;
     this.props.deadline = deadline;
 
@@ -169,5 +196,22 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
     props.comment &&
       this.addNewStage(this.props.status, this.props.deadline, props.comment);
     this.validate();
+    this.updatedAtNow();
+  }
+
+  public approve(status: OrderStatus, deadline: DateVO) {
+    if (this.props.status !== OrderStatus.DIAGNOSED) {
+      throw new ConflictException(
+        'Для согласования оборудование должно быть продиагностировано',
+      );
+    }
+
+    this.props.status = status;
+    this.props.deadline = deadline;
+
+    this.addNewStage(this.props.status, this.props.deadline);
+
+    this.validate();
+    this.updatedAtNow();
   }
 }
