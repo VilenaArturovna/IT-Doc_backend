@@ -238,4 +238,17 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
     this.validate();
     this.updatedAtNow();
   }
+
+  public complete() {
+    if (this.props.status !== OrderStatus.READY) {
+      throw new ConflictException('Завершить можно только готовую заявку');
+    }
+
+    this.props.status = OrderStatus.COMPLETED;
+
+    this.addNewStage(this.props.status);
+
+    this.validate();
+    this.updatedAtNow();
+  }
 }

@@ -11,6 +11,8 @@ import {
   UpdateDeadlineController,
 } from '@modules/order/commands/deadline';
 import {
+  CompleteOrderCommandHandler,
+  CompleteOrderController,
   CreateOrderCommandHandler,
   CreateOrderController,
   OrderHasBeenApprovedCommandHandler,
@@ -53,6 +55,7 @@ export const commandControllers = [
   UpdateOrderController,
   OrderHasBeenApprovedController,
   OrderReadyController,
+  CompleteOrderController,
 ];
 export const commandHandlers = [
   CreateWorkCommandHandler,
@@ -70,4 +73,5 @@ export const commandHandlers = [
   UpdateOrderCommandHandler,
   OrderHasBeenApprovedCommandHandler,
   OrderReadyCommandHandler,
+  CompleteOrderCommandHandler,
 ];

@@ -1,3 +1,4 @@
+export * from './complete-order';
 export * from './create-order';
 export * from './order-has-been-approved';
 export * from './order-has-been-diagnosed';

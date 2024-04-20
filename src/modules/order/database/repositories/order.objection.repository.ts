@@ -59,9 +59,11 @@ export class OrderObjectionRepository extends ObjectionRepositoryBase<
     try {
       const ormEntity = this.mapper.toOrmEntity(entity);
 
-      await this.repository.query(transaction).insertGraph(ormEntity);
+      const order = await this.repository
+        .query(transaction)
+        .insertGraphAndFetch(ormEntity);
 
-      return Result.ok(entity);
+      return Result.ok(this.mapper.toDomainEntity(order));
     } catch (e) {
       return Result.fail(e);
     }
