@@ -112,13 +112,16 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
 
   public takeToWork(deadline: DateVO) {
     if (
-      this.props.status !== OrderStatus.APPROVED &&
-      this.props.status !== OrderStatus.APPROVED_AND_SPARE_PART_IS_ORDERED
+      ![
+        OrderStatus.APPROVED,
+        OrderStatus.APPROVED_AND_SPARE_PART_IS_ORDERED,
+      ].includes(this.props.status)
     ) {
       throw new ConflictException(
         'Чтобы начать работы по заявке, необходимо сначала ее согласовать',
       );
     }
+
     this.props.status = OrderStatus.IN_PROGRESS;
     this.props.deadline = deadline;
 
