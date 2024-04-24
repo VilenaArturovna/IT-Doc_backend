@@ -1,6 +1,7 @@
 import {
   GetInfoAboutOrderForClientReadDaoProvider,
   GetManyClientsReadDaoProvider,
+  GetManyOrdersReadDaoProvider,
   GetManyWorksReadDaoProvider,
   GetOneClientReadDaoProvider,
   GetOneOrderReadDaoProvider,
@@ -14,4 +15,5 @@ export const readDaoProviders = [
   GetOneClientReadDaoProvider,
   GetOneOrderReadDaoProvider,
   GetInfoAboutOrderForClientReadDaoProvider,
+  GetManyOrdersReadDaoProvider,
 ];

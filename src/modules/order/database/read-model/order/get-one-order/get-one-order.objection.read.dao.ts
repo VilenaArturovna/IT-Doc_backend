@@ -46,7 +46,7 @@ export class GetOneOrderObjectionReadDao extends GetOneOrderReadDao {
       )) as stages
     `),
       )
-      .groupBy('orderId')
+      .groupBy('orderId', 'createdAt')
       .orderBy('createdAt')
       .first();
 

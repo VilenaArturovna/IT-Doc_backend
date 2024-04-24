@@ -18,8 +18,8 @@ export const configuration = (): Config => ({
     secret: process.env.JWT_SECRET,
   },
   telegram: {
-    token: process.env.TG_BOT_NAME,
-    name: process.env.TG_BOT_TOKEN,
+    token: process.env.TG_BOT_TOKEN,
+    name: process.env.TG_BOT_NAME,
   },
   margin: parseInt(process.env.MARGIN),
 });

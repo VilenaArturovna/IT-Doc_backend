@@ -33,7 +33,7 @@ export class GetOneOrderController {
   async getOneOrder(
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<GetOneOrderDaoModel> {
-    const query = new GetOneOrderQuery({});
+    const query = new GetOneOrderQuery({ params: { id } });
 
     const result: Result<GetOneOrderDaoModel, ExceptionBase> =
       await this.queryBus.execute(query);

@@ -105,6 +105,12 @@ export class GetOneOrderDaoModel {
   @ApiProperty()
   price: string;
 
+  @ApiProperty()
+  isPaid: boolean;
+
+  @ApiPropertyOptional()
+  refusalToRepair?: boolean;
+
   @ApiPropertyOptional({ type: () => GetOneOrderStaff })
   responsibleStaff?: GetOneOrderStaff;
 
