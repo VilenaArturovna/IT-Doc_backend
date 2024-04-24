@@ -46,9 +46,23 @@ export class WarehouseItemObjectionRepository extends ObjectionRepositoryBase<
         return Result.fail(new NotFoundException('Entity not found'));
       }
 
-      const domainEntity = await this.mapper.toDomainEntity(ormEntity);
+      const domainEntity = this.mapper.toDomainEntity(ormEntity);
 
       return Result.ok(domainEntity);
+    } catch (e) {
+      return Result.fail(e);
+    }
+  }
+
+  async batchUpdate(
+    entities: WarehouseItemEntity[],
+  ): Promise<Result<void, ExceptionBase>> {
+    try {
+      for (const entity of entities) {
+        await this.update(entity);
+      }
+
+      return Result.ok();
     } catch (e) {
       return Result.fail(e);
     }

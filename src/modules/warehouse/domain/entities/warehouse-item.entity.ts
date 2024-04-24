@@ -47,6 +47,14 @@ export class WarehouseItemEntity extends EntityBase<WarehouseItemEntityProps> {
     return this.props.price;
   }
 
+  public get balance() {
+    return this.props.balance;
+  }
+
+  public get title() {
+    return this.props.title;
+  }
+
   public update(props: UpdateWarehouseItemEntityProps) {
     this.props.vendor = props.vendor;
     this.props.provider = props.provider;
@@ -67,6 +75,16 @@ export class WarehouseItemEntity extends EntityBase<WarehouseItemEntityProps> {
   public archive() {
     this.props.isArchived = true;
     this.updatedAtNow();
+  }
+
+  public reserve(quantity: number) {
+    this.props.balance =
+      Math.round((this.props.balance - quantity) * 1000) / 1000;
+  }
+
+  public cancelReservation(quantity: number) {
+    this.props.balance =
+      Math.round((this.props.balance + quantity) * 1000) / 1000;
   }
 
   protected validate() {

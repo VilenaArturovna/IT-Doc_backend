@@ -1,6 +1,6 @@
 import { ExceptionBase } from '@libs/base-classes';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
-import { NotFoundException } from '@libs/exceptions';
+import { ConflictException, NotFoundException } from '@libs/exceptions';
 import { MoneyCalculator, Result } from '@libs/utils';
 import { Currency, DateVO, UuidVO } from '@libs/value-objects';
 import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
@@ -70,6 +70,14 @@ export class OrderHasBeenDiagnosedCommandHandler extends CommandHandlerBase<
         );
         if (!item) return Result.fail(new NotFoundException('ЗИП не найден'));
 
+        if (item.balance < repairPart.quantity) {
+          return Result.fail(
+            new ConflictException(`Не хватает на складе ${item.title}`),
+          );
+        }
+
+        item.reserve(repairPart.quantity);
+
         const cost = new MoneyCalculator(Currency.RUB)
           .plus(item.price)
           .multiply(repairPart.quantity)
@@ -83,6 +91,9 @@ export class OrderHasBeenDiagnosedCommandHandler extends CommandHandlerBase<
           }),
         );
       }
+
+      //TODO check updating
+      await warehouseItemRepository.batchUpdate(warehouseItems);
     }
 
     const margin = this.configService.get<number>('margin');

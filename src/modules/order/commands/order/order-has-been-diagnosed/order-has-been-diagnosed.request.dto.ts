@@ -4,7 +4,6 @@ import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
   IsArray,
-  IsInt,
   IsNotEmpty,
   IsOptional,
   IsPositive,
@@ -20,7 +19,6 @@ export class RepairPartRequestDto {
 
   @ApiProperty()
   @IsPositive()
-  @IsInt()
   quantity: number;
 }
 

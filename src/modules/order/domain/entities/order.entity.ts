@@ -44,6 +44,7 @@ interface UpdateOrderProps {
   price?: MoneyVO;
   beneficiary?: Beneficiary;
   isPaid?: boolean;
+  margin?: number;
 }
 
 export class OrderEntity extends EntityBase<OrderEntityProps> {
@@ -192,10 +193,17 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
   public update(props: UpdateOrderProps) {
     this.props.isPaid = props.isPaid ?? this.props.isPaid;
     this.props.deadline = props.deadline ?? this.props.deadline;
-    this.props.beneficiary = props.beneficiary ?? this.props.beneficiary;
     this.props.responsibleStaff =
       props.responsibleStaff ?? this.props.responsibleStaff;
     this.props.price = props.price ?? this.props.price;
+
+    if (this.props.beneficiary !== props.beneficiary) {
+      this.props.beneficiary = props.beneficiary;
+
+      if (!props.price) {
+        this.calculatePrice(props.margin);
+      }
+    }
 
     props.comment &&
       this.addNewStage(this.props.status, this.props.deadline, props.comment);
@@ -233,6 +241,12 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
     //TODO deadline??
     this.props.status = OrderStatus.READY;
     this.props.refusalToRepair = refusalToRepair ?? false;
+
+    if (refusalToRepair) {
+      this.props.repairParts.forEach((part) =>
+        part.warehouseItem.cancelReservation(part.quantity),
+      );
+    }
 
     this.addNewStage(this.props.status);
 

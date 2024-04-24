@@ -5,6 +5,7 @@ import { Currency, DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
 import { OrderUnitOfWork } from '@modules/order/database/unit-of-work';
 import { OrderEntity } from '@modules/order/domain';
 import { StaffEntity } from '@modules/staff/domain';
+import { ConfigService } from '@nestjs/config';
 import { CommandHandler } from '@nestjs/cqrs';
 
 import { UpdateOrderCommand } from './update-order.command';
@@ -14,7 +15,10 @@ export class UpdateOrderCommandHandler extends CommandHandlerBase<
   OrderUnitOfWork,
   OrderEntity
 > {
-  constructor(unitOfWork: OrderUnitOfWork) {
+  constructor(
+    unitOfWork: OrderUnitOfWork,
+    private readonly configService: ConfigService,
+  ) {
     super(unitOfWork);
   }
 
@@ -41,6 +45,8 @@ export class UpdateOrderCommandHandler extends CommandHandlerBase<
       staff = staffResult.unwrap();
     }
 
+    const margin = this.configService.get<number>('margin');
+
     order.update({
       ...payload,
       price: payload.price
@@ -50,6 +56,7 @@ export class UpdateOrderCommandHandler extends CommandHandlerBase<
       deadline: payload.deadline
         ? DateVO.now().addMinutes(payload.deadline)
         : undefined,
+      margin,
     });
 
     return orderRepository.update(order);

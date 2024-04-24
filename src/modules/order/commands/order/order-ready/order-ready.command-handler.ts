@@ -32,6 +32,7 @@ export class OrderReadyCommandHandler extends CommandHandlerBase<
 
     order.ready(refusalToRepair);
 
+    //TODO check updating warehouse items
     return orderRepository.update(order);
   }
 }

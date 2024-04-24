@@ -46,6 +46,14 @@ export class RepairPartVO extends ValueObject<RepairPartVOProps> {
     return this.props.cost;
   }
 
+  public get quantity() {
+    return this.props.quantity;
+  }
+
+  public get warehouseItem() {
+    return this.props.warehouseItem;
+  }
+
   private validate() {
     const cost = new MoneyCalculator(Currency.RUB)
       .plus(this.props.warehouseItem.price)
