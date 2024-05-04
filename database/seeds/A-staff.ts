@@ -9,6 +9,7 @@ export async function seed(knex: Knex): Promise<any> {
   const superAdmin: StaffOrmEntityProps = {
     firstname: 'super',
     lastname: 'admin',
+    middleName: 'admin',
     isRemoved: false,
     phone: '+79620496314',
     role: Role.ADMIN,

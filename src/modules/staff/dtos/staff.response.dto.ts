@@ -18,6 +18,9 @@ export class StaffResponseDto {
   lastname: string;
 
   @ApiProperty()
+  middleName: string;
+
+  @ApiProperty()
   role: string;
 
   @ApiProperty()
@@ -36,6 +39,7 @@ export class StaffResponseDto {
     this.createdAt = entity.createdAt.ISOString;
     this.firstname = props.firstname;
     this.lastname = props.lastname;
+    this.middleName = props.middleName;
     this.birthdate = props.birthdate?.ISOString;
     this.avatar = props.avatar?.value;
     this.phone = props.phone.value;

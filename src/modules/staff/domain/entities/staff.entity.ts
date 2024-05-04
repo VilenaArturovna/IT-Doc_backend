@@ -6,6 +6,7 @@ import { Role } from '@modules/staff/types';
 export interface StaffEntityProps {
   firstname: string;
   lastname: string;
+  middleName: string;
   phone: PhoneVO;
   birthdate?: DateVO;
   avatar?: UrlVO;
@@ -17,7 +18,7 @@ export interface StaffEntityProps {
 
 type UpdateStaffEntityProps = Pick<
   StaffEntityProps,
-  'firstname' | 'lastname' | 'phone' | 'birthdate' | 'avatar'
+  'firstname' | 'lastname' | 'phone' | 'birthdate' | 'avatar' | 'middleName'
 >;
 
 export class StaffEntity extends EntityBase<StaffEntityProps> {
@@ -31,6 +32,7 @@ export class StaffEntity extends EntityBase<StaffEntityProps> {
     return {
       firstname: this.props.firstname,
       lastname: this.props.lastname,
+      middleName: this.props.middleName,
     };
   }
 
@@ -41,6 +43,7 @@ export class StaffEntity extends EntityBase<StaffEntityProps> {
   public update(props: UpdateStaffEntityProps) {
     this.props.lastname = props.lastname;
     this.props.firstname = props.firstname;
+    this.props.middleName = props.middleName;
     this.props.phone = props.phone;
     this.props.birthdate = props.birthdate;
     this.props.avatar = props.avatar;
@@ -60,9 +63,17 @@ export class StaffEntity extends EntityBase<StaffEntityProps> {
   }
 
   protected validate() {
-    const { firstname, lastname, phone, role, tgUsername } = this.props;
+    const { firstname, lastname, phone, role, tgUsername, middleName } =
+      this.props;
 
-    const requiredFields = [firstname, lastname, tgUsername, phone, role];
+    const requiredFields = [
+      firstname,
+      lastname,
+      tgUsername,
+      phone,
+      role,
+      middleName,
+    ];
 
     if (requiredFields.some((f) => f === null || f === undefined)) {
       throw new StaffHasEmptyFieldsError();

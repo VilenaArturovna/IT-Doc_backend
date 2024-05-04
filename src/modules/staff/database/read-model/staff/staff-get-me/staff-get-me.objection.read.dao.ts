@@ -18,6 +18,7 @@ export class StaffGetMeObjectionReadDao extends StaffGetMeReadDao {
         'phone',
         'firstname',
         'lastname',
+        'middleName',
         'avatar',
         'birthdate',
         'role',

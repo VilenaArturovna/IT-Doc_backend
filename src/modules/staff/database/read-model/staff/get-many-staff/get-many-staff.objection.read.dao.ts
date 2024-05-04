@@ -23,6 +23,7 @@ export class GetManyStaffObjectionReadDao extends GetManyStaffReadDao {
       'phone',
       'firstname',
       'lastname',
+      'middleName',
       'avatar',
       'birthdate',
       'role',
@@ -33,7 +34,8 @@ export class GetManyStaffObjectionReadDao extends GetManyStaffReadDao {
       qb.where((builder) =>
         builder
           .whereILike('firstname', `%${search}%`)
-          .orWhereILike('lastname', `%${search}%`),
+          .orWhereILike('lastname', `%${search}%`)
+          .orWhereILike('middleName', `%${search}%`),
       );
     }
 

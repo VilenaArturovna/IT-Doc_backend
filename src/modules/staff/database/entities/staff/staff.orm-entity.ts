@@ -4,6 +4,7 @@ import { Role } from '@modules/staff/types';
 export interface StaffOrmEntityProps {
   firstname: string;
   lastname: string;
+  middleName: string;
   phone: string;
   birthdate?: string;
   avatar?: string;
@@ -19,6 +20,7 @@ export class StaffOrmEntity
 {
   firstname: string;
   lastname: string;
+  middleName: string;
   phone: string;
   birthdate?: string;
   avatar?: string;
@@ -31,6 +33,7 @@ export class StaffOrmEntity
 export class StaffModel extends ModelBase implements StaffOrmEntity {
   firstname: string;
   lastname: string;
+  middleName: string;
   phone: string;
   birthdate?: string;
   avatar?: string;

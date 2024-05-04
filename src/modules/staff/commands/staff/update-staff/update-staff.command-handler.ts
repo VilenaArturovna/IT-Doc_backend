@@ -36,6 +36,7 @@ export class UpdateStaffCommandHandler extends CommandHandlerBase<
       phone: new PhoneVO(payload.phone),
       avatar: payload.avatar ? new UrlVO(payload.avatar) : undefined,
       birthdate: payload.birthdate ? new DateVO(payload.birthdate) : undefined,
+      middleName: payload.middleName,
     });
 
     return repository.update(staff);

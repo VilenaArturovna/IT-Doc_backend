@@ -51,6 +51,7 @@ export class CreateStaffCommandHandler extends CommandHandlerBase<
       birthdate: payload.birthdate ? new DateVO(payload.birthdate) : undefined,
       isRemoved: false,
       tgUsername: payload.tgUsername,
+      middleName: payload.middleName,
     });
 
     return repository.create(newStaff);

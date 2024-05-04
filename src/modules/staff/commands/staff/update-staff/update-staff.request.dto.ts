@@ -19,6 +19,11 @@ export class UpdateStaffRequestDto {
   @IsNotEmpty()
   lastname: string;
 
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  middleName: string;
+
   @ApiProperty({ example: '+79137773344' })
   @IsMobilePhone('ru-RU')
   phone: string;

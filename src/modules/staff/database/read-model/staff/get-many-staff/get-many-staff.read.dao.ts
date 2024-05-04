@@ -16,6 +16,9 @@ export class GetManyStaffItem {
   lastname: string;
 
   @ApiProperty()
+  middleName: string;
+
+  @ApiProperty()
   phone: string;
 
   @ApiProperty({ enum: Role, enumName: 'Role' })

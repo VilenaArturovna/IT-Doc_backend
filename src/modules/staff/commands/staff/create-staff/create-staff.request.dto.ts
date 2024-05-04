@@ -23,6 +23,11 @@ export class CreateStaffRequestDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  middleName: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
   tgUsername: string;
 
   @ApiProperty({ example: '+79137773344' })
