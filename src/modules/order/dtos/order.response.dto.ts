@@ -1,8 +1,10 @@
 import { OrderEntity } from '@modules/order/domain';
-import { ClientResponseDto } from '@modules/order/dtos/client.response.dto';
-import { OrderStageResponseDto } from '@modules/order/dtos/order-stage.response.dto';
-import { OrderWarehouseItemResponseDto } from '@modules/order/dtos/order-warehouse-item.response.dto';
-import { WorkResponseDto } from '@modules/order/dtos/work.response.dto';
+import {
+  ClientResponseDto,
+  OrderStageResponseDto,
+  OrderWarehouseItemResponseDto,
+  WorkResponseDto,
+} from '@modules/order/dtos';
 import { Beneficiary, OrderStatus, Priority } from '@modules/order/types';
 import { StaffResponseDto } from '@modules/staff/dtos';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';

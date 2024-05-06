@@ -20,5 +20,9 @@ export class TaskEntity extends EntityBase<TaskEntityProps> {
     return new TaskEntity({ props });
   }
 
+  public addParticipants(participants: TaskStaffEntity[]) {
+    this.props.participants = this.props.participants.concat(participants);
+  }
+
   protected validate() {}
 }

@@ -1,5 +1,5 @@
 import { ModelBase, OrmEntityBase } from '@libs/base-classes';
-import { TaskStaffOrmEntity } from '@modules/task/database';
+import { TaskStaffOrmEntity } from '@modules/task/database/entities';
 import { TaskStatus } from '@modules/task/types';
 
 export interface TaskOrmEntityProps {

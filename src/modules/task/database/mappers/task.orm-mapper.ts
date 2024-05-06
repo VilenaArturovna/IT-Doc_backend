@@ -4,7 +4,7 @@ import {
   OrmMapper,
 } from '@libs/base-classes';
 import { Currency, DateVO, MoneyVO } from '@libs/value-objects';
-import { TaskStaffOrmMapper } from '@modules/task/database';
+import { TaskStaffOrmMapper } from '@modules/task/database/mappers/task-staff.orm-mapper';
 import { TaskEntity, TaskEntityProps } from '@modules/task/domain';
 
 import { TaskOrmEntity, TaskOrmEntityProps } from '../entities';

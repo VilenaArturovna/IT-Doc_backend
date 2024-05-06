@@ -28,7 +28,9 @@ export class StaffOrmMapper extends OrmMapper<
   protected toDomainProps(ormEntity: StaffOrmEntity): StaffEntityProps {
     return {
       phone: new PhoneVO(ormEntity.phone),
-      birthdate: new DateVO(ormEntity.birthdate),
+      birthdate: ormEntity.birthdate
+        ? new DateVO(ormEntity.birthdate)
+        : undefined,
       firstname: ormEntity.firstname,
       lastname: ormEntity.lastname,
       role: ormEntity.role,

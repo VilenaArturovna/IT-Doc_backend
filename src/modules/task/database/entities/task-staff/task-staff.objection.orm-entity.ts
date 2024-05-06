@@ -14,12 +14,6 @@ export class TaskStaffObjectionOrmEntity extends TaskStaffModel {
     return this.fromJson(props);
   }
 
-  staffId: string;
-  taskId: string;
-  comment?: string;
-  isResponsible: boolean;
-  isAuthor: boolean;
-  isRead: boolean;
   static get jsonSchema() {
     return {
       type: 'object',

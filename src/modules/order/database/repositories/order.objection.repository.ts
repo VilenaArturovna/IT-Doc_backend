@@ -20,17 +20,19 @@ export class OrderObjectionRepository extends ObjectionRepositoryBase<
     protected readonly trxId: TrxId,
   ) {
     super(OrderObjectionOrmEntity, new OrderOrmMapper(), unitOfWork, trxId);
+
+    this.graph = {
+      stages: true,
+      repairParts: {
+        warehouseItem: true,
+      },
+      client: true,
+      responsibleStaff: true,
+      works: true,
+    };
   }
 
-  private graph: {
-    stages: true;
-    repairParts: {
-      warehouseItem: true;
-    };
-    client: true;
-    responsibleStaff: true;
-    works: true;
-  };
+  private readonly graph: object;
 
   async getOneById(id: IdVO): Promise<Result<OrderEntity, ExceptionBase>> {
     const transaction = this.unitOfWork.getTrx(this.trxId);

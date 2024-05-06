@@ -4,6 +4,7 @@ import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 import { Result } from '@libs/utils';
 import { PhoneVO } from '@libs/value-objects';
 import { StaffEntity, StaffEntityProps } from '@modules/staff/domain';
+import { Role } from '@modules/staff/types';
 
 import { StaffObjectionOrmEntity, StaffOrmEntity } from '../entities';
 import { StaffOrmMapper } from '../mappers';
@@ -75,6 +76,26 @@ export class StaffObjectionRepository extends ObjectionRepositoryBase<
       const domainEntity = this.mapper.toDomainEntity(ormEntity);
 
       return Result.ok(domainEntity);
+    } catch (e) {
+      return Result.fail(e);
+    }
+  }
+
+  async getManyByRole(
+    role: Role,
+  ): Promise<Result<StaffEntity[], ExceptionBase>> {
+    const transaction = this.unitOfWork.getTrx(this.trxId);
+
+    try {
+      const ormEntities = await this.repository
+        .query(transaction)
+        .where({ role });
+
+      const domainEntities = ormEntities.map((ormEntity) =>
+        this.mapper.toDomainEntity(ormEntity),
+      );
+
+      return Result.ok(domainEntities);
     } catch (e) {
       return Result.fail(e);
     }

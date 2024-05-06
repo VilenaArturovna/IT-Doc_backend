@@ -17,5 +17,17 @@ export class TaskStaffEntity extends EntityBase<TaskStaffEntityProps> {
     return new TaskStaffEntity({ props });
   }
 
+  public get staff() {
+    return this.props.staff;
+  }
+
+  public get isResponsible() {
+    return this.props.isResponsible;
+  }
+
+  public get isAuthor() {
+    return this.props.isAuthor;
+  }
+
   protected validate() {}
 }

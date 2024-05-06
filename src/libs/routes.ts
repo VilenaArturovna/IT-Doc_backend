@@ -1,12 +1,14 @@
 const staffRoot = 'staff';
-const warehouseItemRoot = 'warehouse';
+const warehouseItemRoot = 'warehouses';
 const providerRoot = 'provider';
-const vendorRoot = 'vendor';
-const workRoot = 'work';
-const clientRoot = 'client';
-const orderRoot = 'order';
+const vendorRoot = 'vendors';
+const workRoot = 'works';
+const clientRoot = 'clients';
+const orderRoot = 'orders';
 const orderById = `${orderRoot}/:id`;
-const deadlineRoot = 'deadline';
+const deadlineRoot = 'deadlines';
+const tasksRoot = 'tasks';
+const taskById = `${tasksRoot}/:id`;
 
 export const routes = {
   staff: {
@@ -53,5 +55,9 @@ export const routes = {
   deadline: {
     root: deadlineRoot,
     byId: `${deadlineRoot}/:id`,
+  },
+  task: {
+    root: tasksRoot,
+    byId: taskById,
   },
 };
