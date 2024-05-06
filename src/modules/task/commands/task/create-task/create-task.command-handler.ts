@@ -63,6 +63,10 @@ export class CreateTaskCommandHandler extends CommandHandlerBase<
       ],
     });
 
+    if (payload.authorId === payload.responsibleStaffId) {
+      return taskRepository.create(task);
+    }
+
     const participants: TaskStaffEntity[] = [];
 
     if (responsibleStaff) {
