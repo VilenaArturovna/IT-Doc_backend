@@ -1,4 +1,3 @@
-import { StaffResponseDto } from '@modules/staff/dtos';
 import { TaskEntity } from '@modules/task/domain';
 import { TaskStatus } from '@modules/task/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -24,7 +23,7 @@ export class TaskResponseDto {
   @ApiProperty({ enum: TaskStatus, enumName: 'TaskStatus' })
   status: TaskStatus;
 
-  @ApiProperty({ type: () => StaffResponseDto, isArray: true })
+  @ApiProperty({ type: () => TaskStaffResponseDto, isArray: true })
   participants: TaskStaffResponseDto[];
 
   @ApiPropertyOptional()
