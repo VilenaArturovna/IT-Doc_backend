@@ -59,5 +59,6 @@ export const routes = {
   task: {
     root: tasksRoot,
     byId: taskById,
+    addComment: `${taskById}/comment`,
   },
 };

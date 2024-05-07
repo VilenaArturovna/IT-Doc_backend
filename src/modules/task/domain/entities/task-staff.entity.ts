@@ -31,10 +31,23 @@ export class TaskStaffEntity extends EntityBase<TaskStaffEntityProps> {
 
   public makeResponsible() {
     this.props.isResponsible = true;
+
+    this.updatedAt;
+    this.validate();
   }
 
   public markUnread() {
     this.props.isRead = false;
+
+    this.updatedAt;
+    this.validate();
+  }
+
+  public set comment(comment: string) {
+    this.props.comment = comment;
+
+    this.updatedAt;
+    this.validate();
   }
 
   protected validate() {}

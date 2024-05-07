@@ -31,7 +31,7 @@ export class TaskEntity extends EntityBase<TaskEntityProps> {
 
   public takeToWork(staffId: IdVO) {
     if (this.props.status !== TaskStatus.REGISTERED) {
-      throw new ConflictException('Задача уже в работе или завершена');
+      throw new ConflictException('Задача уже в работе или выполнена');
     }
 
     const responsibleParticipant = this.props.participants.find(
@@ -60,14 +60,35 @@ export class TaskEntity extends EntityBase<TaskEntityProps> {
       );
       participant.makeResponsible();
 
-      this.props.participants
-        .filter((p) => !p.id.equals(participant.id))
-        .forEach((p) => p.markUnread());
-
+      this.props.participants = this.props.participants.filter(
+        (p) => !p.id.equals(participant.id),
+      );
+      this.props.participants.forEach((p) => p.markUnread());
       this.props.participants.push(participant);
     }
 
     this.props.status = TaskStatus.IN_WORK;
+
+    this.updatedAt;
+    this.validate();
+  }
+
+  public addComment(comment: string, staffId: IdVO) {
+    if (this.props.status === TaskStatus.COMPLETED) {
+      throw new ConflictException('Задача уже выполнена');
+    }
+
+    const participant = this.props.participants.find((p) =>
+      p.staff.id.equals(staffId),
+    );
+
+    participant.comment = comment;
+
+    this.props.participants = this.props.participants.filter(
+      (p) => !p.id.equals(participant.id),
+    );
+    this.props.participants.forEach((p) => p.markUnread());
+    this.props.participants.push(participant);
 
     this.updatedAt;
     this.validate();
