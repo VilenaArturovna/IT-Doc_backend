@@ -29,5 +29,13 @@ export class TaskStaffEntity extends EntityBase<TaskStaffEntityProps> {
     return this.props.isAuthor;
   }
 
+  public makeResponsible() {
+    this.props.isResponsible = true;
+  }
+
+  public markUnread() {
+    this.props.isRead = false;
+  }
+
   protected validate() {}
 }
