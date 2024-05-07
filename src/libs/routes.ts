@@ -60,5 +60,6 @@ export const routes = {
     root: tasksRoot,
     byId: taskById,
     addComment: `${taskById}/comment`,
+    complete: `${taskById}/complete`,
   },
 };

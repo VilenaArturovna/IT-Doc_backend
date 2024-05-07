@@ -41,7 +41,7 @@ export class TaskEntity extends EntityBase<TaskEntityProps> {
 
     if (
       hasResponsibleStaff &&
-      !staffId.equals(responsibleParticipant.staff.id)
+      !staffId.equals(responsibleParticipant.staffId)
     ) {
       throw new ForbiddenException('Вы не являетесь исполнителем задачи');
     }
@@ -56,15 +56,11 @@ export class TaskEntity extends EntityBase<TaskEntityProps> {
 
     if (!hasResponsibleStaff) {
       const participant = this.props.participants.find((p) =>
-        p.staff.id.equals(staffId),
+        p.staffId.equals(staffId),
       );
       participant.makeResponsible();
 
-      this.props.participants = this.props.participants.filter(
-        (p) => !p.id.equals(participant.id),
-      );
-      this.props.participants.forEach((p) => p.markUnread());
-      this.props.participants.push(participant);
+      this.markUnreadTaskForOtherParticipants(participant);
     }
 
     this.props.status = TaskStatus.IN_WORK;
@@ -79,19 +75,46 @@ export class TaskEntity extends EntityBase<TaskEntityProps> {
     }
 
     const participant = this.props.participants.find((p) =>
-      p.staff.id.equals(staffId),
+      p.staffId.equals(staffId),
     );
 
     participant.comment = comment;
 
+    this.markUnreadTaskForOtherParticipants(participant);
+
+    this.updatedAt;
+    this.validate();
+  }
+
+  public complete(staffId: IdVO) {
+    if (this.props.status !== TaskStatus.IN_WORK) {
+      throw new ConflictException(
+        'Задача должна быть в работе для ее завершения',
+      );
+    }
+
+    const responsibleParticipant = this.props.participants.find(
+      (p) => p.isResponsible,
+    );
+
+    if (!responsibleParticipant.staffId.equals(staffId)) {
+      throw new ForbiddenException('Вы не являетесь исполнителем задачи');
+    }
+
+    this.props.status = TaskStatus.COMPLETED;
+
+    this.markUnreadTaskForOtherParticipants(responsibleParticipant);
+
+    this.updatedAt;
+    this.validate();
+  }
+
+  private markUnreadTaskForOtherParticipants(participant: TaskStaffEntity) {
     this.props.participants = this.props.participants.filter(
       (p) => !p.id.equals(participant.id),
     );
     this.props.participants.forEach((p) => p.markUnread());
     this.props.participants.push(participant);
-
-    this.updatedAt;
-    this.validate();
   }
 
   protected validate() {}

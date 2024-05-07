@@ -1,6 +1,8 @@
 import {
   AddCommentToTaskCommandHandler,
   AddCommentToTaskController,
+  CompleteTaskCommandHandler,
+  CompleteTaskController,
   CreateTaskCommandHandler,
   CreateTaskController,
   RemoveTaskCommandHandler,
@@ -14,10 +16,12 @@ export const commandControllers = [
   RemoveTaskController,
   TakeTaskToWorkController,
   AddCommentToTaskController,
+  CompleteTaskController,
 ];
 export const commandHandlers = [
   CreateTaskCommandHandler,
   RemoveTaskCommandHandler,
   TakeTaskToWorkCommandHandler,
   AddCommentToTaskCommandHandler,
+  CompleteTaskCommandHandler,
 ];
