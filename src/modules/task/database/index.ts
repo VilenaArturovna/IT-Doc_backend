@@ -1,3 +1,9 @@
-import { GetOneTaskReadDaoProvider } from '@modules/task/database/read-model';
+import {
+  GetManyTasksReadDaoProvider,
+  GetOneTaskReadDaoProvider,
+} from '@modules/task/database/read-model';
 
-export const readDaoProviders = [GetOneTaskReadDaoProvider];
+export const readDaoProviders = [
+  GetOneTaskReadDaoProvider,
+  GetManyTasksReadDaoProvider,
+];
