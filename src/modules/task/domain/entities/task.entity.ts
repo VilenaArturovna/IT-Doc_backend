@@ -49,7 +49,7 @@ export class TaskEntity extends EntityBase<TaskEntityProps> {
     if (hasResponsibleStaff) {
       this.props.participants
         .filter((p) => !p.id.equals(responsibleParticipant.id))
-        .forEach((p) => p.markUnread());
+        .forEach((p) => p.markAsUnread());
 
       this.props.participants.push(responsibleParticipant);
     }
@@ -109,11 +109,22 @@ export class TaskEntity extends EntityBase<TaskEntityProps> {
     this.validate();
   }
 
+  public markAsRead(staffId: IdVO) {
+    const participant = this.props.participants.find((p) =>
+      p.staffId.equals(staffId),
+    );
+
+    participant.markAsRead();
+
+    this.updatedAt;
+    this.validate();
+  }
+
   private markUnreadTaskForOtherParticipants(participant: TaskStaffEntity) {
     this.props.participants = this.props.participants.filter(
       (p) => !p.id.equals(participant.id),
     );
-    this.props.participants.forEach((p) => p.markUnread());
+    this.props.participants.forEach((p) => p.markAsUnread());
     this.props.participants.push(participant);
   }
 

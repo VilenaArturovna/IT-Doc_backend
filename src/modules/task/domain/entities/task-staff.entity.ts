@@ -36,7 +36,7 @@ export class TaskStaffEntity extends EntityBase<TaskStaffEntityProps> {
     this.validate();
   }
 
-  public markUnread() {
+  public markAsUnread() {
     this.props.isRead = false;
 
     this.updatedAt;
@@ -45,6 +45,13 @@ export class TaskStaffEntity extends EntityBase<TaskStaffEntityProps> {
 
   public set comment(comment: string) {
     this.props.comment = comment;
+
+    this.updatedAt;
+    this.validate();
+  }
+
+  public markAsRead() {
+    this.props.isRead = true;
 
     this.updatedAt;
     this.validate();
