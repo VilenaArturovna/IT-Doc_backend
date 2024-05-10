@@ -1,6 +1,7 @@
 import { EntityBase } from '@libs/base-classes';
 import { ConflictException, ForbiddenException } from '@libs/exceptions';
 import { DateVO, IdVO, MoneyVO } from '@libs/value-objects';
+import { StaffEntity } from '@modules/staff/domain';
 import { TaskStaffEntity } from '@modules/task/domain';
 import { TaskStatus } from '@modules/task/types';
 
@@ -13,6 +14,11 @@ export interface TaskEntityProps {
   price?: MoneyVO;
   participants: TaskStaffEntity[];
 }
+
+export type UpdateTaskProps = Pick<
+  TaskEntityProps,
+  'theme' | 'description' | 'deadline' | 'price'
+>;
 
 export class TaskEntity extends EntityBase<TaskEntityProps> {
   protected readonly _id: IdVO;
@@ -120,10 +126,73 @@ export class TaskEntity extends EntityBase<TaskEntityProps> {
     this.validate();
   }
 
+  public isChangedResponsibleStaff(staffId: IdVO) {
+    const responsibleParticipant = this.props.participants.find(
+      (p) => p.isResponsible,
+    );
+
+    return !responsibleParticipant.staffId.equals(staffId);
+  }
+
+  public changeResponsibleStaff(staff: StaffEntity) {
+    this.props.participants = this.props.participants.filter(
+      (p) => p.isResponsible,
+    );
+
+    const hasAlreadyCurrentStaff = this.props.participants.find((p) =>
+      p.staffId.equals(staff.id),
+    );
+    if (hasAlreadyCurrentStaff) {
+      const participant = this.props.participants.find((p) =>
+        p.staffId.equals(staff.id),
+      );
+
+      participant.makeResponsible();
+      participant.markAsUnread();
+
+      this.markUnreadTaskForOtherParticipants(participant);
+    } else {
+      const author = this.props.participants.find((p) => p.isAuthor);
+      this.markUnreadTaskForOtherParticipants(author);
+
+      this.props.participants.push(
+        TaskStaffEntity.create({
+          staff,
+          isRead: false,
+          isResponsible: true,
+          isAuthor: false,
+        }),
+      );
+    }
+
+    this.updatedAt;
+    this.validate();
+  }
+
+  public update(props: UpdateTaskProps) {
+    if (this.props.status === TaskStatus.COMPLETED) {
+      throw new ForbiddenException(
+        'Невозможно отредактировать выполненную задачу',
+      );
+    }
+
+    this.props.price = props.price;
+    this.props.deadline = props.deadline;
+    this.props.description = props.description;
+    this.props.theme = props.theme;
+
+    const author = this.props.participants.find((p) => p.isAuthor);
+    this.markUnreadTaskForOtherParticipants(author);
+
+    this.updatedAt;
+    this.validate();
+  }
+
   private markUnreadTaskForOtherParticipants(participant: TaskStaffEntity) {
     this.props.participants = this.props.participants.filter(
       (p) => !p.id.equals(participant.id),
     );
+
     this.props.participants.forEach((p) => p.markAsUnread());
     this.props.participants.push(participant);
   }

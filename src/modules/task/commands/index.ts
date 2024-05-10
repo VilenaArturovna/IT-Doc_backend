@@ -11,6 +11,8 @@ import {
   RemoveTaskController,
   TakeTaskToWorkCommandHandler,
   TakeTaskToWorkController,
+  UpdateTaskCommandHandler,
+  UpdateTaskController,
 } from '@modules/task/commands/task';
 
 export const commandControllers = [
@@ -20,6 +22,7 @@ export const commandControllers = [
   AddCommentToTaskController,
   CompleteTaskController,
   MarkTaskAsReadController,
+  UpdateTaskController,
 ];
 export const commandHandlers = [
   CreateTaskCommandHandler,
@@ -28,4 +31,5 @@ export const commandHandlers = [
   AddCommentToTaskCommandHandler,
   CompleteTaskCommandHandler,
   MarkTaskAsReadCommandHandler,
+  UpdateTaskCommandHandler,
 ];

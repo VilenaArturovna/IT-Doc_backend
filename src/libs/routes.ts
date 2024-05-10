@@ -62,5 +62,6 @@ export const routes = {
     addComment: `${taskById}/comment`,
     complete: `${taskById}/complete`,
     markAsRead: `${taskById}/mark-as-read`,
+    takeToWork: `${taskById}/take-to-work`,
   },
 };
