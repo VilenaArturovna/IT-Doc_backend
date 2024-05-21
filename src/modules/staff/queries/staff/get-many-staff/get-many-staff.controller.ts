@@ -9,6 +9,7 @@ import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
+  ApiExtraModels,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -24,6 +25,7 @@ export class GetManyStaffController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get many staff' })
   @ApiOkResponse({ type: () => GetManyStaffDaoModel })
+  @ApiExtraModels(GetManyStaffRequestDto)
   @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER]))
   @Get(routes.staff.root)
   async getManyStaff(

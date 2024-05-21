@@ -5,7 +5,12 @@ import { GetInfoAboutOrderForClientDaoModel } from '@modules/order/database/read
 import { GetInfoAboutOrderForClientQuery } from '@modules/order/queries';
 import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiExtraModels,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Public } from '@src/common';
 
 import { GetInfoAboutOrderForClientRequestDto } from './get-info-about-order-for-client.request.dto';
@@ -18,6 +23,7 @@ export class GetInfoAboutOrderForClientController {
   @Public()
   @ApiOperation({ summary: 'Get info about order for client' })
   @ApiOkResponse({ type: () => GetInfoAboutOrderForClientDaoModel })
+  @ApiExtraModels(GetInfoAboutOrderForClientRequestDto)
   @Get(routes.order.infoForClient)
   async getInfoAboutOrderForClient(
     @Query() params: GetInfoAboutOrderForClientRequestDto,

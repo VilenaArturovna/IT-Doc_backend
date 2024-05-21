@@ -7,6 +7,7 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
+  ApiExtraModels,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -22,6 +23,7 @@ export class GetManyOrdersController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get many orders' })
   @ApiOkResponse({ type: () => GetManyOrdersDaoModel })
+  @ApiExtraModels(GetManyOrdersRequestDto)
   @Get(routes.order.root)
   async getManyOrders(
     @Query() params: GetManyOrdersRequestDto,

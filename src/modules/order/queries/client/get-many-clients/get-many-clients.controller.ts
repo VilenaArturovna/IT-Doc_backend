@@ -9,6 +9,7 @@ import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
+  ApiExtraModels,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -25,6 +26,7 @@ export class GetManyClientsController {
   @ApiOperation({ summary: 'Get many clients' })
   @ApiOkResponse({ type: () => GetManyClientsDaoModel })
   @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER, Role.ENGINEER]))
+  @ApiExtraModels(GetManyClientsRequestDto)
   @Get(routes.client.root)
   async getManyClients(
     @Query() params: GetManyClientsRequestDto,

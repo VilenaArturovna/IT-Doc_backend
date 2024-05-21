@@ -18,7 +18,7 @@ export class GetManyTasksObjectionReadDao extends GetManyTasksReadDao {
     const { staffId, page, limit } = query.params;
 
     const qb = knex(`${Tables.TASKS} as t`)
-      .select('t.id', 't.theme', 't.deadline', 'ts.isRead')
+      .select('t.id', 't.theme', 't.deadline', 'ts.isRead', 't.number')
       .leftJoin(`${Tables.TASKS_STAFF} as ts`, 'ts.taskId', 't.id')
       .where('ts.staffId', staffId)
       .orderBy('t.createdAt', 'DESC')

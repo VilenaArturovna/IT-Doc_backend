@@ -9,6 +9,7 @@ import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
+  ApiExtraModels,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -25,6 +26,7 @@ export class GetManyWarehouseItemsController {
   @ApiOperation({ summary: 'Get many warehouse items' })
   @ApiOkResponse({ type: () => GetManyWarehouseItemsDaoModel })
   @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER, Role.ENGINEER]))
+  @ApiExtraModels(GetManyWarehouseItemsRequestDto)
   @Get(routes.warehouseItem.root)
   async getManyWarehouseItems(
     @Query() params: GetManyWarehouseItemsRequestDto,

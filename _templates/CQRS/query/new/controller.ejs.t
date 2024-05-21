@@ -12,7 +12,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { Result } from '@libs/utils';
 import { routes } from '@libs/routes';
 import { ExceptionBase } from '@libs/base-classes';
-import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiExtraModels, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { <%= QueryName %> } from '@modules/<%= module %>/queries';
 import { <%= DaoModel %> } from '@modules/<%= module %>/database/read-model';
 import { <%= RequestDto %> } from './<%= name %>.request.dto';
@@ -25,6 +25,7 @@ export class <%= ControllerName %> {
   @ApiBearerAuth()
   @ApiOperation({ summary: '<%= OperationName %>' })
   @ApiOkResponse({ type: () => <%= DaoModel %> })
+  @ApiExtraModels(<%= DaoModel %>, <%= RequestDto %>)
   @Get(routes.)
   async <%= FunctionName %>(): Promise<<%= DaoModel %>> {
     const query = new <%= QueryName %>({  });
