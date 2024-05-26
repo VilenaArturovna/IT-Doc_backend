@@ -31,7 +31,7 @@ export class CreateOrderRequestDto {
   @IsNotJustSpaces()
   equipmentCondition: string; //Состояние оборудования
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsString()
   @IsNotEmpty()
@@ -44,7 +44,9 @@ export class CreateOrderRequestDto {
   @IsNotJustSpaces()
   malfunction: string; //неисправность
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    nullable: true,
+  })
   @IsOptional()
   @IsUUID()
   responsibleStaffId?: string;

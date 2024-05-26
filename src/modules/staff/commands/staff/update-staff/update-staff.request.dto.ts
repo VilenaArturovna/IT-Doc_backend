@@ -28,12 +28,12 @@ export class UpdateStaffRequestDto {
   @IsMobilePhone('ru-RU')
   phone: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsDateString()
   birthdate?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsUrl()
   @IsOptional()
   avatar?: string;

@@ -9,7 +9,7 @@ export class CreateProviderRequestDto {
   @IsNotEmpty()
   title: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsString()
   @IsNotJustSpaces()

@@ -1,18 +1,3 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotJustSpaces } from '@src/common';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { CreateProviderRequestDto } from '@modules/warehouse/commands/provider';
 
-export class UpdateProviderRequestDto {
-  @ApiProperty()
-  @IsString()
-  @IsNotJustSpaces()
-  @IsNotEmpty()
-  title: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  @IsNotJustSpaces()
-  @IsNotEmpty()
-  description?: string;
-}
+export class UpdateProviderRequestDto extends CreateProviderRequestDto {}

@@ -16,7 +16,7 @@ export class CreateWarehouseItemRequestDto {
   @IsEnum(Section)
   section: Section;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsString()
   @IsNotEmpty()
@@ -27,7 +27,7 @@ export class CreateWarehouseItemRequestDto {
   @IsNotEmpty()
   title: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsString()
   @IsNotEmpty()
@@ -37,7 +37,7 @@ export class CreateWarehouseItemRequestDto {
   @IsEnum(Unit)
   unit: Unit;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsString()
   @IsNotEmpty()
@@ -52,13 +52,13 @@ export class CreateWarehouseItemRequestDto {
   @IsPositive()
   balance: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsNumber()
   @IsPositive()
   expense?: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsNumber()
   @IsPositive()
@@ -69,7 +69,7 @@ export class CreateWarehouseItemRequestDto {
   @IsPositive()
   criticalMargin: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsDateString()
   nextDeliveryDate?: string;

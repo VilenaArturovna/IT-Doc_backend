@@ -14,34 +14,38 @@ import {
 } from 'class-validator';
 
 export class UpdateOrderRequestDto {
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsBoolean()
   isPaid?: boolean;
 
-  @ApiPropertyOptional({ enum: Beneficiary, enumName: 'Beneficiary' })
+  @ApiPropertyOptional({
+    enum: Beneficiary,
+    enumName: 'Beneficiary',
+    nullable: true,
+  })
   @IsOptional()
   @IsEnum(Beneficiary)
   beneficiary?: Beneficiary;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   price?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsUUID()
   responsibleStaffId?: string;
 
-  @ApiPropertyOptional({ description: 'in minutes' })
+  @ApiPropertyOptional({ description: 'in minutes', nullable: true })
   @IsOptional()
   @IsInt()
   @IsPositive()
   deadline?: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsString()
   @IsNotEmpty()

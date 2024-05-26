@@ -2,6 +2,7 @@ import { ExceptionBase, ReadDaoBase } from '@libs/base-classes';
 import { PaginationResponseDto } from '@libs/pagination';
 import { Result } from '@libs/utils';
 import { GetManyTasksQuery } from '@modules/task/queries';
+import { TaskStatus } from '@modules/task/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class GetManyTasksItem {
@@ -19,6 +20,9 @@ export class GetManyTasksItem {
 
   @ApiProperty()
   isRead: boolean;
+
+  @ApiProperty({ enum: TaskStatus, enumName: 'TaskStatus' })
+  status: TaskStatus;
 }
 
 export class GetManyTasksDaoModel extends PaginationResponseDto<GetManyTasksItem> {

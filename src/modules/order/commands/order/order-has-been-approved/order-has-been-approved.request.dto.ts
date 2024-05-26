@@ -13,7 +13,7 @@ export class OrderHasBeenApprovedRequestDto {
   @IsEnum(OrderStatus)
   status: OrderStatus;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsDateString()
   @IsDefined()
