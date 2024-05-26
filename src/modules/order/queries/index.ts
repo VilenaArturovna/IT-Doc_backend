@@ -5,6 +5,10 @@ import {
   GetOneClientQueryHandler,
 } from '@modules/order/queries/client';
 import {
+  GetAllDeadlinesController,
+  GetAllDeadlinesQueryHandler,
+} from '@modules/order/queries/deadline';
+import {
   GetInfoAboutOrderForClientController,
   GetInfoAboutOrderForClientQueryHandler,
   GetManyOrdersController,
@@ -20,6 +24,7 @@ import {
 } from '@modules/order/queries/work';
 
 export * from './client';
+export * from './deadline';
 export * from './order';
 export * from './work';
 
@@ -31,6 +36,7 @@ export const queryControllers = [
   GetOneOrderController,
   GetInfoAboutOrderForClientController,
   GetManyOrdersController,
+  GetAllDeadlinesController,
 ];
 export const queryHandlers = [
   GetManyWorksQueryHandler,
@@ -40,4 +46,5 @@ export const queryHandlers = [
   GetOneOrderQueryHandler,
   GetInfoAboutOrderForClientQueryHandler,
   GetManyOrdersQueryHandler,
+  GetAllDeadlinesQueryHandler,
 ];
