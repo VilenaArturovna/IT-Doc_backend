@@ -88,7 +88,7 @@ export class OrderObjectionOrmEntity extends OrderModel {
       modelClass: OrderWarehouseItemObjectionOrmEntity,
       join: {
         from: `${this.tableName}.id`,
-        to: `${OrderWarehouseItemObjectionOrmEntity}.orderId`,
+        to: `${OrderWarehouseItemObjectionOrmEntity.tableName}.orderId`,
       },
     },
     stages: {

@@ -142,7 +142,7 @@ export class MoneyCalculator {
     const [integerPart, floatPart] = amount.split('.');
     return {
       integerPart: parseInt(integerPart),
-      floatPart: parseInt(floatPart),
+      floatPart: floatPart ? parseInt(floatPart) : 0,
     };
   }
 

@@ -33,10 +33,10 @@ export class OrderStageResponseDto {
     this.id = props.id.value;
     this.createdAt = props.createdAt.ISOString;
     this.updatedAt = props.updatedAt.ISOString;
-    this.completedAt = props.completedAt.ISOString;
+    this.completedAt = props.completedAt?.ISOString;
     this.status = props.status;
     this.number = props.number;
-    this.deadline = props.deadline.ISOString;
+    this.deadline = props.deadline?.ISOString;
     this.comment = props.comment;
   }
 }

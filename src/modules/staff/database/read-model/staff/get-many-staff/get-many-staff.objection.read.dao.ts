@@ -16,19 +16,22 @@ export class GetManyStaffObjectionReadDao extends GetManyStaffReadDao {
   ): Promise<Result<GetManyStaffDaoModel, ExceptionBase>> {
     const knex = Model.knex();
 
-    const { page, limit, search } = query.params;
+    const { page, limit, search, isActive } = query.params;
 
-    const qb = knex(Tables.STAFF).select(
-      'id',
-      'phone',
-      'firstname',
-      'lastname',
-      'middleName',
-      'avatar',
-      'birthdate',
-      'role',
-      'isRemoved',
-    );
+    const qb = knex(Tables.STAFF)
+      .select(
+        'id',
+        'phone',
+        'firstname',
+        'lastname',
+        'middleName',
+        'avatar',
+        'birthdate',
+        'role',
+        'isRemoved',
+      )
+      .orderBy('lastname', 'asc')
+      .groupBy('id', 'lastname');
 
     if (search) {
       qb.where((builder) =>
@@ -38,7 +41,10 @@ export class GetManyStaffObjectionReadDao extends GetManyStaffReadDao {
           .orWhereILike('middleName', `%${search}%`),
       );
     }
+    if (isActive) {
+      qb.where({ isRemoved: false });
+    }
 
-    return paginate({ qb, page, limit, isGrouped: false });
+    return paginate({ qb, page, limit, isGrouped: true });
   }
 }

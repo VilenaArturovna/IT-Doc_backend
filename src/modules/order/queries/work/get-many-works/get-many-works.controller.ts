@@ -9,6 +9,7 @@ import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiBearerAuth,
+  ApiExtraModels,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -24,6 +25,7 @@ export class GetManyWorksController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get many works' })
   @ApiOkResponse({ type: () => GetManyWorksDaoModel })
+  @ApiExtraModels(GetManyWorksRequestDto)
   @UseGuards(RoleGuard([Role.ADMIN, Role.MANAGER, Role.ENGINEER]))
   @Get(routes.work.root)
   async getManyWorks(

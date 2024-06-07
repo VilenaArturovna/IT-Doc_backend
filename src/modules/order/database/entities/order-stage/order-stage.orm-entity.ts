@@ -20,6 +20,7 @@ export class OrderStageOrmEntity
   status: OrderStatus;
   orderId: string;
   comment?: string;
+  id: string;
 }
 
 export class OrderStageModel extends ModelBase implements OrderStageOrmEntity {
@@ -29,4 +30,5 @@ export class OrderStageModel extends ModelBase implements OrderStageOrmEntity {
   status: OrderStatus;
   orderId: string;
   comment?: string;
+  id: string;
 }

@@ -28,6 +28,7 @@ export class RepairPartVO extends ValueObject<RepairPartVOProps> {
       cost: props.cost.amount,
       quantity: props.props.quantity,
       warehouseItemId: props.props.warehouseItem.id.value,
+      warehouseItem: props.props.warehouseItem,
     };
   }
 
@@ -60,7 +61,7 @@ export class RepairPartVO extends ValueObject<RepairPartVOProps> {
       .multiply(this.props.quantity)
       .result();
 
-    if (cost.equals(this.props.cost)) {
+    if (!cost.equals(this.props.cost)) {
       throw new DomainException('The calculated cost differs from the cost');
     }
   }

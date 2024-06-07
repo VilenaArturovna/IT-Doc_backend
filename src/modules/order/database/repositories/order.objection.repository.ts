@@ -1,8 +1,8 @@
 import { ExceptionBase, ObjectionRepositoryBase } from '@libs/base-classes';
 import { NotFoundException } from '@libs/exceptions';
 import { TrxId, UnitOfWork } from '@libs/unit-of-work';
-import { Result } from '@libs/utils';
-import { IdVO } from '@libs/value-objects';
+import { deleteObjectKeys, Result } from '@libs/utils';
+import { IdVO, UuidVO } from '@libs/value-objects';
 import { OrderEntity, OrderEntityProps } from '@modules/order/domain';
 
 import { OrderObjectionOrmEntity, OrderOrmEntity } from '../entities';
@@ -24,7 +24,10 @@ export class OrderObjectionRepository extends ObjectionRepositoryBase<
     this.graph = {
       stages: true,
       repairParts: {
-        warehouseItem: true,
+        warehouseItem: {
+          vendor: true,
+          provider: true,
+        },
       },
       client: true,
       responsibleStaff: true,
@@ -63,9 +66,9 @@ export class OrderObjectionRepository extends ObjectionRepositoryBase<
 
       const order = await this.repository
         .query(transaction)
-        .insertGraphAndFetch(ormEntity);
+        .insertGraph(ormEntity);
 
-      return Result.ok(this.mapper.toDomainEntity(order));
+      return this.getOneById(new UuidVO(order.id));
     } catch (e) {
       return Result.fail(e);
     }
@@ -103,9 +106,28 @@ export class OrderObjectionRepository extends ObjectionRepositoryBase<
     try {
       const ormEntity = this.mapper.toOrmEntity(entity);
 
-      await this.repository.query(transaction).upsertGraphAndFetch(ormEntity);
+      const existedStagesIds = (
+        await this.repository
+          .query(transaction)
+          .findById(entity.id.value)
+          .withGraphFetched(this.graph)
+      ).stages?.map((s) => s.id);
 
-      return Result.ok(entity);
+      const clonedStages = [];
+      for (const stage of ormEntity.stages) {
+        if (!existedStagesIds.includes(stage.id)) {
+          const cloneStage = deleteObjectKeys(stage, ['id']);
+          clonedStages.push(cloneStage);
+        }
+      }
+
+      ormEntity.stages = ormEntity.stages.concat(clonedStages);
+
+      await this.repository
+        .query(transaction)
+        .upsertGraph(ormEntity, { relate: true });
+
+      return this.getOneById(entity.id);
     } catch (e) {
       return Result.fail(e);
     }

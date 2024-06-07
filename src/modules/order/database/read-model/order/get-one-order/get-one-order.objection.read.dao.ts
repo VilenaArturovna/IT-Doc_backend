@@ -42,13 +42,12 @@ export class GetOneOrderObjectionReadDao extends GetOneOrderReadDao {
         'status', status,
         'completedAt', "completedAt",
         'deadline', deadline,
-        'comment', comment
+        'comment', comment,
+        'number', number
       )) as stages
     `),
       )
-      .groupBy('orderId', 'createdAt')
-      .orderBy('createdAt')
-      .first();
+      .groupBy('orderId');
 
     const partsQb = knex(`${Tables.ORDERS_WAREHOUSE_ITEMS} as owi`)
       .select(
@@ -67,8 +66,7 @@ export class GetOneOrderObjectionReadDao extends GetOneOrderReadDao {
         'wi.id',
         'owi.warehouseItemId',
       )
-      .groupBy('orderId')
-      .first();
+      .groupBy('orderId');
 
     const order = await knex(`${Tables.ORDERS} as o`)
       .select(

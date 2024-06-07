@@ -16,7 +16,7 @@ export class GetManyOrdersObjectionReadDao extends GetManyOrdersReadDao {
     query: GetManyOrdersQuery,
   ): Promise<Result<GetManyOrdersDaoModel, ExceptionBase>> {
     const knex = Model.knex();
-    const { isActive, page, limit } = query.params;
+    const { isActive, page, limit, staffId, isAdmin } = query.params;
 
     const stagesQb = knex(Tables.ORDER_STAGES)
       .select(
@@ -28,13 +28,12 @@ export class GetManyOrdersObjectionReadDao extends GetManyOrdersReadDao {
         'status', status,
         'completedAt', "completedAt",
         'deadline', deadline,
-        'comment', comment
+        'comment', comment,
+        'number', number
       )) as stages
     `),
       )
-      .groupBy('orderId', 'createdAt')
-      .orderBy('createdAt')
-      .first();
+      .groupBy('orderId');
 
     const qb = knex(`${Tables.ORDERS} as o`)
       .select(
@@ -55,11 +54,17 @@ export class GetManyOrdersObjectionReadDao extends GetManyOrdersReadDao {
       .leftJoin(`${Tables.STAFF} as staff`, 'staff.id', 'o.responsibleStaffId')
       .innerJoin(`${Tables.CLIENTS} as cl`, 'cl.id', 'o.clientId')
       .innerJoin(knex.raw(`(${stagesQb}) as s on s."orderId" = o.id`))
-      .orderBy('o.createdAt')
+      .orderBy('o.createdAt', 'desc')
       .groupBy('o.createdAt', 'o.id', 's.stages', 'staff.id', 'cl.id');
 
     if (isActive) {
       qb.whereNot('o.status', OrderStatus.COMPLETED);
+    }
+
+    if (staffId && !isAdmin) {
+      qb.where((builder) =>
+        builder.where({ responsibleStaffId: staffId }),
+      ).orWhereNull('responsibleStaffId');
     }
 
     return paginate({ qb, page, limit, isGrouped: true });

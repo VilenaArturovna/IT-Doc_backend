@@ -8,8 +8,8 @@ export class CheckCodeVO extends ValueObject<string> {
     this.validate();
   }
 
-  static min: 1000;
-  static max: 9999;
+  static min = 1000;
+  static max = 9999;
   static generate() {
     const code = randomInt(CheckCodeVO.min, CheckCodeVO.max).toString();
 

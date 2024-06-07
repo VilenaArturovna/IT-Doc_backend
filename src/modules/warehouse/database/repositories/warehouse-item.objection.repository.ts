@@ -67,4 +67,28 @@ export class WarehouseItemObjectionRepository extends ObjectionRepositoryBase<
       return Result.fail(e);
     }
   }
+
+  async getManyByIds(
+    ids: IdVO[],
+  ): Promise<Result<WarehouseItemEntity[], ExceptionBase>> {
+    const transaction = this.unitOfWork.getTrx(this.trxId);
+    try {
+      const ormEntities = await this.repository
+        .query(transaction)
+        .findByIds(ids.map((id) => id.value))
+        .withGraphFetched('[vendor, provider]');
+
+      if (ids.length !== ormEntities.length) {
+        return Result.fail(new NotFoundException('Entities not found'));
+      }
+
+      const domainEntities = ormEntities.map((ormEntity) =>
+        this.mapper.toDomainEntity(ormEntity),
+      );
+
+      return Result.ok(domainEntities);
+    } catch (e) {
+      return Result.fail(e);
+    }
+  }
 }

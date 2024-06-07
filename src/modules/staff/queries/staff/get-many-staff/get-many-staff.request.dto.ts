@@ -1,7 +1,7 @@
 import { PaginationRequestDto } from '@libs/pagination';
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotJustSpaces } from '@src/common';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotJustSpaces, TransformToBooleanDecorator } from '@src/common';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class GetManyStaffRequestDto extends PaginationRequestDto {
   @ApiPropertyOptional()
@@ -10,4 +10,10 @@ export class GetManyStaffRequestDto extends PaginationRequestDto {
   @IsNotEmpty()
   @IsNotJustSpaces()
   search?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @TransformToBooleanDecorator()
+  @IsBoolean()
+  isActive?: boolean;
 }

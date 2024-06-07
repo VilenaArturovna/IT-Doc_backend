@@ -66,6 +66,9 @@ export class GetOneOrderStage {
 
   @ApiPropertyOptional()
   comment?: string;
+
+  @ApiProperty()
+  number: number;
 }
 
 export class GetOneOrderDaoModel {

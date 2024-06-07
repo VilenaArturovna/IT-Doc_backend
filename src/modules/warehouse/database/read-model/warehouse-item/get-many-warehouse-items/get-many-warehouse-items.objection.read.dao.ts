@@ -40,7 +40,7 @@ export class GetManyWarehouseItemsObjectionReadDao extends GetManyWarehouseItems
           : `%${params.search}%`;
         return builder
           .whereILike('partNumber', search)
-          .orWhereILike('title', search)
+          .orWhereILike('wi.title', search)
           .orWhereILike('compatibleModels', search);
       });
     }
