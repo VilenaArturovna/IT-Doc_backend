@@ -9,6 +9,8 @@ import {
   GetAllDeadlinesQueryHandler,
 } from '@modules/order/queries/deadline';
 import {
+  GetCertificateOfTechnicalConditionController,
+  GetCertificateOfTechnicalConditionQueryHandler,
   GetInfoAboutOrderForClientController,
   GetInfoAboutOrderForClientQueryHandler,
   GetManyOrdersController,
@@ -37,6 +39,7 @@ export const queryControllers = [
   GetInfoAboutOrderForClientController,
   GetManyOrdersController,
   GetAllDeadlinesController,
+  GetCertificateOfTechnicalConditionController,
 ];
 export const queryHandlers = [
   GetManyWorksQueryHandler,
@@ -47,4 +50,5 @@ export const queryHandlers = [
   GetInfoAboutOrderForClientQueryHandler,
   GetManyOrdersQueryHandler,
   GetAllDeadlinesQueryHandler,
+  GetCertificateOfTechnicalConditionQueryHandler,
 ];

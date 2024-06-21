@@ -12,6 +12,7 @@ export interface StaffOrmEntityProps {
   isRemoved: boolean;
   tgId?: string;
   tgUsername: string;
+  abbreviatedName?: string;
 }
 
 export class StaffOrmEntity
@@ -28,6 +29,7 @@ export class StaffOrmEntity
   isRemoved: boolean;
   tgId?: string;
   tgUsername: string;
+  abbreviatedName?: string;
 }
 
 export class StaffModel extends ModelBase implements StaffOrmEntity {
@@ -41,4 +43,5 @@ export class StaffModel extends ModelBase implements StaffOrmEntity {
   isRemoved: boolean;
   tgId?: string;
   tgUsername: string;
+  abbreviatedName?: string;
 }

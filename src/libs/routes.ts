@@ -50,6 +50,7 @@ export const routes = {
     ready: `${orderById}/ready`,
     complete: `${orderById}/complete`,
     infoForClient: `info-about-order`,
+    certificateOfTechnicalCondition: `${orderById}/certificate-of-technical-condition`,
   },
   deadline: {
     root: deadlineRoot,

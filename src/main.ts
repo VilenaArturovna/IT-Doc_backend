@@ -15,7 +15,11 @@ async function bootstrap() {
     cors: true,
   });
 
-  app.useGlobalPipes(new ValidationPipe({}));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+    }),
+  );
   app.useGlobalInterceptors(new ExceptionInterceptor());
   const customOptions: SwaggerCustomOptions = {
     swaggerOptions: {

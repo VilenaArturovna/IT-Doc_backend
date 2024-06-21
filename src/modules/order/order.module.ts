@@ -6,6 +6,7 @@ import { StaffModule } from '@modules/staff/staff.module';
 import { WarehouseModule } from '@modules/warehouse/warehouse.module';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
+import { htmlToPdfSingletonProvider } from '@src/common/services/html-pdf-service/html-to-pdf.singleton-provider';
 
 @Module({
   controllers: [...commandControllers, ...queryControllers],
@@ -14,6 +15,7 @@ import { CqrsModule } from '@nestjs/cqrs';
     ...queryHandlers,
     ...readDaoProviders,
     OrderUnitOfWork,
+    htmlToPdfSingletonProvider,
   ],
   imports: [CqrsModule, StaffModule, WarehouseModule],
 })
