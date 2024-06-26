@@ -103,10 +103,14 @@ export class CreateTaskCommandHandler extends CommandHandlerBase<
     const newTaskResult = await taskRepository.create(task);
     const newTask = newTaskResult.unwrap();
 
-    await this.telegramBotService.newTaskHasBeenAssigned({
+    const res = await this.telegramBotService.newTaskHasBeenAssigned({
       taskId: newTask.id.value,
       tgIds: participants.map((p) => p.staffTgId),
     });
+
+    if (!res.isErr) {
+      await this.telegramBotService.taskCreated(author.tgId);
+    }
 
     return newTaskResult;
   }

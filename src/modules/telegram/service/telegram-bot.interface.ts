@@ -1,3 +1,4 @@
+import { ExceptionBase } from '@libs/base-classes';
 import { ValidationException } from '@libs/exceptions';
 import { Result } from '@libs/utils';
 import {
@@ -15,17 +16,18 @@ export interface TelegramBotInterface {
 
   sendWelcomeMessage(
     props: ISendWelcomeMessageRequest,
-  ): Promise<Result<void, ValidationException>>;
+  ): Promise<Result<void, ExceptionBase>>;
   newTaskHasBeenAssigned(
     props: INewTaskHasBeenAssignedRequest,
-  ): Promise<Result<void, ValidationException>>;
+  ): Promise<Result<void, ExceptionBase>>;
   newOrderHasBeenAssigned(
     props: INewOrderHasBeenAssignedRequest,
-  ): Promise<Result<void, ValidationException>>;
+  ): Promise<Result<void, ExceptionBase>>;
   deadlineIsApproaching(
     props: IDeadlineIsApproachingRequest,
-  ): Promise<Result<void, ValidationException>>;
+  ): Promise<Result<void, ExceptionBase>>;
   staffRegistered(
     props: IStaffRegisteredRequest,
-  ): Promise<Result<void, ValidationException>>;
+  ): Promise<Result<void, ExceptionBase>>;
+  taskCreated(tgId: string): Promise<Result<void, ExceptionBase>>;
 }

@@ -42,7 +42,16 @@ export interface SendMessageResponse {
       };
       date: number;
       text: string;
+      reply_markup?: TelegramBotInlineKeyboard;
     };
+  };
+}
+
+export interface SendMessageError {
+  data: {
+    ok: boolean;
+    error_code: number;
+    description: string;
   };
 }
 

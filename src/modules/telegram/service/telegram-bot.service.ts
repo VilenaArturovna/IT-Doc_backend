@@ -1,4 +1,5 @@
-import { ValidationException } from '@libs/exceptions';
+import { ExceptionBase } from '@libs/base-classes';
+import { DomainException, ValidationException } from '@libs/exceptions';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
 import {
@@ -7,6 +8,7 @@ import {
   INewTaskHasBeenAssignedRequest,
   ISendWelcomeMessageRequest,
   IStaffRegisteredRequest,
+  SendMessageError,
   SendMessageResponse,
   TelegramBotDeleteMessage,
   TelegramBotInterface,
@@ -34,7 +36,7 @@ export class TelegramBotService implements TelegramBotInterface {
     try {
       return await this.axiosInstance.post('/sendMessage', data);
     } catch (e) {
-      console.log('telegram send message', e);
+      return e.response;
     }
   }
 
@@ -110,13 +112,13 @@ export class TelegramBotService implements TelegramBotInterface {
   //methods
   deadlineIsApproaching(
     props: IDeadlineIsApproachingRequest,
-  ): Promise<Result<void, ValidationException>> {
+  ): Promise<Result<void, ExceptionBase>> {
     return Promise.resolve(undefined);
   }
 
   async newOrderHasBeenAssigned(
     props: INewOrderHasBeenAssignedRequest,
-  ): Promise<Result<void, ValidationException>> {
+  ): Promise<Result<void, ExceptionBase>> {
     const data: TelegramBotSendMessageData = {
       chat_id: props.tgId,
       text: `Назначена новая заявка ${props.orderNumber}`,
@@ -144,7 +146,8 @@ export class TelegramBotService implements TelegramBotInterface {
 
   async newTaskHasBeenAssigned(
     props: INewTaskHasBeenAssignedRequest,
-  ): Promise<Result<void, ValidationException>> {
+  ): Promise<Result<void, ExceptionBase>> {
+    const results: (SendMessageResponse | SendMessageError)[] = [];
     for (const tgId of props.tgIds) {
       const data: TelegramBotSendMessageData = {
         chat_id: tgId,
@@ -166,7 +169,15 @@ export class TelegramBotService implements TelegramBotInterface {
         },
       };
 
-      await this.sendMessage(data);
+      const result = await this.sendMessage(data);
+      results.push(result);
+    }
+
+    if (results.map((r) => r.data.ok).includes(false)) {
+      const failResult = results.find((r) => !r.data.ok);
+      return Result.fail(
+        new DomainException((failResult as SendMessageError).data.description),
+      );
     }
 
     return Result.ok();
@@ -174,7 +185,7 @@ export class TelegramBotService implements TelegramBotInterface {
 
   async sendWelcomeMessage(
     props: ISendWelcomeMessageRequest,
-  ): Promise<Result<void, ValidationException>> {
+  ): Promise<Result<void, ExceptionBase>> {
     const data: TelegramBotSendMessageData = {
       chat_id: props.tgId,
       text: `Привет, ${props.firstname}. Я - бот и в этот чат буду присылать 
@@ -191,10 +202,22 @@ export class TelegramBotService implements TelegramBotInterface {
 
   async staffRegistered(
     props: IStaffRegisteredRequest,
-  ): Promise<Result<void, ValidationException>> {
+  ): Promise<Result<void, ExceptionBase>> {
     const data: TelegramBotSendMessageData = {
       chat_id: props.tgId,
       text: `${props.staffName} зарегистрировался в системе. Теперь он может получать сообщения от бота`,
+      parse_mode: 'HTML',
+    };
+
+    await this.sendMessage(data);
+
+    return Result.ok();
+  }
+
+  async taskCreated(tgId: string): Promise<Result<void, ExceptionBase>> {
+    const data: TelegramBotSendMessageData = {
+      chat_id: tgId,
+      text: `Информация о задаче была отправлена участникам`,
       parse_mode: 'HTML',
     };
 
