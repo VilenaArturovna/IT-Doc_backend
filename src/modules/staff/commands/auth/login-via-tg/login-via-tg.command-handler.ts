@@ -5,6 +5,7 @@ import { checkTelegramHash, Result } from '@libs/utils';
 import { UrlVO } from '@libs/value-objects';
 import { StaffUnitOfWork } from '@modules/staff/database/unit-of-work';
 import { StaffEntity } from '@modules/staff/domain';
+import { TelegramBotService } from '@modules/telegram/service';
 import { ConfigService } from '@nestjs/config';
 import { CommandHandler } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
@@ -21,6 +22,7 @@ export class LoginViaTgCommandHandler extends CommandHandlerBase<
     unitOfWork: StaffUnitOfWork,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly telegramBotService: TelegramBotService,
   ) {
     super(unitOfWork);
   }
@@ -29,7 +31,7 @@ export class LoginViaTgCommandHandler extends CommandHandlerBase<
     command: LoginViaTgCommand,
   ): Promise<Result<{ staff: StaffEntity; token: string }, ExceptionBase>> {
     const {
-      payload: { id, photo_url, username },
+      payload: { id, photo_url },
       trxId,
     } = command;
 
@@ -43,21 +45,8 @@ export class LoginViaTgCommandHandler extends CommandHandlerBase<
     }
 
     const repository = this.unitOfWork.getStaffRepository(trxId);
-    const activeStaffResult = await repository.getOneByTgId(id.toString());
 
-    if (!activeStaffResult.isErr) {
-      const staff = activeStaffResult.unwrap();
-
-      const jwtPayload: JwtPayload = {
-        id: staff.id.value,
-        role: staff.role,
-      };
-      const token = this.jwtService.sign(jwtPayload, { expiresIn: '365d' });
-
-      return Result.ok({ staff, token });
-    }
-
-    const existedStaffResult = await repository.getOneByTgId(String(id));
+    const existedStaffResult = await repository.getOneByTgId(id.toString());
 
     if (!existedStaffResult.isErr) {
       const staff = existedStaffResult.unwrap();
@@ -76,6 +65,14 @@ export class LoginViaTgCommandHandler extends CommandHandlerBase<
         role: staff.role,
       };
       const token = this.jwtService.sign(jwtPayload, { expiresIn: '365d' });
+
+      if (staff.isFirstEntrance) {
+        await this.telegramBotService.sendWelcomeMessage({
+          tgId: staff.tgId,
+          firstname: staff.name.firstname,
+        });
+        staff.enteredForFirstTime();
+      }
 
       return Result.ok({ staff, token });
     }

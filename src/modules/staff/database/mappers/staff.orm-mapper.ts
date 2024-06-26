@@ -39,6 +39,7 @@ export class StaffOrmMapper extends OrmMapper<
       tgUsername: ormEntity.tgUsername,
       tgId: ormEntity.tgId,
       middleName: ormEntity.middleName,
+      isFirstEntrance: ormEntity.isFirstEntrance,
     };
   }
 
@@ -55,6 +56,7 @@ export class StaffOrmMapper extends OrmMapper<
       tgId: props.tgId,
       tgUsername: props.tgUsername ?? null,
       middleName: props.middleName,
+      isFirstEntrance: props.isFirstEntrance,
     };
   }
 }

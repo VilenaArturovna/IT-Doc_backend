@@ -23,6 +23,7 @@ export class StaffObjectionOrmEntity extends StaffModel {
         'tgId',
         'role',
         'isRemoved',
+        'isFirstEntrance',
       ],
       properties: {
         id: { type: 'string' },
@@ -38,6 +39,7 @@ export class StaffObjectionOrmEntity extends StaffModel {
         tgId: { type: 'string' },
         tgUsername: { type: ['string', 'null'] },
         isRemoved: { type: 'boolean' },
+        isFirstEntrance: { type: 'boolean' },
       },
     };
   }

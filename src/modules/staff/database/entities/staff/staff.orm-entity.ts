@@ -13,6 +13,7 @@ export interface StaffOrmEntityProps {
   tgId: string;
   tgUsername?: string;
   abbreviatedName?: string;
+  isFirstEntrance: boolean;
 }
 
 export class StaffOrmEntity
@@ -30,6 +31,7 @@ export class StaffOrmEntity
   tgId: string;
   tgUsername?: string;
   abbreviatedName?: string;
+  isFirstEntrance: boolean;
 }
 
 export class StaffModel extends ModelBase implements StaffOrmEntity {
@@ -44,4 +46,5 @@ export class StaffModel extends ModelBase implements StaffOrmEntity {
   tgId: string;
   tgUsername?: string;
   abbreviatedName?: string;
+  isFirstEntrance: boolean;
 }

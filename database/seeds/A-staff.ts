@@ -17,6 +17,7 @@ export async function seed(knex: Knex): Promise<any> {
     tgId: '762652372',
     avatar:
       'https://t.me/i/userpic/320/GMaHJnJm7l9rWFOHeFjreAWklcnfbaGPvrhJn1PLRAI.jpg',
+    isFirstEntrance: true,
   };
 
   const { count } = await knex(StaffObjectionOrmEntity.tableName)

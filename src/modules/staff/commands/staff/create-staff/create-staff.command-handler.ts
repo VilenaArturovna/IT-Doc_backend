@@ -50,6 +50,7 @@ export class CreateStaffCommandHandler extends CommandHandlerBase<
       isRemoved: false,
       tgId: payload.tgId,
       middleName: payload.middleName,
+      isFirstEntrance: true,
     });
 
     return repository.create(newStaff);
