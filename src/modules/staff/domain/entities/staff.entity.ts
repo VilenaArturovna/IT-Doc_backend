@@ -12,8 +12,8 @@ export interface StaffEntityProps {
   avatar?: UrlVO;
   role: Role;
   isRemoved: boolean;
-  tgId?: string;
-  tgUsername: string;
+  tgId: string;
+  tgUsername?: string;
 }
 
 type UpdateStaffEntityProps = Pick<
@@ -40,8 +40,12 @@ export class StaffEntity extends EntityBase<StaffEntityProps> {
     return this.props.role;
   }
 
-  public get tgId(): string | undefined {
+  public get tgId(): string {
     return this.props.tgId;
+  }
+
+  public get isRemoved() {
+    return this.props.isRemoved;
   }
 
   public update(props: UpdateStaffEntityProps) {
@@ -67,17 +71,9 @@ export class StaffEntity extends EntityBase<StaffEntityProps> {
   }
 
   protected validate() {
-    const { firstname, lastname, phone, role, tgUsername, middleName } =
-      this.props;
+    const { firstname, lastname, phone, role, tgId, middleName } = this.props;
 
-    const requiredFields = [
-      firstname,
-      lastname,
-      tgUsername,
-      phone,
-      role,
-      middleName,
-    ];
+    const requiredFields = [firstname, lastname, tgId, phone, role, middleName];
 
     if (requiredFields.some((f) => f === null || f === undefined)) {
       throw new StaffHasEmptyFieldsError();

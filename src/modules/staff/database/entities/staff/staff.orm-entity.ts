@@ -10,8 +10,8 @@ export interface StaffOrmEntityProps {
   avatar?: string;
   role: Role;
   isRemoved: boolean;
-  tgId?: string;
-  tgUsername: string;
+  tgId: string;
+  tgUsername?: string;
   abbreviatedName?: string;
 }
 
@@ -27,8 +27,8 @@ export class StaffOrmEntity
   avatar?: string;
   role: Role;
   isRemoved: boolean;
-  tgId?: string;
-  tgUsername: string;
+  tgId: string;
+  tgUsername?: string;
   abbreviatedName?: string;
 }
 
@@ -41,7 +41,7 @@ export class StaffModel extends ModelBase implements StaffOrmEntity {
   avatar?: string;
   role: Role;
   isRemoved: boolean;
-  tgId?: string;
-  tgUsername: string;
+  tgId: string;
+  tgUsername?: string;
   abbreviatedName?: string;
 }

@@ -57,10 +57,14 @@ export class LoginViaTgCommandHandler extends CommandHandlerBase<
       return Result.ok({ staff, token });
     }
 
-    const existedStaffResult = await repository.getOneByTgUsername(username);
+    const existedStaffResult = await repository.getOneByTgId(String(id));
 
     if (!existedStaffResult.isErr) {
       const staff = existedStaffResult.unwrap();
+
+      if (staff.isRemoved) {
+        return Result.fail(new NotFoundException('Пользователь не найден'));
+      }
 
       staff.activate(
         id.toString(),

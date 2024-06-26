@@ -28,7 +28,7 @@ export class CreateStaffRequestDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  tgUsername: string;
+  tgId: string;
 
   @ApiProperty({ example: '+79137773344' })
   @IsMobilePhone('ru-RU')

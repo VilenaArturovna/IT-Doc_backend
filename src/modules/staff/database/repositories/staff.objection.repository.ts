@@ -43,26 +43,6 @@ export class StaffObjectionRepository extends ObjectionRepositoryBase<
     }
   }
 
-  async getOneByTgUsername(
-    tgUsername: string,
-  ): Promise<Result<StaffEntity, ExceptionBase>> {
-    try {
-      const ormEntity = await this.repository
-        .query()
-        .findOne('tgUsername', tgUsername);
-
-      if (!ormEntity) {
-        return Result.fail(new NotFoundException('Entity not found'));
-      }
-
-      const domainEntity = this.mapper.toDomainEntity(ormEntity);
-
-      return Result.ok(domainEntity);
-    } catch (e) {
-      return Result.fail(e);
-    }
-  }
-
   async getOneByTgId(
     tgId: string,
   ): Promise<Result<StaffEntity, ExceptionBase>> {
@@ -89,7 +69,7 @@ export class StaffObjectionRepository extends ObjectionRepositoryBase<
     try {
       const ormEntities = await this.repository
         .query(transaction)
-        .where({ role });
+        .where({ role, isRemoved: false });
 
       const domainEntities = ormEntities.map((ormEntity) =>
         this.mapper.toDomainEntity(ormEntity),

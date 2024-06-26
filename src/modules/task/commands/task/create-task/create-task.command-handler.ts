@@ -105,9 +105,7 @@ export class CreateTaskCommandHandler extends CommandHandlerBase<
 
     await this.telegramBotService.newTaskHasBeenAssigned({
       taskId: newTask.id.value,
-      tgIds: participants
-        .map((p) => p.staffTgId)
-        .filter((item) => Boolean(item)),
+      tgIds: participants.map((p) => p.staffTgId),
     });
 
     return newTaskResult;

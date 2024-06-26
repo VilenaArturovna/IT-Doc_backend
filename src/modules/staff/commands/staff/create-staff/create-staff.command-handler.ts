@@ -25,9 +25,7 @@ export class CreateStaffCommandHandler extends CommandHandlerBase<
 
     const repository = this.unitOfWork.getStaffRepository(trxId);
 
-    const existedTgUsernameResult = await repository.getOneByTgUsername(
-      payload.tgUsername,
-    );
+    const existedTgUsernameResult = await repository.getOneByTgId(payload.tgId);
     if (!existedTgUsernameResult.isErr) {
       return Result.fail(
         new ConflictException('Пользователь уже существует в системе'),
@@ -50,7 +48,7 @@ export class CreateStaffCommandHandler extends CommandHandlerBase<
       role: payload.role,
       birthdate: payload.birthdate ? new DateVO(payload.birthdate) : undefined,
       isRemoved: false,
-      tgUsername: payload.tgUsername,
+      tgId: payload.tgId,
       middleName: payload.middleName,
     });
 

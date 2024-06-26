@@ -29,7 +29,7 @@ export class TaskStaffEntity extends EntityBase<TaskStaffEntityProps> {
     return this.props.isAuthor;
   }
 
-  public get staffTgId(): string | undefined {
+  public get staffTgId(): string {
     return this.props.staff.tgId;
   }
 

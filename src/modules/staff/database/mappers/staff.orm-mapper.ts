@@ -52,8 +52,8 @@ export class StaffOrmMapper extends OrmMapper<
       role: props.role,
       avatar: props.avatar ? props.avatar.value : null,
       isRemoved: props.isRemoved,
-      tgId: props.tgId ?? null,
-      tgUsername: props.tgUsername,
+      tgId: props.tgId,
+      tgUsername: props.tgUsername ?? null,
       middleName: props.middleName,
     };
   }
