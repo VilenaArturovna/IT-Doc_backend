@@ -78,6 +78,12 @@ export interface INewTaskHasBeenAssignedRequest {
   taskId: string;
 }
 
+export interface INewOrderHasBeenRegisteredRequest {
+  tgIds: string[];
+  orderId: string;
+  orderNumber: string;
+}
+
 export interface INewOrderHasBeenAssignedRequest {
   tgId: string;
   orderId: string;

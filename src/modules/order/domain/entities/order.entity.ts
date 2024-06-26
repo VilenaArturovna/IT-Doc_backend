@@ -60,6 +60,10 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
     return this.props.priority;
   }
 
+  public get number() {
+    return this.props.number;
+  }
+
   public putInQueueForDiagnostics(deadline: DateVO) {
     if (this.props.status !== OrderStatus.IN_DIAGNOSTICS_QUEUE) {
       throw new ConflictException(

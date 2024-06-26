@@ -5,6 +5,7 @@ import { Result } from '@libs/utils';
 import {
   IDeadlineIsApproachingRequest,
   INewOrderHasBeenAssignedRequest,
+  INewOrderHasBeenRegisteredRequest,
   INewTaskHasBeenAssignedRequest,
   ISendWelcomeMessageRequest,
   IStaffRegisteredRequest,
@@ -32,7 +33,7 @@ export class TelegramBotService implements TelegramBotInterface {
 
   private async sendMessage(
     data: TelegramBotSendMessageData,
-  ): Promise<SendMessageResponse> {
+  ): Promise<SendMessageResponse | SendMessageError> {
     try {
       return await this.axiosInstance.post('/sendMessage', data);
     } catch (e) {
@@ -127,7 +128,7 @@ export class TelegramBotService implements TelegramBotInterface {
         inline_keyboard: [
           [
             {
-              text: 'Перейти к задаче',
+              text: 'Перейти к заявка',
               url:
                 this.domain +
                 '/admin/' +
@@ -139,7 +140,52 @@ export class TelegramBotService implements TelegramBotInterface {
       },
     };
 
-    await this.sendMessage(data);
+    const res = await this.sendMessage(data);
+
+    if (!res.data.ok) {
+      return Result.fail(
+        new DomainException((res as SendMessageError).data.description),
+      );
+    }
+
+    return Result.ok();
+  }
+
+  async newOrderHasBeenRegistered(
+    props: INewOrderHasBeenRegisteredRequest,
+  ): Promise<Result<void, ExceptionBase>> {
+    const results: (SendMessageResponse | SendMessageError)[] = [];
+    for (const tgId of props.tgIds) {
+      const data: TelegramBotSendMessageData = {
+        chat_id: tgId,
+        text: `Зарегистрирована новая заявка ${props.orderNumber}`,
+        parse_mode: 'HTML',
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: 'Перейти к заявка',
+                url:
+                  this.domain +
+                  '/admin/' +
+                  routes.order.root +
+                  `/${props.orderId}`,
+              },
+            ],
+          ],
+        },
+      };
+
+      const result = await this.sendMessage(data);
+      results.push(result);
+    }
+
+    if (results.map((r) => r.data.ok).includes(false)) {
+      const failResult = results.find((r) => !r.data.ok);
+      return Result.fail(
+        new DomainException((failResult as SendMessageError).data.description),
+      );
+    }
 
     return Result.ok();
   }
@@ -218,6 +264,18 @@ export class TelegramBotService implements TelegramBotInterface {
     const data: TelegramBotSendMessageData = {
       chat_id: tgId,
       text: `Информация о задаче была отправлена участникам`,
+      parse_mode: 'HTML',
+    };
+
+    await this.sendMessage(data);
+
+    return Result.ok();
+  }
+
+  async orderCreated(tgId: string): Promise<Result<void, ExceptionBase>> {
+    const data: TelegramBotSendMessageData = {
+      chat_id: tgId,
+      text: `Информация о заявке была отправлена инженеру(-ам)`,
       parse_mode: 'HTML',
     };
 

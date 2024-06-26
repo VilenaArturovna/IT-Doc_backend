@@ -7,6 +7,9 @@ import { OrderEntity, OrderStageEntity } from '@modules/order/domain';
 import { CheckCodeVO } from '@modules/order/domain/value-objects';
 import { OrderStatus } from '@modules/order/types';
 import { StaffEntity } from '@modules/staff/domain';
+import { Role } from '@modules/staff/types';
+import { TelegramBotService } from '@modules/telegram/service';
+import { ConfigService } from '@nestjs/config';
 import { CommandHandler } from '@nestjs/cqrs';
 
 import { CreateOrderCommand } from './create-order.command';
@@ -16,7 +19,11 @@ export class CreateOrderCommandHandler extends CommandHandlerBase<
   OrderUnitOfWork,
   OrderEntity
 > {
-  constructor(unitOfWork: OrderUnitOfWork) {
+  constructor(
+    unitOfWork: OrderUnitOfWork,
+    private readonly configService: ConfigService,
+    private readonly telegramBotService: TelegramBotService,
+  ) {
     super(unitOfWork);
   }
 
@@ -38,7 +45,7 @@ export class CreateOrderCommandHandler extends CommandHandlerBase<
     );
     const client = clientResult.unwrap();
 
-    let staff: StaffEntity;
+    let staff: StaffEntity | undefined;
 
     if (responsibleStaffId) {
       const staffResult = await staffRepository.getOneById(
@@ -82,8 +89,37 @@ export class CreateOrderCommandHandler extends CommandHandlerBase<
     });
 
     const createResult = await orderRepository.create(order);
-    createResult.unwrap();
+    const newOrder = createResult.unwrap();
 
-    return Result.ok(order);
+    let telegramSendMessageResult: Result<void, ExceptionBase>;
+
+    if (staff) {
+      telegramSendMessageResult =
+        await this.telegramBotService.newOrderHasBeenAssigned({
+          orderId: newOrder.id.value,
+          orderNumber: newOrder.number,
+          tgId: staff.tgId,
+        });
+    } else {
+      const engineersStaffResult = await staffRepository.getManyByRole(
+        Role.ENGINEER,
+      );
+      const engineersStaff = engineersStaffResult.unwrap();
+
+      telegramSendMessageResult =
+        await this.telegramBotService.newOrderHasBeenRegistered({
+          orderId: newOrder.id.value,
+          orderNumber: newOrder.number,
+          tgIds: engineersStaff.map((s) => s.tgId),
+        });
+    }
+
+    if (!telegramSendMessageResult.isErr) {
+      await this.telegramBotService.orderCreated(
+        this.configService.get<string>('adminTgId'),
+      );
+    }
+
+    return createResult;
   }
 }

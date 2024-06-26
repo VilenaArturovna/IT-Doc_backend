@@ -4,6 +4,7 @@ import { Result } from '@libs/utils';
 import {
   IDeadlineIsApproachingRequest,
   INewOrderHasBeenAssignedRequest,
+  INewOrderHasBeenRegisteredRequest,
   INewTaskHasBeenAssignedRequest,
   ISendWelcomeMessageRequest,
   IStaffRegisteredRequest,
@@ -23,6 +24,9 @@ export interface TelegramBotInterface {
   newOrderHasBeenAssigned(
     props: INewOrderHasBeenAssignedRequest,
   ): Promise<Result<void, ExceptionBase>>;
+  newOrderHasBeenRegistered(
+    props: INewOrderHasBeenRegisteredRequest,
+  ): Promise<Result<void, ExceptionBase>>;
   deadlineIsApproaching(
     props: IDeadlineIsApproachingRequest,
   ): Promise<Result<void, ExceptionBase>>;
@@ -30,4 +34,5 @@ export interface TelegramBotInterface {
     props: IStaffRegisteredRequest,
   ): Promise<Result<void, ExceptionBase>>;
   taskCreated(tgId: string): Promise<Result<void, ExceptionBase>>;
+  orderCreated(tgId: string): Promise<Result<void, ExceptionBase>>;
 }
