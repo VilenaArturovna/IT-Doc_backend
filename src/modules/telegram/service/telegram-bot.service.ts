@@ -6,6 +6,7 @@ import {
   INewOrderHasBeenAssignedRequest,
   INewTaskHasBeenAssignedRequest,
   ISendWelcomeMessageRequest,
+  IStaffRegisteredRequest,
   SendMessageResponse,
   TelegramBotDeleteMessage,
   TelegramBotInterface,
@@ -180,6 +181,20 @@ export class TelegramBotService implements TelegramBotInterface {
       тебе информацию о новых задачах, заявках и приближении дедлайнов. 
       Но не стоит всецело полагаться на меня, ведь всегда бывают сбои и баги, 
       самодисциплину никто не отменял`,
+      parse_mode: 'HTML',
+    };
+
+    await this.sendMessage(data);
+
+    return Result.ok();
+  }
+
+  async staffRegistered(
+    props: IStaffRegisteredRequest,
+  ): Promise<Result<void, ValidationException>> {
+    const data: TelegramBotSendMessageData = {
+      chat_id: props.tgId,
+      text: `${props.staffName} зарегистрировался в системе. Теперь он может получать сообщения от бота`,
       parse_mode: 'HTML',
     };
 

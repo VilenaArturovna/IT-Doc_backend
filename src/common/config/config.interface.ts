@@ -22,5 +22,6 @@ export interface Config {
     token: string;
   };
   margin: number;
+  adminTgId: string;
   domain: string;
 }

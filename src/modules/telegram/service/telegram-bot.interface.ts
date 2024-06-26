@@ -5,6 +5,7 @@ import {
   INewOrderHasBeenAssignedRequest,
   INewTaskHasBeenAssignedRequest,
   ISendWelcomeMessageRequest,
+  IStaffRegisteredRequest,
 } from '@modules/telegram/service/telegram-bot.types';
 
 export interface TelegramBotInterface {
@@ -23,5 +24,8 @@ export interface TelegramBotInterface {
   ): Promise<Result<void, ValidationException>>;
   deadlineIsApproaching(
     props: IDeadlineIsApproachingRequest,
+  ): Promise<Result<void, ValidationException>>;
+  staffRegistered(
+    props: IStaffRegisteredRequest,
   ): Promise<Result<void, ValidationException>>;
 }

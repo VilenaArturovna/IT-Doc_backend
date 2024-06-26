@@ -72,6 +72,11 @@ export class LoginViaTgCommandHandler extends CommandHandlerBase<
           firstname: staff.name.firstname,
         });
         staff.enteredForFirstTime();
+
+        await this.telegramBotService.staffRegistered({
+          staffName: `${staff.name.firstname} ${staff.name.lastname}`,
+          tgId: this.configService.get<string>('adminTgId'),
+        });
       }
 
       return Result.ok({ staff, token });

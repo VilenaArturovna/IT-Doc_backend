@@ -23,4 +23,5 @@ export const configuration = (): Config => ({
   },
   margin: parseInt(process.env.MARGIN),
   domain: process.env.DOMAIN,
+  adminTgId: process.env.ADMIN_TG_ID,
 });

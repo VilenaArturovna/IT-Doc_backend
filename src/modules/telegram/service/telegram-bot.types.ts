@@ -81,3 +81,8 @@ export interface IDeadlineIsApproachingRequest {
   orderNumber: string;
   deadline: DateVO;
 }
+
+export interface IStaffRegisteredRequest {
+  tgId: string;
+  staffName: string;
+}
