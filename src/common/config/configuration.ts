@@ -22,4 +22,5 @@ export const configuration = (): Config => ({
     name: process.env.TG_BOT_NAME,
   },
   margin: parseInt(process.env.MARGIN),
+  domain: process.env.DOMAIN,
 });

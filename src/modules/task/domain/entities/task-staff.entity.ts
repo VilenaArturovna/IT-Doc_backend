@@ -29,6 +29,10 @@ export class TaskStaffEntity extends EntityBase<TaskStaffEntityProps> {
     return this.props.isAuthor;
   }
 
+  public get staffTgId(): string | undefined {
+    return this.props.staff.tgId;
+  }
+
   public makeResponsible() {
     this.props.isResponsible = true;
 

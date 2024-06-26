@@ -9,6 +9,7 @@ const orderById = `${orderRoot}/:id`;
 const deadlineRoot = 'deadlines';
 const tasksRoot = 'tasks';
 const taskById = `${tasksRoot}/:id`;
+const telegramWebhookRoot = 'telegram/webhook';
 
 export const routes = {
   staff: {
@@ -63,5 +64,9 @@ export const routes = {
     complete: `${taskById}/complete`,
     markAsRead: `${taskById}/mark-as-read`,
     takeToWork: `${taskById}/take-to-work`,
+  },
+  telegram: {
+    webhook: telegramWebhookRoot,
+    updates: `${telegramWebhookRoot}/updates`,
   },
 };

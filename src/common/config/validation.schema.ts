@@ -20,4 +20,5 @@ export const validationSchema = Joi.object({
   TG_BOT_NAME: Joi.string().required(),
 
   MARGIN: Joi.number().required(),
+  DOMAIN: Joi.string().required(),
 });

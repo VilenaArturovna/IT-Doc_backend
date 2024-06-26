@@ -7,6 +7,7 @@ import { Role } from '@modules/staff/types';
 import { TaskUnitOfWork } from '@modules/task/database/unit-of-work';
 import { TaskEntity, TaskStaffEntity } from '@modules/task/domain';
 import { TaskStatus } from '@modules/task/types';
+import { TelegramBotService } from '@modules/telegram/service';
 import { CommandHandler } from '@nestjs/cqrs';
 
 import { CreateTaskCommand } from './create-task.command';
@@ -16,7 +17,10 @@ export class CreateTaskCommandHandler extends CommandHandlerBase<
   TaskUnitOfWork,
   TaskEntity
 > {
-  constructor(unitOfWork: TaskUnitOfWork) {
+  constructor(
+    unitOfWork: TaskUnitOfWork,
+    private readonly telegramBotService: TelegramBotService,
+  ) {
     super(unitOfWork);
   }
 
@@ -96,6 +100,16 @@ export class CreateTaskCommandHandler extends CommandHandlerBase<
 
     task.addParticipants(participants);
 
-    return taskRepository.create(task);
+    const newTaskResult = await taskRepository.create(task);
+    const newTask = newTaskResult.unwrap();
+
+    await this.telegramBotService.newTaskHasBeenAssigned({
+      taskId: newTask.id.value,
+      tgIds: participants
+        .map((p) => p.staffTgId)
+        .filter((item) => Boolean(item)),
+    });
+
+    return newTaskResult;
   }
 }

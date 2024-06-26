@@ -40,6 +40,10 @@ export class StaffEntity extends EntityBase<StaffEntityProps> {
     return this.props.role;
   }
 
+  public get tgId(): string | undefined {
+    return this.props.tgId;
+  }
+
   public update(props: UpdateStaffEntityProps) {
     this.props.lastname = props.lastname;
     this.props.firstname = props.firstname;

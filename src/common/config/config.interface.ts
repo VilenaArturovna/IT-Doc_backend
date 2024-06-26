@@ -22,4 +22,5 @@ export interface Config {
     token: string;
   };
   margin: number;
+  domain: string;
 }
