@@ -3,6 +3,7 @@ import { ValidationException } from '@libs/exceptions';
 import { Result } from '@libs/utils';
 import {
   IDeadlineIsApproachingRequest,
+  IDeadlineIsApproachingWithoutResponsibleStaffRequest,
   INewOrderHasBeenAssignedRequest,
   INewOrderHasBeenRegisteredRequest,
   INewTaskHasBeenAssignedRequest,
@@ -29,6 +30,9 @@ export interface TelegramBotInterface {
   ): Promise<Result<void, ExceptionBase>>;
   deadlineIsApproaching(
     props: IDeadlineIsApproachingRequest,
+  ): Promise<Result<void, ExceptionBase>>;
+  deadlineIsApproachingWithoutResponsibleStaff(
+    props: IDeadlineIsApproachingWithoutResponsibleStaffRequest,
   ): Promise<Result<void, ExceptionBase>>;
   staffRegistered(
     props: IStaffRegisteredRequest,

@@ -22,6 +22,7 @@ export interface Config {
     token: string;
   };
   margin: number;
+  minutesBeforeDeadline: number;
   adminTgId: string;
   domain: string;
 }

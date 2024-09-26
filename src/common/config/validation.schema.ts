@@ -22,4 +22,5 @@ export const validationSchema = Joi.object({
   MARGIN: Joi.number().required(),
   DOMAIN: Joi.string().required(),
   ADMIN_TG_ID: Joi.string().required(),
+  MINUTES_BEFORE_DEADLINE: Joi.number().required(),
 });

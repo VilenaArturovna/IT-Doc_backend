@@ -4,6 +4,7 @@ import { TrxId, UnitOfWork } from '@libs/unit-of-work';
 import { deleteObjectKeys, Result } from '@libs/utils';
 import { IdVO, UuidVO } from '@libs/value-objects';
 import { OrderEntity, OrderEntityProps } from '@modules/order/domain';
+import * as dayjs from 'dayjs';
 
 import { OrderObjectionOrmEntity, OrderOrmEntity } from '../entities';
 import { OrderOrmMapper } from '../mappers';
@@ -128,6 +129,29 @@ export class OrderObjectionRepository extends ObjectionRepositoryBase<
         .upsertGraph(ormEntity, { relate: true });
 
       return this.getOneById(entity.id);
+    } catch (e) {
+      return Result.fail(e);
+    }
+  }
+
+  async getManyFinishingOrders(minutesBeforeDeadline: number) {
+    const transaction = this.unitOfWork.getTrx(this.trxId);
+
+    try {
+      const now = dayjs().toISOString();
+      const date = dayjs().add(minutesBeforeDeadline, 'minutes').toISOString();
+
+      const ormEntities = await this.repository
+        .query(transaction)
+        .whereNotNull('deadline')
+        .andWhereBetween('deadline', [now, date])
+        .withGraphJoined(this.graph);
+
+      const domainEntities = ormEntities.map((ormEntity) =>
+        this.mapper.toDomainEntity(ormEntity),
+      );
+
+      return Result.ok(domainEntities);
     } catch (e) {
       return Result.fail(e);
     }

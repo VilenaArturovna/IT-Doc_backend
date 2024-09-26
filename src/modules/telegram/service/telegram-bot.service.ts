@@ -2,8 +2,10 @@ import { ExceptionBase } from '@libs/base-classes';
 import { DomainException, ValidationException } from '@libs/exceptions';
 import { routes } from '@libs/routes';
 import { Result } from '@libs/utils';
+import { DateVO } from '@libs/value-objects';
 import {
   IDeadlineIsApproachingRequest,
+  IDeadlineIsApproachingWithoutResponsibleStaffRequest,
   INewOrderHasBeenAssignedRequest,
   INewOrderHasBeenRegisteredRequest,
   INewTaskHasBeenAssignedRequest,
@@ -111,10 +113,76 @@ export class TelegramBotService implements TelegramBotInterface {
   }
 
   //methods
-  deadlineIsApproaching(
+  async deadlineIsApproaching(
     props: IDeadlineIsApproachingRequest,
   ): Promise<Result<void, ExceptionBase>> {
-    return Promise.resolve(undefined);
+    const data: TelegramBotSendMessageData = {
+      chat_id: props.tgId,
+      text: `${props.isCopy ? '[Копия]' : ''}
+      Дедлайн по заявке ${props.orderNumber} 
+      будет через ${this.getMinutes(props.deadline)}`,
+      parse_mode: 'HTML',
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'Перейти к заявке',
+              url:
+                this.domain +
+                '/admin/' +
+                routes.order.root +
+                `/${props.orderId}`,
+            },
+          ],
+        ],
+      },
+    };
+
+    const res = await this.sendMessage(data);
+
+    if (!res.data.ok) {
+      return Result.fail(
+        new DomainException((res as SendMessageError).data.description),
+      );
+    }
+
+    return Result.ok();
+  }
+
+  async deadlineIsApproachingWithoutResponsibleStaff(
+    props: IDeadlineIsApproachingWithoutResponsibleStaffRequest,
+  ): Promise<Result<void, ExceptionBase>> {
+    const data: TelegramBotSendMessageData = {
+      chat_id: props.tgId,
+      text: `Дедлайн по заявке ${props.orderNumber} 
+      будет через ${this.getMinutes(props.deadline)}. 
+      Назначьте ответственного инженера`,
+      parse_mode: 'HTML',
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'Перейти к заявке',
+              url:
+                this.domain +
+                '/admin/' +
+                routes.order.root +
+                `/${props.orderId}`,
+            },
+          ],
+        ],
+      },
+    };
+
+    const res = await this.sendMessage(data);
+
+    if (!res.data.ok) {
+      return Result.fail(
+        new DomainException((res as SendMessageError).data.description),
+      );
+    }
+
+    return Result.ok();
   }
 
   async newOrderHasBeenAssigned(
@@ -128,7 +196,7 @@ export class TelegramBotService implements TelegramBotInterface {
         inline_keyboard: [
           [
             {
-              text: 'Перейти к заявка',
+              text: 'Перейти к заявке',
               url:
                 this.domain +
                 '/admin/' +
@@ -164,7 +232,7 @@ export class TelegramBotService implements TelegramBotInterface {
           inline_keyboard: [
             [
               {
-                text: 'Перейти к заявка',
+                text: 'Перейти к заявке',
                 url:
                   this.domain +
                   '/admin/' +
@@ -282,5 +350,17 @@ export class TelegramBotService implements TelegramBotInterface {
     await this.sendMessage(data);
 
     return Result.ok();
+  }
+
+  private getMinutes(deadline: DateVO) {
+    const minutes = deadline.getRemainingMinutes();
+    const wordForMinutes =
+      minutes === 1
+        ? 'минуту'
+        : minutes >= 5 || minutes === 0
+        ? 'минут'
+        : 'минуты';
+
+    return `${minutes} ${wordForMinutes}`;
   }
 }

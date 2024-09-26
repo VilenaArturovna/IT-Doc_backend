@@ -18,6 +18,7 @@ import { htmlToPdfSingletonProvider } from '@src/common/services/html-pdf-servic
     OrderUnitOfWork,
     htmlToPdfSingletonProvider,
     telegramBotSingletonProvider,
+    //InformAboutApproachingDeadlineCronService,
   ],
   imports: [CqrsModule, StaffModule, WarehouseModule],
 })

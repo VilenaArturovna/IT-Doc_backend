@@ -95,6 +95,14 @@ export interface IDeadlineIsApproachingRequest {
   orderId: string;
   orderNumber: string;
   deadline: DateVO;
+  isCopy: boolean;
+}
+
+export interface IDeadlineIsApproachingWithoutResponsibleStaffRequest {
+  tgId: string;
+  orderId: string;
+  orderNumber: string;
+  deadline: DateVO;
 }
 
 export interface IStaffRegisteredRequest {

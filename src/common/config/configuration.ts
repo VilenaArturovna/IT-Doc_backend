@@ -22,6 +22,7 @@ export const configuration = (): Config => ({
     name: process.env.TG_BOT_NAME,
   },
   margin: parseInt(process.env.MARGIN),
+  minutesBeforeDeadline: parseInt(process.env.MINUTES_BEFORE_DEADLINE),
   domain: process.env.DOMAIN,
   adminTgId: process.env.ADMIN_TG_ID,
 });

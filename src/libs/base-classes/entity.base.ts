@@ -52,5 +52,5 @@ export abstract class EntityBase<Props> {
     return Object.freeze(copiedProps);
   }
 
-  protected abstract validate();
+  protected abstract validate(): void;
 }

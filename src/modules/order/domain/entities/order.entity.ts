@@ -64,6 +64,14 @@ export class OrderEntity extends EntityBase<OrderEntityProps> {
     return this.props.number;
   }
 
+  public get deadline() {
+    return this.props.deadline;
+  }
+
+  public get responsibleStaff(): StaffEntity | undefined {
+    return this.props.responsibleStaff;
+  }
+
   public putInQueueForDiagnostics(deadline: DateVO) {
     if (this.props.status !== OrderStatus.IN_DIAGNOSTICS_QUEUE) {
       throw new ConflictException(

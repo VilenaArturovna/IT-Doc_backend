@@ -41,4 +41,13 @@ export class DateVO extends ValueObject<Date> {
     const d = dayjs(this.props.value).add(minutes, 'minutes');
     return new DateVO(d.toISOString());
   }
+
+  public getRemainingMinutes(): number {
+    const now = new Date().getTime();
+    const date = this.value.getTime();
+
+    const diff = Math.ceil((date - now) / 1000 / 60);
+
+    return diff >= 0 ? diff : diff * -1;
+  }
 }

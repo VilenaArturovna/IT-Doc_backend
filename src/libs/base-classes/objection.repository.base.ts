@@ -23,7 +23,7 @@ export abstract class ObjectionRepositoryBase<
   Mapper extends OrmMapper<Entity, EntityProps, OrmEntity>,
 > implements ObjectionRepository<Entity>
 {
-  constructor(
+  protected constructor(
     protected readonly repository: ModelClass<ObjectionOrmEntity>,
     protected readonly mapper: Mapper,
     protected readonly unitOfWork: UnitOfWork,
