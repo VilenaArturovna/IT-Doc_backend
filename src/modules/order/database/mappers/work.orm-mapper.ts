@@ -3,7 +3,7 @@ import {
   OrmEntityProps,
   OrmMapper,
 } from '@libs/base-classes';
-import { Currency, MoneyVO } from '@libs/value-objects';
+import { MoneyVO } from '@libs/value-objects';
 import { WorkEntity, WorkEntityProps } from '@modules/order/domain';
 
 import { WorkOrmEntity, WorkOrmEntityProps } from '../entities';
@@ -29,7 +29,7 @@ export class WorkOrmMapper extends OrmMapper<
     return {
       name: ormEntity.name,
       time: ormEntity.time,
-      price: MoneyVO.toVO({ amount: ormEntity.price, currency: Currency.RUB }),
+      price: MoneyVO.toVO({ amount: ormEntity.price }),
     };
   }
 

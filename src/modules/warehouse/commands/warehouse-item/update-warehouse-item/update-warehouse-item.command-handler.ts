@@ -1,7 +1,7 @@
 import { ExceptionBase } from '@libs/base-classes';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
 import { Result } from '@libs/utils';
-import { Currency, DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
+import { DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
 import { WarehouseUnitOfWork } from '@modules/warehouse/database/unit-of-work';
 import { WarehouseItemEntity } from '@modules/warehouse/domain';
 import { CommandHandler } from '@nestjs/cqrs';
@@ -44,7 +44,7 @@ export class UpdateWarehouseItemCommandHandler extends CommandHandlerBase<
 
     warehouseItem.update({
       title: payload.title,
-      price: MoneyVO.toVO({ amount: payload.price, currency: Currency.RUB }),
+      price: MoneyVO.toVO({ amount: payload.price }),
       balance: payload.balance,
       criticalMargin: payload.criticalMargin,
       nextDeliveryDate: payload.nextDeliveryDate

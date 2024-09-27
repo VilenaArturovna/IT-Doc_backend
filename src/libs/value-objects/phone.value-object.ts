@@ -13,8 +13,4 @@ export class PhoneVO extends ValueObject<string> {
   public get value(): string {
     return this.props.value;
   }
-
-  public isEqualTo(phone: PhoneVO): boolean {
-    return this.props.value === phone.value;
-  }
 }

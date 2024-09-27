@@ -36,11 +36,18 @@ export type UpdateWarehouseItemEntityProps = Omit<
   'unit' | 'section' | 'isArchived'
 >;
 
+export type CreateWarehouseItemEntityProps = Omit<
+  WarehouseItemEntityProps,
+  'isArchived'
+>;
+
 export class WarehouseItemEntity extends EntityBase<WarehouseItemEntityProps> {
   protected readonly _id: IdVO;
 
-  public static create(props: WarehouseItemEntityProps): WarehouseItemEntity {
-    return new WarehouseItemEntity({ props });
+  public static create(
+    props: CreateWarehouseItemEntityProps,
+  ): WarehouseItemEntity {
+    return new WarehouseItemEntity({ props: { ...props, isArchived: false } });
   }
 
   public get price() {

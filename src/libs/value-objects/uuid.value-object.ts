@@ -18,8 +18,4 @@ export class UuidVO extends IdVO {
   public get value(): string | null {
     return this.props.value;
   }
-
-  public isEqualTo(id: UuidVO): boolean {
-    return this.props.value === id.value;
-  }
 }

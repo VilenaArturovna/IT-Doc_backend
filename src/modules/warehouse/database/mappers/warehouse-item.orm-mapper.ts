@@ -3,7 +3,7 @@ import {
   OrmEntityProps,
   OrmMapper,
 } from '@libs/base-classes';
-import { Currency, DateVO, MoneyVO } from '@libs/value-objects';
+import { DateVO, MoneyVO } from '@libs/value-objects';
 import { ProviderOrmMapper } from '@modules/warehouse/database/mappers/provider.orm-mapper';
 import { VendorOrmMapper } from '@modules/warehouse/database/mappers/vendor.orm-mapper';
 import {
@@ -44,7 +44,7 @@ export class WarehouseItemOrmMapper extends OrmMapper<
       unit: ormEntity.unit,
       balance: ormEntity.balance,
       criticalMargin: ormEntity.criticalMargin,
-      price: MoneyVO.toVO({ amount: ormEntity.price, currency: Currency.RUB }),
+      price: MoneyVO.toVO({ amount: ormEntity.price }),
       expense: ormEntity.expense,
       expenseReserve: ormEntity.expenseReserve,
       packing: ormEntity.packing,

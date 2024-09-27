@@ -13,7 +13,7 @@ interface MoneyVOProps {
 
 interface MoneyPrimitiveProps {
   amount: string;
-  currency: Currency;
+  currency?: Currency;
 }
 
 export class MoneyVO extends ValueObject<MoneyVOProps> {
@@ -22,6 +22,9 @@ export class MoneyVO extends ValueObject<MoneyVOProps> {
       throw new Error(
         `Значение ${value.currency} не является валидным для валюты`,
       );
+    }
+    if (isNaN(+value.amount)) {
+      throw new Error('Значение суммы невалидно');
     }
     super(value);
   }
@@ -43,7 +46,7 @@ export class MoneyVO extends ValueObject<MoneyVOProps> {
 
   public static toVO(value: MoneyPrimitiveProps): MoneyVO {
     return new MoneyVO({
-      currency: value.currency,
+      currency: value?.currency ?? Currency.RUB,
       amount: value.amount,
     });
   }

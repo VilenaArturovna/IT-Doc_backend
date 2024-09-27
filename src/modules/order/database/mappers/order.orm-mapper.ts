@@ -3,7 +3,7 @@ import {
   OrmEntityProps,
   OrmMapper,
 } from '@libs/base-classes';
-import { Currency, DateVO, MoneyVO } from '@libs/value-objects';
+import { DateVO, MoneyVO } from '@libs/value-objects';
 import { ClientOrmMapper } from '@modules/order/database/mappers/client.orm-mapper';
 import { OrderStageOrmMapper } from '@modules/order/database/mappers/order-stage.orm-mapper';
 import { WorkOrmMapper } from '@modules/order/database/mappers/work.orm-mapper';
@@ -52,7 +52,6 @@ export class OrderOrmMapper extends OrmMapper<
         : undefined,
       price: MoneyVO.toVO({
         amount: ormEntity.price,
-        currency: Currency.RUB,
       }),
       serialNumberEquipment: ormEntity.serialNumberEquipment,
       repairParts: ormEntity.repairParts
