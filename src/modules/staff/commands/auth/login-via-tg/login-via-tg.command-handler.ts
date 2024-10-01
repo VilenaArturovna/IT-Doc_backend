@@ -31,7 +31,7 @@ export class LoginViaTgCommandHandler extends CommandHandlerBase<
     command: LoginViaTgCommand,
   ): Promise<Result<{ staff: StaffEntity; token: string }, ExceptionBase>> {
     const {
-      payload: { id, photo_url },
+      payload: { id, photo_url, username },
       trxId,
     } = command;
 
@@ -55,10 +55,7 @@ export class LoginViaTgCommandHandler extends CommandHandlerBase<
         return Result.fail(new NotFoundException('Пользователь не найден'));
       }
 
-      staff.activate(
-        id.toString(),
-        photo_url ? new UrlVO(photo_url) : undefined,
-      );
+      staff.activate(username, photo_url ? new UrlVO(photo_url) : undefined);
 
       const jwtPayload: JwtPayload = {
         id: staff.id.value,

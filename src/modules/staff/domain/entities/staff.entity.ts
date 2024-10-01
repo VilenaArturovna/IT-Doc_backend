@@ -17,6 +17,11 @@ export interface StaffEntityProps {
   isFirstEntrance: boolean;
 }
 
+type CreateStaffEntityProps = Omit<
+  StaffEntityProps,
+  'isFirstEntrance' | 'isRemoved'
+>;
+
 type UpdateStaffEntityProps = Pick<
   StaffEntityProps,
   'firstname' | 'lastname' | 'phone' | 'birthdate' | 'avatar' | 'middleName'
@@ -25,8 +30,10 @@ type UpdateStaffEntityProps = Pick<
 export class StaffEntity extends EntityBase<StaffEntityProps> {
   protected readonly _id: IdVO;
 
-  public static create(props: StaffEntityProps): StaffEntity {
-    return new StaffEntity({ props });
+  public static create(props: CreateStaffEntityProps): StaffEntity {
+    return new StaffEntity({
+      props: { ...props, isFirstEntrance: true, isRemoved: false },
+    });
   }
 
   public get name() {
@@ -73,8 +80,8 @@ export class StaffEntity extends EntityBase<StaffEntityProps> {
     this.updatedAtNow();
   }
 
-  public activate(tgId: string, avatar?: UrlVO) {
-    this.props.tgId = tgId;
+  public activate(tgUsername?: string, avatar?: UrlVO) {
+    this.props.tgUsername = tgUsername;
     this.props.avatar = this.props.avatar ?? avatar;
     this.updatedAtNow();
   }

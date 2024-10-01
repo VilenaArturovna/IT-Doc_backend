@@ -47,10 +47,8 @@ export class CreateStaffCommandHandler extends CommandHandlerBase<
       phone: new PhoneVO(payload.phone),
       role: payload.role,
       birthdate: payload.birthdate ? new DateVO(payload.birthdate) : undefined,
-      isRemoved: false,
       tgId: payload.tgId,
       middleName: payload.middleName,
-      isFirstEntrance: true,
     });
 
     return repository.create(newStaff);
