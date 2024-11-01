@@ -9,5 +9,5 @@ FROM node:16.20.2-alpine AS runner
 WORKDIR /app
 COPY --from=builder /app ./
 ENTRYPOINT ["sh", "-c"]
-CMD ["yarn migration:run && yarn seed:run && yarn start:dev"]
+CMD ["yarn migration:run && yarn start:dev"]
 
