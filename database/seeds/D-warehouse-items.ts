@@ -4,6 +4,7 @@ import {
   WarehouseItemOrmEntityProps,
 } from '@modules/warehouse/database/entities';
 import { Section, Unit } from '@modules/warehouse/types';
+import { EnvironmentTypes } from '@src/common/config/config.interface';
 import { Knex } from 'knex';
 import { v4 as uuid } from 'uuid';
 
@@ -29,11 +30,14 @@ export async function seed(knex: Knex) {
       };
     });
 
-  const { count } = await knex(WarehouseItemObjectionOrmEntity.tableName)
-    .count()
-    .first();
+  const env: EnvironmentTypes = process.env.NODE_ENV as EnvironmentTypes;
+  if (env !== 'production') {
+    const { count } = await knex(WarehouseItemObjectionOrmEntity.tableName)
+      .count()
+      .first();
 
-  if (Number(count)) return;
+    if (Number(count)) return;
 
-  await knex(WarehouseItemObjectionOrmEntity.tableName).insert(items);
+    await knex(WarehouseItemObjectionOrmEntity.tableName).insert(items);
+  }
 }
