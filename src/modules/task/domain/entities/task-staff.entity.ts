@@ -10,11 +10,15 @@ export interface TaskStaffEntityProps {
   isRead: boolean;
 }
 
+export type CreateTaskStaffEntityProps = Omit<TaskStaffEntityProps, 'isRead'>;
+
 export class TaskStaffEntity extends EntityBase<TaskStaffEntityProps> {
   protected readonly _id: IdVO;
 
-  public static create(props: TaskStaffEntityProps): TaskStaffEntity {
-    return new TaskStaffEntity({ props });
+  public static create(props: CreateTaskStaffEntityProps): TaskStaffEntity {
+    return new TaskStaffEntity({
+      props: { ...props, isRead: Boolean(props.isAuthor) },
+    });
   }
 
   public get staffId() {

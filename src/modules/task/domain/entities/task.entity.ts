@@ -15,6 +15,8 @@ export interface TaskEntityProps {
   participants: TaskStaffEntity[];
 }
 
+export type CreateTaskProps = Omit<TaskEntityProps, 'status'>;
+
 export type UpdateTaskProps = Pick<
   TaskEntityProps,
   'theme' | 'description' | 'deadline' | 'price'
@@ -23,8 +25,10 @@ export type UpdateTaskProps = Pick<
 export class TaskEntity extends EntityBase<TaskEntityProps> {
   protected readonly _id: IdVO;
 
-  public static create(props: TaskEntityProps): TaskEntity {
-    return new TaskEntity({ props });
+  public static create(props: CreateTaskProps): TaskEntity {
+    return new TaskEntity({
+      props: { ...props, status: TaskStatus.REGISTERED },
+    });
   }
 
   public get status() {
@@ -158,7 +162,6 @@ export class TaskEntity extends EntityBase<TaskEntityProps> {
       this.props.participants.push(
         TaskStaffEntity.create({
           staff,
-          isRead: false,
           isResponsible: true,
           isAuthor: false,
         }),

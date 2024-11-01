@@ -6,7 +6,6 @@ import { StaffEntity } from '@modules/staff/domain';
 import { Role } from '@modules/staff/types';
 import { TaskUnitOfWork } from '@modules/task/database/unit-of-work';
 import { TaskEntity, TaskStaffEntity } from '@modules/task/domain';
-import { TaskStatus } from '@modules/task/types';
 import { TelegramBotService } from '@modules/telegram/service';
 import { CommandHandler } from '@nestjs/cqrs';
 
@@ -56,12 +55,10 @@ export class CreateTaskCommandHandler extends CommandHandlerBase<
       price: payload.price
         ? new MoneyVO({ currency: Currency.RUB, amount: payload.price })
         : undefined,
-      status: TaskStatus.REGISTERED,
       participants: [
         TaskStaffEntity.create({
           staff: author,
           isResponsible: payload.authorId === payload.responsibleStaffId,
-          isRead: true,
           isAuthor: true,
         }),
       ],
@@ -78,7 +75,6 @@ export class CreateTaskCommandHandler extends CommandHandlerBase<
         TaskStaffEntity.create({
           staff: responsibleStaff,
           isAuthor: false,
-          isRead: false,
           isResponsible: true,
         }),
       );
@@ -91,7 +87,6 @@ export class CreateTaskCommandHandler extends CommandHandlerBase<
           TaskStaffEntity.create({
             staff: st,
             isAuthor: false,
-            isRead: false,
             isResponsible: false,
           }),
         );
