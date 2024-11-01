@@ -25,4 +25,11 @@ export interface Config {
   minutesBeforeDeadline: number;
   adminTgId: string;
   domain: string;
+  timeweb: {
+    endpoint: string;
+    accessKeyId: string;
+    secretAccessKey: string;
+    region: string;
+    publicBucket: string;
+  };
 }

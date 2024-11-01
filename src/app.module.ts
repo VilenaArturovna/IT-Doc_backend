@@ -1,5 +1,6 @@
 import { OrderModule } from '@modules/order/order.module';
 import { StaffModule } from '@modules/staff/staff.module';
+import { StorageModule } from '@modules/storage/storage.module';
 import { TaskModule } from '@modules/task/task.module';
 import { TelegramModule } from '@modules/telegram/telegram.module';
 import { WarehouseModule } from '@modules/warehouse/warehouse.module';
@@ -27,6 +28,7 @@ import { JwtAuthGuard } from '@src/common/guards/auth/jwt-auth.guard';
     OrderModule,
     TaskModule,
     TelegramModule,
+    StorageModule,
   ],
   controllers: [],
   providers: [

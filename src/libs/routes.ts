@@ -10,6 +10,7 @@ const deadlineRoot = 'deadlines';
 const tasksRoot = 'tasks';
 const taskById = `${tasksRoot}/:id`;
 const telegramWebhookRoot = 'telegram/webhook';
+const storageRoot = 'storage';
 
 export const routes = {
   staff: {
@@ -68,5 +69,8 @@ export const routes = {
   telegram: {
     webhook: telegramWebhookRoot,
     updates: `${telegramWebhookRoot}/updates`,
+  },
+  storage: {
+    getSignedUrl: `${storageRoot}/get-signed-url`,
   },
 };
