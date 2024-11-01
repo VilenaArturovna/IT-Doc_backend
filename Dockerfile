@@ -8,6 +8,5 @@ RUN yarn build
 FROM node:14.17.5-alpine AS runner
 WORKDIR /app
 COPY --from=builder /app ./
-EXPOSE 3000
-ENTRYPOINT ["sh", "-c"]
-CMD ["yarn migration:run && yarn start:dev"]
+EXPOSE 80
+CMD ["yarn", "start"]
