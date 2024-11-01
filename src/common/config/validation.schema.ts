@@ -23,4 +23,11 @@ export const validationSchema = Joi.object({
   DOMAIN: Joi.string().required(),
   ADMIN_TG_ID: Joi.string().required(),
   MINUTES_BEFORE_DEADLINE: Joi.number().required(),
+
+  //TIMEWEB
+  TIMEWEB_ENDPOINT: Joi.string().required(),
+  TIMEWEB_ACCESS_KEY_ID: Joi.string().required(),
+  TIMEWEB_SECRET_ACCESS_KEY: Joi.string().required(),
+  TIMEWEB_REGION: Joi.string().required(),
+  TIMEWEB_PUBLIC_BUCKET: Joi.string().required(),
 });

@@ -25,4 +25,11 @@ export const configuration = (): Config => ({
   minutesBeforeDeadline: parseInt(process.env.MINUTES_BEFORE_DEADLINE),
   domain: process.env.DOMAIN,
   adminTgId: process.env.ADMIN_TG_ID,
+  timeweb: {
+    region: process.env.TIMEWEB_REGION,
+    endpoint: process.env.TIMEWEB_ENDPOINT,
+    accessKeyId: process.env.TIMEWEB_ACCESS_KEY_ID,
+    secretAccessKey: process.env.TIMEWEB_SECRET_ACCESS_KEY,
+    publicBucket: process.env.TIMEWEB_PUBLIC_BUCKET,
+  },
 });
