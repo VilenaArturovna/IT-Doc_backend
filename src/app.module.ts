@@ -7,6 +7,7 @@ import { WarehouseModule } from '@modules/warehouse/warehouse.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
+import { AppController } from '@src/app.controller';
 import {
   configuration,
   ObjectionConfigService,
@@ -30,7 +31,7 @@ import { JwtAuthGuard } from '@src/common/guards/auth/jwt-auth.guard';
     TelegramModule,
     StorageModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [
     {
       provide: APP_GUARD,

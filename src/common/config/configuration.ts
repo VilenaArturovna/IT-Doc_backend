@@ -3,7 +3,7 @@ import { Config, EnvironmentTypes } from './config.interface';
 export const configuration = (): Config => ({
   app: {
     env: process.env.NODE_ENV as EnvironmentTypes,
-    port: parseInt(process.env.PORT) || 3000,
+    port: parseInt(process.env.PORT),
   },
   database: {
     postgres: {
