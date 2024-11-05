@@ -302,10 +302,7 @@ export class TelegramBotService implements TelegramBotInterface {
   ): Promise<Result<void, ExceptionBase>> {
     const data: TelegramBotSendMessageData = {
       chat_id: props.tgId,
-      text: `Привет, ${props.firstname}. Я - бот и в этот чат буду присылать 
-      тебе информацию о новых задачах, заявках и приближении дедлайнов. 
-      Но не стоит всецело полагаться на меня, ведь всегда бывают сбои и баги, 
-      самодисциплину никто не отменял`,
+      text: `Привет, ${props.firstname}. Я - бот и в этот чат буду присылать тебе информацию о новых задачах, заявках и приближении дедлайнов. Но не стоит всецело полагаться на меня, ведь всегда бывают сбои и баги, самодисциплину никто не отменял`,
       parse_mode: 'HTML',
     };
 
