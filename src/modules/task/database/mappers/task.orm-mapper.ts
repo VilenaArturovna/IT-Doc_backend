@@ -3,7 +3,7 @@ import {
   OrmEntityProps,
   OrmMapper,
 } from '@libs/base-classes';
-import { Currency, DateVO, MoneyVO } from '@libs/value-objects';
+import { Currency, DateVO, MoneyVO, UrlVO } from '@libs/value-objects';
 import { TaskStaffOrmMapper } from '@modules/task/database/mappers/task-staff.orm-mapper';
 import { TaskEntity, TaskEntityProps } from '@modules/task/domain';
 
@@ -39,6 +39,7 @@ export class TaskOrmMapper extends OrmMapper<
       participants: ormEntity.participants?.map((p) =>
         new TaskStaffOrmMapper().toDomainEntity(p),
       ),
+      files: ormEntity.files?.map((f) => new UrlVO(f)),
     };
   }
 
@@ -55,6 +56,7 @@ export class TaskOrmMapper extends OrmMapper<
         ...new TaskStaffOrmMapper().toOrmEntity(p),
         taskId: props.id.value,
       })),
+      files: props.files ? props.files.map((f) => f.value) : null,
     };
   }
 }

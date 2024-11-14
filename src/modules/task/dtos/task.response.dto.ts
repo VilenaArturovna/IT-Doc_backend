@@ -32,6 +32,9 @@ export class TaskResponseDto {
   @ApiPropertyOptional()
   deadline?: string;
 
+  @ApiPropertyOptional()
+  files?: string[];
+
   constructor(entity: TaskEntity) {
     const props = entity.getCopiedProps();
 
@@ -45,5 +48,6 @@ export class TaskResponseDto {
     this.participants = props.participants.map(
       (p) => new TaskStaffResponseDto(p),
     );
+    this.files = props.files?.map((f) => f.value);
   }
 }

@@ -25,6 +25,7 @@ export class TaskObjectionOrmEntity extends TaskModel {
         number: { type: ['string', 'null'] },
         deadline: { type: ['string', 'null'] },
         price: { type: ['string', 'null'] },
+        files: { type: ['array', 'null'], items: { type: 'string' } },
       },
     };
   }

@@ -1,7 +1,7 @@
 import { EntityBase } from '@libs/base-classes';
 import { ConflictException } from '@libs/exceptions';
 import { MoneyCalculator } from '@libs/utils';
-import { DateVO, IdVO, MoneyVO } from '@libs/value-objects';
+import { DateVO, IdVO, MoneyVO, UrlVO } from '@libs/value-objects';
 import {
   ClientEntity,
   OrderStageEntity,
@@ -30,6 +30,7 @@ export interface OrderEntityProps {
   checkCode: CheckCodeVO;
   isPaid: boolean;
   refusalToRepair?: boolean;
+  files?: UrlVO[];
 }
 
 type EndDiagnosticProps = Pick<
@@ -45,6 +46,7 @@ interface UpdateOrderProps {
   beneficiary?: Beneficiary;
   isPaid?: boolean;
   margin?: number;
+  files?: UrlVO[];
 }
 
 export class OrderEntity extends EntityBase<OrderEntityProps> {

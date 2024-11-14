@@ -1,10 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsArray,
   IsDateString,
   IsDefined,
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUrl,
   IsUUID,
 } from 'class-validator';
 
@@ -36,4 +38,10 @@ export class CreateTaskRequestDto {
   @IsOptional()
   @IsUUID()
   responsibleStaffId?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsArray()
+  @IsUrl({}, { each: true })
+  files?: string[];
 }

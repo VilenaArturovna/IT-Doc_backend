@@ -10,6 +10,7 @@ export interface TaskOrmEntityProps {
   deadline?: string;
   price?: string;
   participants?: TaskStaffOrmEntity[];
+  files?: string[];
 }
 
 export class TaskOrmEntity
@@ -23,6 +24,7 @@ export class TaskOrmEntity
   deadline?: string;
   price?: string;
   participants?: TaskStaffOrmEntity[];
+  files?: string[];
 }
 
 export class TaskModel extends ModelBase implements TaskOrmEntity {
@@ -33,4 +35,5 @@ export class TaskModel extends ModelBase implements TaskOrmEntity {
   deadline?: string;
   price?: string;
   participants?: TaskStaffOrmEntity[];
+  files?: string[];
 }

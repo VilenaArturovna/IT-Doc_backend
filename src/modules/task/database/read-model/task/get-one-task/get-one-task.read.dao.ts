@@ -71,6 +71,9 @@ export class GetOneTaskDaoModel {
 
   @ApiPropertyOptional({ nullable: true })
   deadline?: string;
+
+  @ApiPropertyOptional({ nullable: true })
+  files?: string[];
 }
 
 export abstract class GetOneTaskReadDao extends ReadDaoBase<

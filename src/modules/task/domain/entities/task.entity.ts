@@ -1,6 +1,6 @@
 import { EntityBase } from '@libs/base-classes';
 import { ConflictException, ForbiddenException } from '@libs/exceptions';
-import { DateVO, IdVO, MoneyVO } from '@libs/value-objects';
+import { DateVO, IdVO, MoneyVO, UrlVO } from '@libs/value-objects';
 import { StaffEntity } from '@modules/staff/domain';
 import { TaskStaffEntity } from '@modules/task/domain';
 import { TaskStatus } from '@modules/task/types';
@@ -13,13 +13,14 @@ export interface TaskEntityProps {
   deadline?: DateVO;
   price?: MoneyVO;
   participants: TaskStaffEntity[];
+  files?: UrlVO[];
 }
 
 export type CreateTaskProps = Omit<TaskEntityProps, 'status'>;
 
 export type UpdateTaskProps = Pick<
   TaskEntityProps,
-  'theme' | 'description' | 'deadline' | 'price'
+  'theme' | 'description' | 'deadline' | 'price' | 'files'
 >;
 
 export class TaskEntity extends EntityBase<TaskEntityProps> {

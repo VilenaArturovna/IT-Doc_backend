@@ -1,7 +1,7 @@
 import { ExceptionBase } from '@libs/base-classes';
 import { CommandHandlerBase } from '@libs/base-classes/command-handler.base';
 import { Result } from '@libs/utils';
-import { Currency, DateVO, MoneyVO, UuidVO } from '@libs/value-objects';
+import { Currency, DateVO, MoneyVO, UrlVO, UuidVO } from '@libs/value-objects';
 import { StaffEntity } from '@modules/staff/domain';
 import { Role } from '@modules/staff/types';
 import { TaskUnitOfWork } from '@modules/task/database/unit-of-work';
@@ -62,6 +62,9 @@ export class CreateTaskCommandHandler extends CommandHandlerBase<
           isAuthor: true,
         }),
       ],
+      files: payload.files?.length
+        ? payload.files.map((file) => new UrlVO(file))
+        : undefined,
     });
 
     if (payload.authorId === payload.responsibleStaffId) {
