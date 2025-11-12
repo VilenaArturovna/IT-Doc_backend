@@ -46,7 +46,7 @@ export class OrderHasBeenDiagnosedCommandHandler extends CommandHandlerBase<
     );
     const deadlineEntity = deadlineEntityResult.unwrap();
 
-    const deadline = DateVO.now().addMinutes(
+    const deadline = await DateVO.now().addMinutesOfWorkingTime(
       deadlineEntity.getPriorityDeadline(order.priority),
     );
 

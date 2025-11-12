@@ -5,8 +5,9 @@ import {
 } from '@modules/telegram/commands';
 import { TelegramUnitOfWork } from '@modules/telegram/database/unit-of-work';
 import { queriesControllers, queryHandlers } from '@modules/telegram/queries';
+import { TelegramBotService } from '@modules/telegram/service';
 import { telegramBotSingletonProvider } from '@modules/telegram/service/telegram-bot.singleton.provider';
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
@@ -17,6 +18,7 @@ import { CqrsModule } from '@nestjs/cqrs';
     TelegramUnitOfWork,
   ],
   controllers: [TelegramWebhookController, ...queriesControllers],
-  imports: [CqrsModule, OrderModule],
+  imports: [CqrsModule, forwardRef(() => OrderModule)],
+  exports: [TelegramBotService],
 })
 export class TelegramModule {}

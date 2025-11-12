@@ -75,13 +75,13 @@ describe('WarehouseItem', () => {
     expect(props.nextDeliveryDate).not.toBeDefined();
   });
 
-  test('should be updated with optional fields', () => {
+  test('should be updated with optional fields', async () => {
     const initialProps = item.getCopiedProps();
     item.update({
       ...initialProps,
       compatibleModels: 'HP2310, Samsung 4500',
       partNumber: '682hl38',
-      nextDeliveryDate: DateVO.now().addMinutes(800),
+      nextDeliveryDate: await DateVO.now().addMinutesOfWorkingTime(800),
     });
     const props = item.getCopiedProps();
 

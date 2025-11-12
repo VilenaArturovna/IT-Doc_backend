@@ -18,9 +18,11 @@ import {
   TelegramBotSendMessageData,
   WebhookResponse,
 } from '@modules/telegram/service';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios, { AxiosInstance } from 'axios';
 
+@Injectable()
 export class TelegramBotService implements TelegramBotInterface {
   private axiosInstance: AxiosInstance;
   private readonly domain: string;

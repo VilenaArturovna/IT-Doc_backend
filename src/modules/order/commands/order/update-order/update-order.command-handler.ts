@@ -47,15 +47,17 @@ export class UpdateOrderCommandHandler extends CommandHandlerBase<
 
     const margin = this.configService.get<number>('margin');
 
+    const deadline = payload.deadline
+      ? await DateVO.now().addMinutesOfWorkingTime(payload.deadline)
+      : undefined;
+
     order.update({
       ...payload,
       price: payload.price
         ? new MoneyVO({ currency: Currency.RUB, amount: payload.price })
         : undefined,
       responsibleStaff: staff,
-      deadline: payload.deadline
-        ? DateVO.now().addMinutes(payload.deadline)
-        : undefined,
+      deadline,
       margin,
     });
 

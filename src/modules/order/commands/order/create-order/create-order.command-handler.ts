@@ -61,7 +61,7 @@ export class CreateOrderCommandHandler extends CommandHandlerBase<
     const deadlineEntityResult = await deadlineRepository.getOneByName(status);
     const deadlineEntity = deadlineEntityResult.unwrap();
 
-    const deadline = DateVO.now().addMinutes(
+    const deadline = await DateVO.now().addMinutesOfWorkingTime(
       deadlineEntity.getPriorityDeadline(payload.priority),
     );
 

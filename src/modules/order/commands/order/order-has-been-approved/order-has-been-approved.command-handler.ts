@@ -52,7 +52,7 @@ export class OrderHasBeenApprovedCommandHandler extends CommandHandlerBase<
       );
       const deadlineEntity = deadlineEntityResult.unwrap();
 
-      deadline = DateVO.now().addMinutes(
+      deadline = await DateVO.now().addMinutesOfWorkingTime(
         deadlineEntity.getPriorityDeadline(order.priority),
       );
     }

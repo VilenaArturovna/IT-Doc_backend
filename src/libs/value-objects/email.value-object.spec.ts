@@ -1,4 +1,4 @@
-import { EmailVO } from "@libs/value-objects/email.value-object";
+import { EmailVO } from '@libs/value-objects/email.value-object';
 
 describe('EmailVO', () => {
   test('should be an error when value is invalid string', () => {
@@ -8,4 +8,4 @@ describe('EmailVO', () => {
 
     expect(invalidString).toThrow();
   });
-})
+});
